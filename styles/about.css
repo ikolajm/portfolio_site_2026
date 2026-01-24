@@ -1,0 +1,61 @@
+/* GSAP */
+#about .content video {
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+#about .content .text {
+    transform: translateX(50px);
+    opacity: 0;
+}
+/* === */
+
+#about .content {
+    align-items: center;
+    gap: var(--section__gap);
+}
+
+#about .content video {
+    display: block;
+    border: var(--border--default);
+    width: 480px;
+    max-width: calc(100% - 48px);
+    height: 360px;
+    object-fit: cover;
+    border-radius: var(--borderRadius--default);
+    filter: brightness(1.25);
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+@media screen and (max-width: 1000px) {
+    #about .content video {
+        width: 360px;
+        height: 275px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #about .content {
+        flex-direction: column-reverse;
+        gap: var(--section__gap--mobile);
+    }
+
+    #about .content video {
+        width: auto;
+        height: auto;
+        aspect-ratio: 5 / 3;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #about .content video {
+        width: auto;
+        height: auto;
+        aspect-ratio: 5 / 3;
+    }
+}
+
+#about .content .text {
+    position: relative;
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/assets/svg/personal_logo_black.svg" media="(prefers-color-scheme: light)">
+        <link rel="icon" href="/assets/svg/personal_logo_white.svg" media="(prefers-color-scheme: dark)">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-...your-integrity-hash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="styles/variables.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/full_project_feature.css">
+        <link rel="stylesheet" href="styles/contact.css">
+        <script type="importmap">
+            {
+              "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@v0.149.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.149.0/examples/jsm/"
+              }
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/SplitText.min.js"></script>
+        <title>Jacob Ikola, Digital Product Development</title>
+    </head>
+    <body>
+        <nav>
+            <!-- Logo -->
+            <a data-linkType="internal" href="./index.html">
+                <img src="/assets/svg/personal_logo_white.svg" alt="Jacob Ikola's personal logo" />
+            </a>
+        </nav>
+        <main>
+            <section id="hero">
+                <div class="content-container">
+                    <div class="text-content">
+                        <!-- Logo -->
+                        <svg
+                            id="availoLogo"
+                            viewBox="0 0 52.916666 52.916667">
+                            <g
+                                transform="translate(-79.379136,-168.27756)"
+                            >
+                                <path
+                                    d="m 90.543686,214.75369 c 2.204808,-3.32891 10.118794,-15.34901 14.762994,-23.34008 0.29264,-0.50354 0.76147,-0.50204 1.05503,0.003 4.70603,8.10226 12.56938,20.03276 14.76287,23.34032 0.32185,0.48532 0.29191,1.26015 -0.16792,1.61732 -2.16579,1.68225 -8.01205,4.25632 -14.06538,4.52888 -0.58384,0.0263 -1.53208,0.0254 -2.11587,-0.002 -6.013059,-0.28637 -11.831369,-2.87414 -14.045108,-4.5463 -0.465017,-0.35126 -0.509374,-1.11379 -0.186616,-1.60111 z m 11.400764,-7.32453 c 0.26841,1.63269 1.21336,2.56826 2.83484,2.83476 0.57607,0.0947 1.53218,0.0948 2.10806,-0.001 1.61891,-0.27017 2.56343,-1.21472 2.83357,-2.83366 0.0961,-0.57582 0.0961,-1.53205 -2e-5,-2.10793 -0.27016,-1.61891 -1.21472,-2.56343 -2.83366,-2.83357 -0.57582,-0.0961 -1.53205,-0.0961 -2.10793,2e-5 -1.61891,0.27016 -2.56343,1.21472 -2.83357,2.83366 -0.0961,0.57582 -0.096,1.53193 -0.001,2.10806 z m 5.67128,-28.11576 c -1.08005,-0.51855 -2.48474,-0.51855 -3.56478,-1e-5 -0.52443,0.25178 -1.16155,0.97249 -1.48461,1.45894 -2.976237,4.48149 -14.518641,24.3167 -17.297303,28.70977 -0.310383,0.49072 -0.888442,0.4837 -1.222556,0.004 -3.241872,-4.6531 -4.493204,-9.3062 -4.653457,-13.95929 -0.02012,-0.58417 -0.01998,-1.5324 0.01104,-2.11601 0.437943,-8.24013 5.956198,-24.54832 25.371099,-25.12048 0.58422,-0.0172 1.53212,-0.0172 2.11635,-1.2e-4 16.70261,0.4877 24.94541,12.52974 25.38184,25.12029 0.0202,0.58412 0.0208,1.53228 -0.007,2.11604 -0.23523,4.85893 -2.06202,9.721 -4.6918,13.92799 -0.30981,0.49564 -0.81521,0.48119 -1.11298,-0.0218 -2.65646,-4.48722 -14.35027,-24.20443 -17.35605,-28.664 -0.32638,-0.48425 -0.96492,-1.2037 -1.48933,-1.45548 z"
+                                    transform="translate(0.00394985,0.13580865)" 
+                                />
+                            </g>
+                        </svg>
+                        <div class="text">
+                            <h1 class="title">Availo</h1>
+                            <h2 class="subtitle">Group plans without the&nbsp;group&nbsp;text</h2>
+                        </div>
+                    </div>
+                    <div class="phones">
+                        <img id="phoneUnder" src="/assets/photos/availo/phone/seven_day_shadow.png" />
+                        <img id="phoneOver" src="/assets/photos/availo/phone/thirty_day_shadow.png" />
+                    </div>
+                </div>
+            </section>
+
+            <section id="details">
+                <dl class="metadata">
+                    <div class="detail">
+                        <dt>Status:</dt>
+                        <dd>In development</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Name:</dt>
+                        <dd>Availo</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Tagline:</dt>
+                        <dd>"Group plans without the group text"</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Role:</dt>
+                        <dd>Branding, UX/UI Design, App Development</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Tools:</dt>
+                        <dd>Inkscape, Figma, VS Code, Git, Github</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Tech Stack:</dt>
+                        <dd>SCSS, React Native, TypeScript, GraphQL, PostgreSQL</dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Useful Links:</dt>
+                        <!-- <dd><a href="github.com" target="_blank">Github</a></dd> -->
+                        <dd><a href="https://docs.google.com/document/d/1K0D_MLNC0KWW99SSRLurKYEHL80rOGjKPN9U2oN41-I/view?usp=sharing" target="_blank">Design System Doc</a></dd>
+                    </div>
+                </dl>
+                <div class="description">
+                    <p>“I’m doing X later—feel free to join!”</p>
+                    <p>Spontaneous planning used to be easy. You’d run into someone, float an idea, and suddenly your night looked a little better. But when work, shopping, and social life all take place behind screens, those moments of frictionless connection start to disappear. Reaching out feels heavier than it should.</p>
+                    <p>Making plans shouldn’t feel like project management. Yet modern social planning often comes with too many questions, too much back-and-forth, and just enough friction to make you give up.</p>
+                    <p>Some of the best plans start with a quick run-in, a shared moment, or a mutual “sure, why not?”. This app makes it easy to float ideas, discover who’s free, and turn everyday moments into shared experiences. Less overthinking, more showing up—just like it used to be!</p>
+                </div>
+            </section>
+
+            <section id="selected-mockups">
+                <h3 class="section-indicator section-indicator--small">Selected Mockups</h3>
+                    
+                <div class="card-spread">
+                    <div id="card1" class="card">
+                        <img src="./assets/photos/availo/phone/login.png" />
+                    </div>
+                    <div id="card2" class="card">
+                        <img src="./assets/photos/availo/phone/event_time_setting.png" />
+                    </div>
+                    <div id="card3" class="card">
+                        <img src="./assets/photos/availo/phone/event_view.png" />
+                    </div>
+                    <div id="card4" class="card middle-card">
+                        <img src="./assets/photos/availo/phone/seven_day.png" />
+                    </div>
+                    <div id="card5" class="card">
+                        <img src="./assets/photos/availo/phone/thirty_day.png" />
+                    </div>
+                    <div id="card6" class="card">
+                        <img src="./assets/photos/availo/phone/calendar_group.png" />
+                    </div>
+                    <div id="card7" class="card">
+                        <img src="./assets/photos/availo/phone/user_profile.png" />
+                    </div>
+                </div>
+            </section>
+
+            <section id="figma">
+                <h3 class="section-indicator section-indicator--small">View the Figma Project</h3>
+                    
+                <div class="embed-container">
+                    <iframe src="https://embed.figma.com/design/ziw8WGzlEh4rMscVv1skcm/Availo-V2?node-id=1-2&embed-host=share" allowfullscreen></iframe>
+                </div>
+            </section>
+
+            <footer id="contact">
+                <!-- FS Plate Edge -->
+                <svg
+                    class="fs-plate__edge"
+                    viewBox="0 0 1273.1113 42"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="m 1272.6114,40.336914 c -3.0205,-3.487102 -7.4219,-5.673828 -12.8516,-5.673828 h -170 c -20,0 -39.9956,-33 -60,-33 H 244.75973 c -15.11251,0 -40.00004,33 -60,33 h -170 C 6.6932357,34.663858 2.0721037,35.210301 0.49996406,40.336914"
+                    />
+                </svg>
+                <!-- Content -->
+                <div class="column">
+                    <div class="signoff">
+                        <h3 class="section-indicator section-indicator--large">Think I can help?</h3>
+                        <p>I'm always eager to leverage these skills and experiences to tackle new challenges!</p>
+                    </div>
+                    <div class="links">
+                        <div class="link-group">    
+                            <h3 class="section-indicator section-indicator--small">My email</h3>
+                            <div class="email">
+                                <a href="mailto:ikolajm@gmail.com">ikolajm@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="link-group">
+                            <h4 class="section-indicator section-indicator--small">Other links</h4>
+                            <div class="icons">
+                                <a href="https://github.com/ikolajm" target="_blank">
+                                    <i class="fa-brands fa-github"></i>
+                                </a>
+                                <a href="https://www.linkedin.com/in/jmi/" target="_blank">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column location-column">
+                    <div class="location-container">
+                        <div class="location">
+                            <!-- Location "Div" Outline -->
+                            <div id="uniqueOutlineContainer">
+                                <span>Based in:</span>
+                                <svg 
+                                    id="uniqueOutline"
+                                    viewBox="0 0 41.010417 54.239584"
+                                    preserveAspectRatio="none"
+                                >
+                                    <path
+                                        d="m 118.14045,173.97208 v -50.58223 c 0,-0.42151 -0.59412,-1.0538 -0.98653,-1.0538 h -6.90562 c -1.96204,0 -2.97054,6.32278 -4.93259,6.32278 H 79.666309 c -0.392415,0 -0.986517,0.63229 -0.986517,1.0538 v 44.25945 c 0,0.42151 0.594102,1.05379 0.986517,1.05379 h 37.487611 c 0.39462,0 0.98653,-0.63228 0.98653,-1.05379 z"
+                                        transform="translate(-77.904914,-121.56117)" 
+                                    />
+                                </svg>
+                            </div>
+                            <div id="state-container" >
+                                <!-- State SVG -->
+                                <svg
+                                    id="state-svg"
+                                    viewBox="0 0 31.731255 32.58788"
+                                >
+                                    <path
+                                        id="path1414"
+                                        d="m 90.839466,167.0244 c 0.167796,-1.19693 1.386283,-1.95038 1.74732,-3.14018 0.696414,-2.29502 0.503298,-4.73519 -0.597728,-6.94562 -0.591409,-1.18732 -2.386645,-2.3565 -1.836441,-3.54583 0.38353,-0.82905 0.924545,-1.4646 0.436908,-2.66916 -0.455507,-1.12519 0.713216,-1.95292 1.059528,-3.03006 0.267046,-0.83059 0.622165,-1.84025 0.396524,-2.56015 -0.07678,-0.24496 0.254056,-0.6578 0.341084,-0.95852 0.163541,-0.56598 0.105787,-0.90144 0.689551,-1.17009 0.624979,-0.28762 0.110307,-0.49707 0.746591,-0.71915 0.521483,-0.18201 0.278753,1.06683 1.109309,-0.17031 1.263381,-1.88184 1.888617,-1.2381 1.20187,0.28167 -0.39901,0.883 -0.03126,0.22877 0.408111,1.10561 1.065963,2.12705 0.88438,-2.10938 2.017354,-0.78241 1.13489,-1.06464 -1.256349,-2.1594 -0.578381,-3.3544 0.697845,-1.23003 1.869798,1.03813 2.337734,0.31843 0.6176,-0.94987 0.0169,-1.00583 -0.19463,-1.81647 -0.141646,-0.92115 1.04345,-1.51028 0.4335,-2.39342 -0.627004,-0.90784 0.33006,-1.04944 1.17519,-0.68726 1.10981,0.4756 2.09622,0.80145 3.48269,0.89674 1.31721,0.0905 1.22605,0.5673 2.56163,1.33987 0.99998,0.57844 3.09377,0.25004 3.53753,1.05024 0.3608,0.65061 1.25055,1.35552 0.49107,2.3509 -0.79305,1.03939 1.9521,1.42544 1.41458,2.73981 -0.39309,0.96119 0.73892,2.52604 -0.43595,3.17554 -1.60394,-0.21885 -0.003,2.12269 -1.68361,2.43049 -1.52867,0.28003 -2.41158,1.74554 -1.71887,2.60561 0.64527,0.80117 1.41602,0.96357 2.97431,0.34269 1.1667,-0.46486 0.79316,-1.95305 1.84112,-2.40772 1.1137,-0.48319 2.58719,-1.71834 3.81528,-0.77923 1.11561,0.85308 0.87568,2.20074 1.57753,3.20982 0.68175,0.9802 0.70177,2.12736 1.12126,3.15598 0.38683,0.94855 0.58445,1.82676 0.86924,2.96783 0.40591,1.62637 -2.70523,0.11679 -2.33113,1.74976 0.18918,0.82576 0.18267,1.40238 -0.44045,2.18127 -0.63393,0.7924 -1.23505,0.81173 -1.75249,2.11926 -0.35173,0.88879 -1.6494,1.45202 -1.58747,2.41266 0.0495,0.76751 -0.79371,0.61587 -1.43265,0.61785 -7.72757,0.0239 -15.49322,0.0644 -23.197014,0.078 z"
+                                        transform="translate(-89.967924,-134.51857)"
+                                    />
+                                </svg>
+                            </div>
+                            <span class="state">Michigan, USA</span>
+                        </div>
+                        <div class="coordinates">
+                            <span>42.9633599° N</span>
+                            <span>-85.6680863° W</span>
+                        </div>
+                    </div>
+                    <span class="copyright">&copy; <script>document.write(new Date().getFullYear());</script> Jacob Ikola</span>
+                </div>
+            </footer>
+        </main>
+        <script type="module" src="./js/state.js"></script>
+        <script type="module" src="./js/gsap-project.js"></script>
+    </body>
+</html>

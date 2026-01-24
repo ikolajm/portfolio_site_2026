@@ -1,0 +1,33 @@
+:root {
+    /* COLORS */
+    /* - Primary */
+    --primary--default: #0099E5;
+    --primary--light: #A3E0FF;
+    --primary--dark: #003854;
+    /* - Light */
+    --white--default: #E4E6E7;
+    --white--offwhite: #BDC0C2;
+    /* - Dark */
+    --surface--default: #141515;
+    --surface--1: #2D2F2F;
+    --surface--2: #464949;
+    /* - Outline */
+    --outline--default: rgba(110, 116, 119, .65);
+
+    /* TYPOGRAPHY */
+    /* Font Family */
+    --ff-headers: "Finlandica", sans-serif;
+    --ff-content: "Inter", sans-serif;
+    /* Recurring Font Sizes */
+    --section__title: 24px;
+    --section__subtitle: 18px;
+
+    /* LAYOUTS */
+    /* Content Containers */
+    --section__maxWidth: 1000px;
+    --section__gap: 48px;
+    --section__gap--mobile: 24px;
+    --border--default: 2px solid var(--white--default);
+    --borderRadius--default: 24px;
+    --content__maxWidth: 500px;
+}
