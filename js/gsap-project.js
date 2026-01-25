@@ -225,7 +225,7 @@ function initFigmaAnimation() {
     const figmaEmbed = document.querySelector("#figma .embed-container");
     const scrollTriggerOptions = {
         ease: "power4.inOut",
-        start: "top 60%",
+        start: "top 65%",
         toggleActions: "play none none none"
     }
     gsap.to(figmaEmbed, {
@@ -366,7 +366,7 @@ function initTextIndicators() {
 
     for (let i=0; i<=(sectionIndicators.length - contactIndicators.length - 1); i++) {
         const indicator = sectionIndicators[i];
-        initBlockReveal(indicator, "top 80%");
+        initBlockReveal(indicator, "top 65%");
     }    
     for (let i=0; i<=(contactIndicators.length - 1); i++) {
         const indicator = contactIndicators[i];
