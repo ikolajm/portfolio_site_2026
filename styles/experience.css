@@ -74,6 +74,11 @@
         grid-template-columns: 0% 100%;
         column-gap: 0px;
     }
+    #experience .articles article {
+        padding: 24px 16px;
+        background: rgba(20, 21, 21, .3); /* Similar background set on hero in gsap code */
+        border-radius: 4px;
+    }
     #experience .particle-column {
         z-index: -1;
         width: 100%;

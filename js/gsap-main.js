@@ -110,12 +110,12 @@ function initAboutAnimation() {
 }
 
 function pinParticleLogos() {
-    const mm = gsap.matchMedia();
-    mm.add({
-        isColumn: "(max-width: 750px)",
-        isRow: "(min-width: 751px)" 
-    }, (context) => {
-        const { isRow } = context.conditions;
+    // const mm = gsap.matchMedia();
+    // mm.add({
+    //     isColumn: "(max-width: 750px)",
+    //     isRow: "(min-width: 751px)" 
+    // }, (_context) => {
+        // const { isRow } = context.conditions;
 
         // if (isRow) {
             const articlesContainer = document.querySelector("#experience .articles");
@@ -167,7 +167,7 @@ function pinParticleLogos() {
                 }
             });
         // }
-    });
+    // });
 }
 
 function initExperienceArticleAnimations() {
@@ -178,12 +178,12 @@ function initExperienceArticleAnimations() {
         start: "top 50%",
         toggleActions: "play none none none"
     }
-    const mm = gsap.matchMedia();
-    mm.add({
-        isColumn: "(max-width: 750px)",
-        isRow: "(min-width: 751px)" 
-    }, (context) => {
-        const { isRow } = context.conditions;
+    // const mm = gsap.matchMedia();
+    // mm.add({
+    //     isColumn: "(max-width: 750px)",
+    //     isRow: "(min-width: 751px)" 
+    // }, (context) => {
+    //     const { isRow } = context.conditions;
 
         experienceArticles.forEach(article => {
             gsap.to(article, {
@@ -198,13 +198,13 @@ function initExperienceArticleAnimations() {
         });
         gsap.to(particleColumn, {
             duration: .6,
-            opacity: isRow ? 1 : .7,
+            opacity: 1,
             scrollTrigger: {
                 trigger: particleColumn,
                 ...scrollTriggerOptions
             }
         });
-    });
+    // });
 }
 
 function initAvailoFeature() {
@@ -377,7 +377,7 @@ function initTextIndicators() {
     // Main Indicators (Default Trigger Position)
     for (let i=0; i<=(sectionIndicators.length - contactIndicators.length - 1); i++) {
         const indicator = sectionIndicators[i];
-        initBlockReveal(indicator, "top 80%");
+        initBlockReveal(indicator, "top 65%");
     }
     // Contact Indicators
     for (let i=0; i<=(contactIndicators.length - 1); i++) {
