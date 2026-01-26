@@ -118,7 +118,7 @@ function initCardAnimation() {
             ["0px", "24px", "48px", "96px"]
             : ["0px", "12px", "24px", "48px"];
         const scrollTriggerOptions = {
-            ease: "power4.inOut",
+            ease: "power4.out",
             start: "top 50%",
             toggleActions: "play none none none"
         }
