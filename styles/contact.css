@@ -135,7 +135,7 @@
 #contact #uniqueOutlineContainer #uniqueOutline path {
     fill: none;
     stroke: var(--white--default);
-    stroke-width: .5;
+    stroke-width: 2;
 }
 
 #contact #state-container {
