@@ -198,6 +198,12 @@
     padding-right: .25rem;
 }
 
+@media screen and (max-width: 750px) {
+    #contact #uniqueOutlineContainer #uniqueOutline path {
+        stroke-width: 1;
+    }
+}
+
 @media screen and (max-width: 500px) {
     #contact #uniqueOutlineContainer #uniqueOutline {
         transform: rotateY(180deg);
