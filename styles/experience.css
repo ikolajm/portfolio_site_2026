@@ -76,7 +76,7 @@
     }
     #experience .articles article {
         padding: 24px 16px;
-        background: rgba(20, 21, 21, .3); /* Similar background set on hero in gsap code */
+        background: rgba(20, 21, 21, .4); /* Similar background set on hero in gsap code */
         border-radius: 4px;
     }
     #experience .particle-column {
