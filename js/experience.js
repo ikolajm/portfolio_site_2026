@@ -6,8 +6,8 @@ import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js"
 /* --------------------------
    Config
 --------------------------- */
-const MAX_PARTICLES = 7500;
-const PARTICLE_SIZE = 1;
+const MAX_PARTICLES = 5000;
+const PARTICLE_SIZE = 3;
 const PARTICLE_COLOR = "#E4E6E7";
 const EXTRUDE_DEPTH = 2;
 const MORPH_SPEED = 7.5;
