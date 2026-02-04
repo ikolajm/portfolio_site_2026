@@ -10,6 +10,7 @@
 
 /* Waves */
 #wave {
+    opacity: .5;
     position: absolute;
     display: flex;
     justify-content: center;
