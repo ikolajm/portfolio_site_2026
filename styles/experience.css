@@ -91,7 +91,7 @@
     }
     #experience .content article {
         padding: 24px 16px;
-        background: rgba(20, 21, 21, .75); /* Similar background set on hero in gsap code */
+        background: rgba(20, 21, 21, .5); /* Similar background set on hero in gsap code */
         border-radius: 4px;
     }
     #experience .content .particle-column {
