@@ -88,6 +88,16 @@ for (let i = 0; i < pos.count; i++) {
 const simplex = new SimplexNoise();
 
 /* --------------------------
+  Cache X/Y positions (never change, avoid per-frame method calls)
+--------------------------- */
+const xCache = new Float32Array(pos.count);
+const yCache = new Float32Array(pos.count);
+for (let i = 0; i < pos.count; i++) {
+    xCache[i] = pos.getX(i);
+    yCache[i] = pos.getY(i);
+}
+
+/* --------------------------
   Per-point Color Buffer
 --------------------------- */
 const baseHSL = createBaseHSL(PARTICLE_COLOR);
@@ -134,27 +144,49 @@ scene.add(waves);
 /* --------------------------
   Animation Loop
 --------------------------- */
+let lastColorUpdate = 0;
 function animationLoop() {
     const time = getElapsedTime();
+    // -- Wrap time to prevent float precision loss over long sessions
+    const wrappedTime = time % (WAVE_LOOP_SECONDS * 100);
+
     // -- Wave
     for( let i=0; i<pos.count; i++ ) {
-        const x = pos.getX(i);
-        const y = pos.getY(i);
-        pos.setZ(i, simplex.noise3d( x/4, y/4, time/WAVE_LOOP_SECONDS ));
+      pos.setZ(i, simplex.noise3d( xCache[i]/4, yCache[i]/4, wrappedTime/WAVE_LOOP_SECONDS ));
     }
     pos.needsUpdate = true;
 
+
     // -- Color Drift
-    applyColorField({
-        positions: pos.array,
-        colors: colorAttr.array,
-        baseHSL,
-        lightnessOffsets,
-        time,
-        config: ColorFieldConfig
-    });
-    colorAttr.needsUpdate = true;
+    if (time - lastColorUpdate >= ColorFieldConfig.COLOR_UPDATE_INTERVAL) {
+      applyColorField({
+          positions: pos.array,
+          colors: colorAttr.array,
+          baseHSL,
+          lightnessOffsets,
+          time,
+          config: ColorFieldConfig
+      });
+      colorAttr.needsUpdate = true;
+      lastColorUpdate = time;
+    }
+
 	
     composer.render();
 }
-renderer.setAnimationLoop(animationLoop);
+
+let animating = false;
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            if (!animating) {
+                animating = true;
+                renderer.setAnimationLoop(animationLoop);
+            }
+        } else {
+            animating = false;
+            renderer.setAnimationLoop(null);
+        }
+    });
+}, { threshold: 0.01 });
+observer.observe(wave);

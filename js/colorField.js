@@ -9,7 +9,8 @@ export const ColorFieldConfig = {
   MAX_LIGHTNESS_SHIFT: 0.025,
   MAX_HUE_SHIFT: 0.025,
   PHASE_X_SCALE: 0.25,
-  PHASE_Y_SCALE: 0.25
+  PHASE_Y_SCALE: 0.25,
+  COLOR_UPDATE_INTERVAL: 0.05
 };
 
 /* ----------------------------------

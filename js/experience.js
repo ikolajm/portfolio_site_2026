@@ -50,6 +50,8 @@ let jitterStrength = .7;
 // =
 let baseHSL = null;
 let lightnessOffsets = null;
+// =
+let lastColorUpdate = 0;
 
 /* --------------------------
   Three.js Setup
@@ -127,7 +129,6 @@ async function init() {
 
   startMorphToNoise();
   setupScrollTriggers();
-  clock.getDelta();
   animate();
 }
 
@@ -336,17 +337,20 @@ function updateMorph(dt) {
   }
   pointSystem.geometry.attributes.position.needsUpdate = true;
 
-  // -- Update color field each frame
-  const colors = pointSystem.geometry.attributes.color.array;
-  applyColorField({
-    positions: pos,
-    colors,
-    baseHSL,
-    lightnessOffsets,
-    time: now,
-    config: ColorFieldConfig
-  });
-  pointSystem.geometry.attributes.color.needsUpdate = true;
+  // -- Color drift
+  if (now - lastColorUpdate >= ColorFieldConfig.COLOR_UPDATE_INTERVAL) {
+    const colors = pointSystem.geometry.attributes.color.array;
+    applyColorField({
+      positions: pos,
+      colors,
+      baseHSL,
+      lightnessOffsets,
+      time: now,
+      config: ColorFieldConfig
+    });
+    pointSystem.geometry.attributes.color.needsUpdate = true;
+    lastColorUpdate = now;
+  }
 }
 
 /* --------------------------
@@ -382,8 +386,22 @@ function setupScrollTriggers() {
 /* --------------------------
   Animation Loop
 --------------------------- */
+let animating = false; 
 function animate() {
-  requestAnimationFrame(animate);
   updateMorph(clock.getDelta());
   composer.render();
 }
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      if (!animating) {
+        animating = true;
+        renderer.setAnimationLoop(animate);
+      }
+    } else {
+      animating = false;
+      renderer.setAnimationLoop(null);
+    }
+  });
+}, { threshold: 0.01 });
+observer.observe(container);   
