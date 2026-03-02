@@ -1,3 +1,5 @@
+import { ANIMATION_CONFIG } from "./animationConfig.js";
+
 function initLoadIn() {
     const tl = gsap.timeline();
     tl.to(
@@ -41,60 +43,50 @@ function initDetailsAnimation() {
     const section = document.querySelector("#details");
     const metadata = document.querySelector("#details .metadata");
     const description = document.querySelector("#details .description");
-    
+
     const mm = gsap.matchMedia();
     mm.add({
         isColumn: "(max-width: 550px)",
-        isRow: "(min-width: 551px)" 
+        isRow: "(min-width: 551px)"
     }, (context) => {
         const { isRow } = context.conditions;
-        const scrollTriggerOptions = {
-            ease: "power4.inOut",
-            start: "top 50%",
-            toggleActions: "play none none none"
-        }
+
+        const tweenDefaults = {
+            duration: ANIMATION_CONFIG.fadeDurationLong,
+            ease: "power4.out",
+            x: 0,
+            opacity: 1,
+        };
+
+        const scrollTriggerBase = {
+            start: "top 65%",
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions,
+        };
+
         if (isRow) {
             const timeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: section,
-                    ...scrollTriggerOptions
-                }
+                scrollTrigger: { trigger: section, ...scrollTriggerBase }
             });
-            timeline.to(metadata, {
-                duration: .6,
-                x: 0,
-                opacity: 1
-            });
-            timeline.to(description, {
-                duration: .6,
-                x: 0,
-                opacity: 1
-            });
+
+            timeline
+                .to(metadata, { ...tweenDefaults })
+                .to(description, { ...tweenDefaults }, "-=0.4");
+
         } else {
             gsap.to(metadata, {
-                duration: .6,
-                x: 0,
-                opacity: 1,
-                scrollTrigger: {
-                    trigger: metadata,
-                    ...scrollTriggerOptions
-                }
+                ...tweenDefaults,
+                scrollTrigger: { trigger: metadata, ...scrollTriggerBase }
             });
             gsap.to(description, {
-                duration: .6,
-                x: 0,
-                opacity: 1,
-                scrollTrigger: {
-                    trigger: description,
-                    ...scrollTriggerOptions
-                }
+                ...tweenDefaults,
+                scrollTrigger: { trigger: description, ...scrollTriggerBase }
             });
         }
-    });  
+    });
 }
 
 function initCardAnimation() {
-    const duration = .3;
+    const duration = ANIMATION_CONFIG.fadeDuration;
     const spread = document.querySelector("#selected-mockups .card-spread");
 
     // const card1 = document.querySelector("#card1");
@@ -121,7 +113,7 @@ function initCardAnimation() {
     const scrollTriggerOptions = {
         ease: "power4.out",
         start: "top 50%",
-        toggleActions: "play none none none"
+        toggleActions: ANIMATION_CONFIG.defaultToggleActions
     }
     const scrollTrigger = {
         trigger: spread,
@@ -223,12 +215,12 @@ function initCardAnimation() {
 function initFigmaAnimation() {
     const figmaEmbed = document.querySelector("#figma .file-preview");
     const scrollTriggerOptions = {
-        ease: "power4.inOut",
+        ease: ANIMATION_CONFIG.defaultEase,
         start: "top 65%",
-        toggleActions: "play none none none"
+        toggleActions: ANIMATION_CONFIG.defaultToggleActions
     }
     gsap.to(figmaEmbed, {
-        duration: .6,
+        duration: ANIMATION_CONFIG.fadeDurationLong,
         opacity: 1,
         // y: 0,
         scrollTrigger: {
@@ -316,15 +308,15 @@ function initContactAnimation() {
         scrollTrigger: {
             trigger: bumper,
             start: "top 70%",
-            ease: "power4.inOut",
-            toggleActions: "play none none none"
+            ease: ANIMATION_CONFIG.defaultEase,
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions
         }
     });
 
-    tl.to(bumper, { delay: .3, duration: .3, opacity: 1 })
-      .to(container, { duration: .3, maxWidth: "160px" })
-      .to(maskBorder, { duration: .3, maxWidth: "100%", opacity: 1 }, "<")
-      .to(content, { duration: .6, opacity: 1 });
+    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 })
+      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" })
+      .to(maskBorder, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "100%", opacity: 1 }, "<")
+      .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
 }
 
 gsap.registerPlugin(SplitText, ScrollTrigger);

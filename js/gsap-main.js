@@ -1,12 +1,4 @@
-// GLOBAL VARIABLES (Consistency)
-const defaultEase = "power4.inOut";
-const defaultToggleActions = "play none none none";
-const defaultDelay = .3
-const flickerDuration = .1;
-const fadeDuration = .3;
-const expandDuration = .3;
-const rotateDuration = .3;
-const fadeDurationLong = .3 * 2;
+import { ANIMATION_CONFIG } from "./animationConfig.js";
 
 function initLoadIn() {
     return new Promise((resolve) => {
@@ -27,7 +19,7 @@ function initLoadIn() {
 function initHeroAnimation() {
     const homeContent = document.querySelector("#home .content");
     const text = homeContent.querySelector(":scope > .text");
-    const ease = defaultEase;
+    const ease = ANIMATION_CONFIG.defaultEase;
     const mm = gsap.matchMedia();
     mm.add({
         isColumn: "(max-width: 750px)",
@@ -37,39 +29,39 @@ function initHeroAnimation() {
         
         gsap.to(text, {
             delay: 2.5, // Delay to match reveal of .home__content bg
-            duration: fadeDuration,
+            duration: ANIMATION_CONFIG.fadeDuration,
             opacity: 1
         });
         const tl = gsap.timeline();
         tl.to(homeContent, {
             delay: .75,
-            duration: fadeDuration,
+            duration: ANIMATION_CONFIG.fadeDuration,
             opacity: 1
         });
         tl.to(homeContent, {
-            duration: flickerDuration,
+            duration: ANIMATION_CONFIG.flickerDuration,
             opacity: 0
         });
         tl.to(homeContent, {
-            duration: flickerDuration,
+            duration: ANIMATION_CONFIG.flickerDuration,
             opacity: 1
         });
         tl.to(homeContent, {
-            duration: flickerDuration,
+            duration: ANIMATION_CONFIG.flickerDuration,
             opacity: 0
         });
         tl.to(homeContent, {
-            duration: flickerDuration,
+            duration: ANIMATION_CONFIG.flickerDuration,
             opacity: 1
         });
         tl.to(homeContent, {
-            delay: defaultDelay,
-            duration: rotateDuration,
+            delay: ANIMATION_CONFIG.defaultDelay,
+            duration: ANIMATION_CONFIG.rotateDuration,
             ease,
             rotation: 0
         });
         tl.to(homeContent, {
-            duration: .5,
+            duration: ANIMATION_CONFIG.fadeDurationLong,
             ease,
             paddingTop: isRow ? 16 : 24,
             paddingBottom: isRow ? 16 : 24,
@@ -96,9 +88,9 @@ function initAboutAnimation() {
         const { isRow } = context.conditions;
 
         const scrollTriggerOptions = {
-            ease: defaultEase,
+            ease: ANIMATION_CONFIG.defaultEase,
             start: "top 50%",
-            toggleActions: defaultToggleActions
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions
         };
 
         const tl = gsap.timeline({
@@ -108,12 +100,12 @@ function initAboutAnimation() {
             }
         });
 
-        isRow ? tl.to(mediaContainer, { duration: fadeDurationLong, opacity: 1 })
-          .to(videoContainer, { duration: expandDuration, width: "100%" }, "<")
-          .to(textElement, { delay: defaultDelay, duration: fadeDurationLong, opacity: 1, x: "0px" })
+        isRow ? tl.to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
+          .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
+          .to(textElement, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" })
         : tl.to(textElement, { delay: 0, duration: fadeDurationLong, opacity: 1, x: "0px" })
-        .to(mediaContainer, { duration: fadeDurationLong, opacity: 1 })
-        .to(videoContainer, { duration: expandDuration, width: "100%" }, "<")
+        .to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
+        .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
         
 
         return () => tl.kill();
@@ -175,18 +167,18 @@ function pinParticleLogos() {
 }
 
 function initExperienceArticleAnimations() {
-    const ease = defaultEase;
+    const ease = ANIMATION_CONFIG.defaultEase;
     const particleColumn = document.querySelector("#experience .particle-column");
     const experienceArticles = document.querySelectorAll("#experience article");
     const scrollTriggerOptions = {
         ease,
         start: "top 50%",
-        toggleActions: defaultToggleActions
+        toggleActions: ANIMATION_CONFIG.defaultToggleActions
     }
 
     experienceArticles.forEach(article => {
         gsap.to(article, {
-            duration: fadeDurationLong,
+            duration: ANIMATION_CONFIG.fadeDurationLong,
             x: "0px",
             opacity: 1,
             scrollTrigger: {
@@ -196,7 +188,7 @@ function initExperienceArticleAnimations() {
         });
     });
     gsap.to(particleColumn, {
-        duration: .6,
+        duration: ANIMATION_CONFIG.fadeDurationLong,
         opacity: 1,
         scrollTrigger: {
             trigger: particleColumn,
@@ -206,7 +198,7 @@ function initExperienceArticleAnimations() {
 }
 
 function initProjectFeature() {
-    const ease = defaultEase;
+    const ease = ANIMATION_CONFIG.defaultEase;
     const mm = gsap.matchMedia();
 
     const mediaElement = document.querySelector("#projects .media");
@@ -222,7 +214,7 @@ function initProjectFeature() {
         const scrollTriggerOptions = {
             ease,
             start: "top 50%",
-            toggleActions: defaultToggleActions
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions
         }
         
         // Image
@@ -233,22 +225,22 @@ function initProjectFeature() {
             }
         });
         imageTL.to(mediaElement, {
-            duration: fadeDurationLong,
+            duration: ANIMATION_CONFIG.fadeDurationLong,
             opacity: 1,
         });
         imageTL.to(imageElement, {
-            duration: fadeDurationLong,
+            duration: ANIMATION_CONFIG.fadeDurationLong,
             maxWidth: "100%",
         });
         imageTL.to(controlsElement, {
-            delay: defaultDelay,
-            duration: fadeDuration,
+            delay: ANIMATION_CONFIG.defaultDelay,
+            duration: ANIMATION_CONFIG.fadeDuration,
             opacity: 1,
         });
         // Content
         gsap.to(contentElement, {
             delay: isRow ? 1 : 0,
-            duration: fadeDurationLong,
+            duration: ANIMATION_CONFIG.fadeDurationLong,
             x: "0px",
             opacity: 1,
             scrollTrigger: {
@@ -295,33 +287,33 @@ function initSectionReveal(indicator, start) {
         scrollTrigger: {
             trigger: indicator,
             start,
-            toggleActions: "play none none none"
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions
         }
     });
     tl.to(entireSVG, {
-        duration: fadeDuration,
+        duration: ANIMATION_CONFIG.fadeDuration,
         opacity: 1
     });
     tl.to(entireSVG, {
-        duration: flickerDuration,
+        duration: ANIMATION_CONFIG.flickerDuration,
         opacity: 0
     });
     tl.to(entireSVG, {
-        duration: flickerDuration,
+        duration: ANIMATION_CONFIG.flickerDuration,
         opacity: 1
     });
     tl.to(entireSVG, {
-        duration: flickerDuration,
+        duration: ANIMATION_CONFIG.flickerDuration,
         opacity: 0
     });
     tl.to(entireSVG, {
-        duration: flickerDuration,
+        duration: ANIMATION_CONFIG.flickerDuration,
         opacity: 1
     });
     tl.to(headerText, {
-        delay: defaultDelay,
-        duration: fadeDurationLong,
-        ease: "power4.inOut",
+        delay: ANIMATION_CONFIG.defaultDelay,
+        duration: ANIMATION_CONFIG.fadeDurationLong,
+        ease: ANIMATION_CONFIG.defaultEase,
         left: "0px",
         opacity: 1
     });
@@ -349,15 +341,15 @@ function initContactAnimation() {
         scrollTrigger: {
             trigger: bumper,
             start: "top 70%",
-            ease: defaultEase,
-            toggleActions: defaultToggleActions
+            ease: ANIMATION_CONFIG.defaultEase,
+            toggleActions: ANIMATION_CONFIG.defaultToggleActions
         }
     });
 
-    tl.to(bumper, { delay: defaultDelay, duration: fadeDuration, opacity: 1 })
-      .to(container, { duration: expandDuration, maxWidth: "160px" })
-      .to(maskBorder, { duration: expandDuration, maxWidth: "100%", opacity: 1 }, "<")
-      .to(content, { duration: fadeDurationLong, opacity: 1 });
+    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 })
+      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" })
+      .to(maskBorder, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "100%", opacity: 1 }, "<")
+      .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
 }
 
 gsap.registerPlugin(SplitText, ScrollTrigger);

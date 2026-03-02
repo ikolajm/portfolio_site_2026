@@ -43,8 +43,8 @@
     justify-content: center;
     transition: .3s;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
 }
 #projects article .media .controls button:hover {
     background: var(--white--offwhite);
