@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 export const OrbConfig = {
-    AFTERIMAGE_THRESHOLD: .7,
+    AFTERIMAGE_THRESHOLD: .8,
     BLOOM_STRENGTH: .15,
     BLOOM_RADIUS: .15,
     BLOOM_THRESHOLD: .2,

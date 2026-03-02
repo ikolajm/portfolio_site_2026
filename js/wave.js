@@ -23,7 +23,7 @@ const PARTICLE_COLOR = "#0099E5";
 // -- Wave Positioning
 const WAVE_ROTATION_X = .25;
 const WAVE_ROTATION_Z = .1;
-const WAVE_LOOP_SECONDS = 12;
+const WAVE_LOOP_SECONDS = 16;
 
 /* --------------------------
     Three.js Setup
@@ -78,7 +78,7 @@ window.addEventListener( "resize", (event) => {
 /* --------------------------
   Init Waves
 --------------------------- */
-const WAVE_SEGMENTS_X = 2400
+const WAVE_SEGMENTS_X = 1200;
 const geometry = new THREE.PlaneGeometry(innerWidth/10, 1, WAVE_SEGMENTS_X, 3);
 const pos = geometry.getAttribute('position');
 const randomOffsets = new Float32Array(pos.count);
