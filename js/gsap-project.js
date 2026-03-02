@@ -94,135 +94,134 @@ function initDetailsAnimation() {
 }
 
 function initCardAnimation() {
-    const duration = .6;
+    const duration = .3;
     const spread = document.querySelector("#selected-mockups .card-spread");
-    const card1 = document.querySelector("#card1");
-    const card2 = document.querySelector("#card2");
-    const card3 = document.querySelector("#card3");
-    const card4 = document.querySelector("#card4");
-    const card5 = document.querySelector("#card5");
-    const card6 = document.querySelector("#card6");
-    const card7 = document.querySelector("#card7");
-    const rotationDegrees = ["0deg", "7deg", "14deg", "21deg"];
-        
-    const mm = gsap.matchMedia();
-    mm.add({
-        isColumn: "(max-width: 1000px)",
-        isRow: "(min-width: 1001px)" 
-    }, (context) => {
-        const { isRow } = context.conditions;
-        const xDisplacement = isRow ? 
-            ["0px", "100px", "200px", "300px"]
-            : ["0px", "75px", "125px", "175px"];
-        const yDisplacement = isRow ? 
-            ["0px", "24px", "48px", "96px"]
-            : ["0px", "12px", "24px", "48px"];
-        const scrollTriggerOptions = {
-            ease: "power4.out",
-            start: "top 50%",
-            toggleActions: "play none none none"
-        }
-        const scrollTrigger = {
-            trigger: spread,
-            ...scrollTriggerOptions
-        }
 
-        const leftTimeline = gsap.timeline({scrollTrigger}, 0);
-        const rightTimeline = gsap.timeline({
-            onComplete: () => {
-                const cards = document.querySelectorAll("#selected-mockups .card");
-                cards.forEach(card => card.style.transition = ".3s");
-            },
-            scrollTrigger
-        }, 0);
-        // Pull cards up in "hand"
-        leftTimeline.to(card1, {
-            duration,
-            opacity: 1,
-            y: 0,
-        });
-        rightTimeline.to(card7, {
-            duration,
-            delay: .3,
-            opacity: 1,
-            y: 0,
-        });
-        // -
-        leftTimeline.to(card2, {
-            duration,
-            opacity: 1,
-            y: 0,
-        });
-        rightTimeline.to(card6, {
-            duration,
-            opacity: 1,
-            y: 0,
-        });
-        // -
-        leftTimeline.to(card3, {
-            duration,
-            opacity: 1,
-            y: 0,
-        });
-        rightTimeline.to(card5, {
-            duration,
-            opacity: 1,
-            y: 0,
-        });
-        // -
-        leftTimeline.to(card4, {
-            duration,
-            delay: .05,
-            opacity: 1,
-            y: 0,
-        });
-        // -
-        // Tier 1 items shuffle out
-        leftTimeline.to(card3, {
-            delay: .15,
-            duration,
-            x: `-${xDisplacement[xDisplacement.length - 3]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 3]}`,
-            rotation: `-${rotationDegrees[rotationDegrees.length - 3]}`,
-        });
-        rightTimeline.to(card5, {
-            delay: .6,
-            duration,
-            x: `${xDisplacement[xDisplacement.length - 3]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 3]}`,
-            rotation: `${rotationDegrees[rotationDegrees.length - 3]}`,
-        });
-        // Tier 2 items shuffle out
-        leftTimeline.to(card2, {
-            duration,
-            x: `-${xDisplacement[xDisplacement.length - 2]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 2]}`,
-            rotation: `-${rotationDegrees[rotationDegrees.length - 2]}`,
-        });
-        rightTimeline.to(card6, {
-            duration,
-            x: `${xDisplacement[xDisplacement.length - 2]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 2]}`,
-            rotation: `${rotationDegrees[rotationDegrees.length - 2]}`,
-        });
-        // Tier 3 items shuffle out
-        leftTimeline.to(card1, {
-            duration,
-            x: `-${xDisplacement[xDisplacement.length - 1]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 1]}`,
-            rotation: `-${rotationDegrees[rotationDegrees.length - 1]}`,
-        });
-        rightTimeline.to(card7, {
-            duration,
-            x: `${xDisplacement[xDisplacement.length - 1]}`,
-            y: `+=${yDisplacement[yDisplacement.length - 1]}`,
-            rotation: `${rotationDegrees[rotationDegrees.length - 1]}`,
-        });
-    });   
+    // const card1 = document.querySelector("#card1");
+    // const card2 = document.querySelector("#card2");
+    // const card3 = document.querySelector("#card3");
+    // const card4 = document.querySelector("#card4");
+    // const card5 = document.querySelector("#card5");
+    // const card6 = document.querySelector("#card6");
+    // const card7 = document.querySelector("#card7");
+    // const rotationDegrees = ["0deg", "7deg", "14deg", "21deg"];
+        
+    // const mm = gsap.matchMedia();
+    // mm.add({
+    //     isColumn: "(max-width: 1000px)",
+    //     isRow: "(min-width: 1001px)" 
+    // }, (context) => {
+    //     const { isRow } = context.conditions;
+    //     const xDisplacement = isRow ? 
+    //         ["0px", "100px", "200px", "300px"]
+    //         : ["0px", "75px", "125px", "175px"];
+    //     const yDisplacement = isRow ? 
+    //         ["0px", "24px", "48px", "96px"]
+    //         : ["0px", "12px", "24px", "48px"];
+    const scrollTriggerOptions = {
+        ease: "power4.out",
+        start: "top 50%",
+        toggleActions: "play none none none"
+    }
+    const scrollTrigger = {
+        trigger: spread,
+        ...scrollTriggerOptions
+    }
+
+    const tl = gsap.timeline({scrollTrigger});
+    tl.to(spread, {
+        duration,
+        opacity: 1,
+    });
+    //     const leftTimeline = gsap.timeline({scrollTrigger}, 0);
+    //     // Pull cards up in "hand"
+    //     leftTimeline.to(card1, {
+    //         duration,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     rightTimeline.to(card7, {
+    //         duration,
+    //         delay: .3,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     // -
+    //     leftTimeline.to(card2, {
+    //         duration,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     rightTimeline.to(card6, {
+    //         duration,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     // -
+    //     leftTimeline.to(card3, {
+    //         duration,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     rightTimeline.to(card5, {
+    //         duration,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     // -
+    //     leftTimeline.to(card4, {
+    //         duration,
+    //         delay: .05,
+    //         opacity: 1,
+    //         y: 0,
+    //     });
+    //     // -
+    //     // Tier 1 items shuffle out
+    //     leftTimeline.to(card3, {
+    //         delay: .15,
+    //         duration,
+    //         x: `-${xDisplacement[xDisplacement.length - 3]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 3]}`,
+    //         rotation: `-${rotationDegrees[rotationDegrees.length - 3]}`,
+    //     });
+    //     rightTimeline.to(card5, {
+    //         delay: .6,
+    //         duration,
+    //         x: `${xDisplacement[xDisplacement.length - 3]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 3]}`,
+    //         rotation: `${rotationDegrees[rotationDegrees.length - 3]}`,
+    //     });
+    //     // Tier 2 items shuffle out
+    //     leftTimeline.to(card2, {
+    //         duration,
+    //         x: `-${xDisplacement[xDisplacement.length - 2]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 2]}`,
+    //         rotation: `-${rotationDegrees[rotationDegrees.length - 2]}`,
+    //     });
+    //     rightTimeline.to(card6, {
+    //         duration,
+    //         x: `${xDisplacement[xDisplacement.length - 2]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 2]}`,
+    //         rotation: `${rotationDegrees[rotationDegrees.length - 2]}`,
+    //     });
+    //     // Tier 3 items shuffle out
+    //     leftTimeline.to(card1, {
+    //         duration,
+    //         x: `-${xDisplacement[xDisplacement.length - 1]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 1]}`,
+    //         rotation: `-${rotationDegrees[rotationDegrees.length - 1]}`,
+    //     });
+    //     rightTimeline.to(card7, {
+    //         duration,
+    //         x: `${xDisplacement[xDisplacement.length - 1]}`,
+    //         y: `+=${yDisplacement[yDisplacement.length - 1]}`,
+    //         rotation: `${rotationDegrees[rotationDegrees.length - 1]}`,
+    //     });
+    // });   
 }
 
 function initFigmaAnimation() {
-    const figmaEmbed = document.querySelector("#figma .embed-container");
+    const figmaEmbed = document.querySelector("#figma .file-preview");
     const scrollTriggerOptions = {
         ease: "power4.inOut",
         start: "top 65%",
@@ -231,70 +230,12 @@ function initFigmaAnimation() {
     gsap.to(figmaEmbed, {
         duration: .6,
         opacity: 1,
-        y: 0,
+        // y: 0,
         scrollTrigger: {
             trigger: figmaEmbed,
             ...scrollTriggerOptions
         }
     });
-}
-
-function completeContactAnimation() {
-    const contactIndicators = document.querySelectorAll("#contact .section-indicator");
-    const indicatorPercentages = [
-        "top 85%",
-        "top 90%",
-        "top 95%"
-    ];
-    // Contact Indicators
-    for (let i=0; i<=(contactIndicators.length - 1); i++) {
-        const indicatorScrollTriggerOptions = {
-            ease: "power4.inOut",
-            start: indicatorPercentages[i],
-            toggleActions: "play none none none"
-        }
-        const indicator = contactIndicators[i];
-        const sibling = indicator.nextSibling.nextSibling;
-        gsap.to(sibling,{
-            delay: .6,
-            duration: .3,
-            opacity: 1,
-            x: "0px",
-            scrollTrigger: {
-                trigger: indicator,
-                ...indicatorScrollTriggerOptions
-            },
-        })
-    }
-
-    // const locationElement = document.querySelector("#contact .location-column .location");
-    // const coordinatesElement = document.querySelector("#contact .location-column .coordinates");
-    // const elementGroup = [
-    //     locationElement,
-    //     coordinatesElement
-    // ];
-    // const mm = gsap.matchMedia();
-    // mm.add({
-    //     isColumn: "(max-width: 500px)",
-    //     isRow: "(min-width: 501px)" 
-    // }, (context) => {
-    //     const { isRow } = context.conditions;
-    //     const locationScrollTriggerOptions = {
-    //         trigger: isRow ? contactIndicators[1] : contactIndicators[2],
-    //         ease: "power4.inOut",
-    //         start: isRow ? indicatorPercentages[1] : "top 50%",
-    //         toggleActions: "play none none none"
-    //     }
-    //     gsap.to(elementGroup, {
-    //         delay: isRow ? 1.2 : 0,
-    //         duration: .6,
-    //         opacity: 1,
-    //         x: 0,
-    //         scrollTrigger: {
-    //             ...locationScrollTriggerOptions
-    //         }
-    //     });
-    // });  
 }
 
 function initBlockReveal(indicator, start) {
@@ -358,25 +299,37 @@ function initBlockReveal(indicator, start) {
 function initTextIndicators() {
     const sectionIndicators = document.querySelectorAll(".section-indicator");
     const contactIndicators = document.querySelectorAll("#contact .section-indicator");
-    const contactPercentages = [
-        "top 85%",
-        "top 90%",
-        "top 95%"
-    ];
 
     for (let i=0; i<=(sectionIndicators.length - contactIndicators.length - 1); i++) {
         const indicator = sectionIndicators[i];
         initBlockReveal(indicator, "top 65%");
-    }    
-    for (let i=0; i<=(contactIndicators.length - 1); i++) {
-        const indicator = contactIndicators[i];
-        initBlockReveal(indicator, contactPercentages[i]);
     }
+}
+
+function initContactAnimation() {
+    const bumper = document.querySelector(".svg-location-bumper");
+    const maskBorder = document.querySelector("#contact .location-column .row .svg-location-border");
+    const container = document.querySelector("#contact .location-column .row .container");
+    const content = container.querySelector(":scope > .location");
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: bumper,
+            start: "top 70%",
+            ease: "power4.inOut",
+            toggleActions: "play none none none"
+        }
+    });
+
+    tl.to(bumper, { delay: .3, duration: .3, opacity: 1 })
+      .to(container, { duration: .3, maxWidth: "160px" })
+      .to(maskBorder, { duration: .3, maxWidth: "100%", opacity: 1 }, "<")
+      .to(content, { duration: .6, opacity: 1 });
 }
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 document.fonts.ready.then(() => {
-    initTextIndicators();
+    // initTextIndicators();    
 });
 window.onload = () => {
     initLoadIn();
@@ -384,5 +337,5 @@ window.onload = () => {
     initDetailsAnimation();
     initCardAnimation();
     initFigmaAnimation();
-    completeContactAnimation();
+    initContactAnimation();
 };

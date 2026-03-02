@@ -5,10 +5,10 @@ import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
 // ----------------------
 
 const scene = new THREE.Scene();
-const ambientLight = new THREE.AmbientLight( "#E4E6E7", .9 ); // soft white light
+const ambientLight = new THREE.AmbientLight( "#E4E6E7", 1 ); // soft white light
 scene.add(ambientLight);
 
-const container = document.getElementById('state-container');
+const container = document.querySelector('#contact .svg-container');
 const rect = container.getBoundingClientRect();
 const width = rect.width;
 const height = rect.height;
@@ -66,7 +66,7 @@ svgData.paths.forEach((path, _i) => {
 
     // Outline
     const edges = new THREE.EdgesGeometry(mesh.geometry, 8);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: "#6e7477" });
+    const lineMaterial = new THREE.LineBasicMaterial({ color: "#464949" });
     const line = new THREE.LineSegments(edges, lineMaterial);
     mesh.add(line);
   });

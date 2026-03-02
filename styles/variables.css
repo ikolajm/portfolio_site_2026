@@ -13,6 +13,7 @@
     --surface--2: #464949;
     /* - Outline */
     --outline--default: rgba(110, 116, 119, .65);
+    --outline--subtle: rgba(110, 116, 119, .1);
 
     /* TYPOGRAPHY */
     /* Font Family */

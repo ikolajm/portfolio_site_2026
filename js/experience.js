@@ -2,64 +2,103 @@ import * as THREE from "three";
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 import { MeshSurfaceSampler } from "three/addons/math/MeshSurfaceSampler.js";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { AfterimagePass } from "three/addons/postprocessing/AfterimagePass.js";
+import { getElapsedTime } from "./elapsedTime.js";
+import { applyColorField, createBaseHSL, createLightnessOffsets, ColorFieldConfig } from "./colorField.js";
+import { createOrbTexture, OrbConfig } from "./orbs.js";
 
 /* --------------------------
-   Config
+  Config
 --------------------------- */
-const MAX_PARTICLES = 5000;
-const PARTICLE_SIZE = 3;
-const PARTICLE_COLOR = "#E4E6E7";
+const BACKGROUND_COLOR = "#141515";
+// -- Particle Init
+const MAX_PARTICLES = 2000;
+const PARTICLE_SIZE = 5;
 const EXTRUDE_DEPTH = 2;
-const MORPH_SPEED = 7.5;
-const BBOX_SIZE = 300;
-
-const NOISE_RADIUS = 130;
-const IDLE_JITTER = 2;
+const MORPH_SPEED = 7;
+const NOISE_RADIUS = 120;
+const IDLE_JITTER = 1.75;
+const PARTICLE_COLOR = "#0099E5";
+// -- Camera, Position
+const BBOX_SIZE = 275;
+const CAMERA_DISTANCE = 350;
 
 /* --------------------------
-   Three.js Setup
+  State
 --------------------------- */
-const container = document.querySelector("#particle-logo");
+const morphTargets = [];
+let noiseTarget = [];
+// =
+let currentIndex = 0;
+let nextIndex = 0;
+// =
+let morphPhase = "idle"; // idle | to-noise | to-shape
+let morphProgress = 0;
+// =
+let pointSystem;
+const clock = new THREE.Clock();
+// =
+let basePositions;
+let currentBase;
+let morphFrom = null;
+let noiseSeeds;
+// =
+let jitterStrength = .7;
+// =
+let baseHSL = null;
+let lightnessOffsets = null;
+
+/* --------------------------
+  Three.js Setup
+--------------------------- */
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(BACKGROUND_COLOR);
 
 const camera = new THREE.PerspectiveCamera(45, 1, 1, 2000);
-camera.position.z = 400;
+camera.position.z = CAMERA_DISTANCE;
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.LinearToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const container = document.querySelector("#particle-logo");
 container.appendChild(renderer.domElement);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+/* --------------------------
+  Orb Trails
+--------------------------- */
+const afterimagePass = new AfterimagePass();
+afterimagePass.uniforms['damp'].value = .5;
+composer.addPass(afterimagePass);
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(innerWidth, innerHeight),
+    OrbConfig.BLOOM_STRENGTH,
+    OrbConfig.BLOOM_RADIUS,
+    OrbConfig.BLOOM_THRESHOLD
+);
+composer.addPass(bloomPass);
 
 function resize() {
   const r = container.getBoundingClientRect();
   camera.aspect = r.width / r.height;
   camera.updateProjectionMatrix();
+
   renderer.setSize(r.width, r.height);
+  composer.setSize(r.width, r.height);
 }
 resize();
 window.addEventListener("resize", resize);
 
 /* --------------------------
-   State
---------------------------- */
-const morphTargets = [];
-let noiseTarget = [];
-
-let currentIndex = 0;
-let nextIndex = 0;
-
-let morphPhase = "idle"; // idle | to-noise | to-shape
-let morphProgress = 0;
-
-let pointSystem;
-const clock = new THREE.Clock();
-
-let basePositions;
-let morphFrom = null;
-let noiseSeeds;
-
-let jitterStrength = .3;
-
-/* --------------------------
-   Init
+  Init
 --------------------------- */
 init();
 
@@ -77,11 +116,12 @@ async function init() {
 
     scaleGeometryToBox(geom, BBOX_SIZE);
     morphTargets.push(sampleMergedGeometry(geom));
+    geom.dispose();
   }
 
   normalizeAndShuffleTargets();
 
-  noiseTarget = generateNoiseBlob(morphTargets[0].length);
+  noiseTarget = generateNoiseBlob(MAX_PARTICLES);
 
   createPoints(noiseTarget);
 
@@ -92,7 +132,7 @@ async function init() {
 }
 
 /* --------------------------
-   Geometry Helpers
+  Geometry Helpers
 --------------------------- */
 function svgToMergedBufferGeometry(svgData) {
   const geoms = [];
@@ -127,85 +167,118 @@ function scaleGeometryToBox(geom, size) {
 
 function sampleMergedGeometry(geom) {
   const sampler = new MeshSurfaceSampler(new THREE.Mesh(geom)).build();
-  const pts = [];
+  const buf = new Float32Array(MAX_PARTICLES * 3);
   const v = new THREE.Vector3();
 
   for (let i = 0; i < MAX_PARTICLES; i++) {
     sampler.sample(v);
-    pts.push(v.clone());
+    buf[i * 3]     = v.x;
+    buf[i * 3 + 1] = v.y;
+    buf[i * 3 + 2] = v.z;
   }
-  return pts;
+  return buf;
 }
 
 function normalizeAndShuffleTargets() {
-  const count = Math.min(...morphTargets.map(t => t.length));
-  morphTargets.forEach(t => (t.length = count));
-
+  const count = MAX_PARTICLES;
   for (let i = count - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    morphTargets.forEach(t => ([t[i], t[j]] = [t[j], t[i]]));
+    const ai = i * 3;
+    const aj = j * 3;
+
+    morphTargets.forEach(t => {
+      const tx = t[ai], ty = t[ai + 1], tz = t[ai + 2];
+      t[ai] = t[aj];
+      t[ai + 1] = t[aj + 1];  
+      t[ai + 2] = t[aj + 2];
+      t[aj] = tx;     
+      t[aj + 1] = ty;           
+      t[aj + 2] = tz;
+    });
   }
 }
 
+/* --------------------------
+  Generate Transitional Noise
+--------------------------- */
 function generateNoiseBlob(count) {
-  const pts = [];
+  const buf = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
     const r = NOISE_RADIUS * Math.pow(Math.random(), 0.4);
     const a = Math.random() * Math.PI * 2;
     const b = Math.random() * Math.PI;
-    pts.push(
-      new THREE.Vector3(
-        r * Math.sin(b) * Math.cos(a),
-        r * Math.sin(b) * Math.sin(a),
-        (Math.random() - 0.5) * NOISE_RADIUS
-      )
-    );
+    buf[i * 3]     = r * Math.sin(b) * Math.cos(a);
+    buf[i * 3 + 1] = r * Math.sin(b) * Math.sin(a);
+    buf[i * 3 + 2] = (Math.random() - 0.5) * NOISE_RADIUS;
   }
-  return pts;
+  return buf;
 }
 
 /* --------------------------
-   Points
+  Points
 --------------------------- */
 function createPoints(initial) {
   const g = new THREE.BufferGeometry();
-  const buf = new Float32Array(initial.length * 3);
+  const buf = initial.slice();
 
-  initial.forEach((p, i) => buf.set([p.x, p.y, p.z], i * 3));
   g.setAttribute("position", new THREE.BufferAttribute(buf, 3));
 
   noiseSeeds = new Float32Array(buf.length).map(() => Math.random() * 10);
   basePositions = buf.slice();
+  currentBase = buf.slice();
 
-  const mat = new THREE.PointsMaterial({
-    color: PARTICLE_COLOR,
-    size: PARTICLE_SIZE
+  // -- Create per-point color buffer
+  baseHSL = createBaseHSL(PARTICLE_COLOR);
+  lightnessOffsets = createLightnessOffsets(MAX_PARTICLES, ColorFieldConfig.LIGHTNESS_VARIATION_RANGE);
+
+  const colors = new Float32Array(initial.length * 3);
+  applyColorField({
+    positions: basePositions,
+    colors,
+    baseHSL,
+    lightnessOffsets,
+    time: 0,
+    config: ColorFieldConfig
   });
+  g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+  const orbTexture = createOrbTexture();
+  const mat = new THREE.PointsMaterial({
+    size: PARTICLE_SIZE,
+    vertexColors: true,
+    map: orbTexture,
+    transparent: true,
+    opacity: 1,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  mat.sizeAttenuation = false;
 
   pointSystem = new THREE.Points(g, mat);
   scene.add(pointSystem);
 }
 
 /* --------------------------
-   Morph Control
+  Morph Control
 --------------------------- */
 function startMorphToNoise() {
-  morphFrom = basePositions.slice();
+  morphFrom = currentBase.slice();
   morphProgress = 0;
   morphPhase = "to-noise";
 }
 
 function startMorphToShape(index) {
   nextIndex = index;
-  morphFrom = basePositions.slice();
+  morphFrom = currentBase.slice();
   morphProgress = 0;
   morphPhase = "to-shape";
 }
 
 /* --------------------------
-   Update
+  Update Morph
 --------------------------- */
 function updateMorph(dt) {
+  const now = getElapsedTime();
   const pos = pointSystem.geometry.attributes.position.array;
 
   morphProgress = THREE.MathUtils.damp(morphProgress, 1, MORPH_SPEED, dt);
@@ -218,50 +291,73 @@ function updateMorph(dt) {
   );
 
   for (let i = 0; i < pos.length; i += 3) {
-    const idx = i / 3;
-
     let bx = basePositions[i];
     let by = basePositions[i + 1];
     let bz = basePositions[i + 2];
 
     if (morphPhase === "to-noise") {
-      bx = THREE.MathUtils.lerp(morphFrom[i], noiseTarget[idx].x, morphProgress);
-      by = THREE.MathUtils.lerp(morphFrom[i + 1], noiseTarget[idx].y, morphProgress);
-      bz = THREE.MathUtils.lerp(morphFrom[i + 2], noiseTarget[idx].z, morphProgress);
+      bx = THREE.MathUtils.lerp(morphFrom[i],     noiseTarget[i],     morphProgress);
+      by = THREE.MathUtils.lerp(morphFrom[i + 1], noiseTarget[i + 1], morphProgress);
+      bz = THREE.MathUtils.lerp(morphFrom[i + 2], noiseTarget[i + 2], morphProgress);
+    } else if (morphPhase === "to-shape") {
+      const t = morphTargets[nextIndex];
+      bx = THREE.MathUtils.lerp(morphFrom[i],     t[i],     morphProgress);
+      by = THREE.MathUtils.lerp(morphFrom[i + 1], t[i + 1], morphProgress);
+      bz = THREE.MathUtils.lerp(morphFrom[i + 2], t[i + 2], morphProgress);
     }
 
-    if (morphPhase === "to-shape") {
-      const t = morphTargets[nextIndex][idx];
-      bx = THREE.MathUtils.lerp(morphFrom[i], t.x, morphProgress);
-      by = THREE.MathUtils.lerp(morphFrom[i + 1], t.y, morphProgress);
-      bz = THREE.MathUtils.lerp(morphFrom[i + 2], t.z, morphProgress);
-    }
+    const jx = Math.sin(now + noiseSeeds[i])     * IDLE_JITTER;
+    const jy = Math.cos(now + noiseSeeds[i + 1]) * IDLE_JITTER;
+    const jz = Math.sin(now + noiseSeeds[i + 2]) * IDLE_JITTER * 0.5;
 
-    const jx = Math.sin(clock.elapsedTime + noiseSeeds[i]) * IDLE_JITTER;
-    const jy = Math.cos(clock.elapsedTime + noiseSeeds[i + 1]) * IDLE_JITTER;
-    const jz = Math.sin(clock.elapsedTime + noiseSeeds[i + 2]) * IDLE_JITTER * 0.5;
-
-    pos[i] = bx + jx * jitterStrength;
+    pos[i]     = bx + jx * jitterStrength;
     pos[i + 1] = by + jy * jitterStrength;
     pos[i + 2] = bz + jz * jitterStrength;
 
-    basePositions[i]     = bx;
-    basePositions[i + 1] = by;
-    basePositions[i + 2] = bz;
+    // Track pre-jitter interpolated position for clean morph interruption
+    currentBase[i]     = bx;
+    currentBase[i + 1] = by;
+    currentBase[i + 2] = bz;
   }
 
   if (morphProgress > 0.999 && morphPhase !== "idle") {
+    if (morphPhase === "to-noise") {
+      for (let i = 0; i < basePositions.length; i++) {
+        basePositions[i] = noiseTarget[i];
+      }
+    } else if (morphPhase === "to-shape") {
+      const t = morphTargets[nextIndex];
+      for (let i = 0; i < basePositions.length; i++) {
+        basePositions[i] = t[i];
+      }
+    }
     morphPhase = "idle";
     currentIndex = nextIndex;
   }
-
   pointSystem.geometry.attributes.position.needsUpdate = true;
+
+  // -- Update color field each frame
+  const colors = pointSystem.geometry.attributes.color.array;
+  applyColorField({
+    positions: pos,
+    colors,
+    baseHSL,
+    lightnessOffsets,
+    time: now,
+    config: ColorFieldConfig
+  });
+  pointSystem.geometry.attributes.color.needsUpdate = true;
 }
 
 /* --------------------------
-   ScrollTriggers
+  ScrollTriggers
 --------------------------- */
 function setupScrollTriggers() {
+  if (typeof ScrollTrigger === "undefined") {
+    console.warn("ScrollTrigger not found — scroll-based morphing disabled.");
+    return;
+  }
+
   document.querySelectorAll(".noise-trigger").forEach(el => {
     ScrollTrigger.create({
       trigger: el,
@@ -284,10 +380,10 @@ function setupScrollTriggers() {
 }
 
 /* --------------------------
-   Loop
+  Animation Loop
 --------------------------- */
 function animate() {
   requestAnimationFrame(animate);
   updateMorph(clock.getDelta());
-  renderer.render(scene, camera);
+  composer.render();
 }

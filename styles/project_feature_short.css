@@ -1,74 +1,126 @@
 /* GSASP Modifications */
-#availo .content {
-    transform: translateX(50px);
+#projects .project .media {
     opacity: 0;
 }
-#projects article .phones {
-    transform: translateX(-50px);
+#projects .project .media .image {
+    max-width: 0%;
+}
+#projects .project .content {
+    /* transform: translateX(50px);*/
     opacity: 0;
 }
 /* === */
 
-#projects article .phones {
+#projects article .content {
+    height: 275px;
+}
+
+#projects article .media {
     position: relative;
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#projects article .media .controls {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    z-index: 3;
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 8px;
+
+    opacity: 0;
+}
+#projects article .media .controls button {
+    background: var(--white--default);
+    color: var(--surface--default);
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+#projects article .media .controls button:hover {
+    background: var(--white--offwhite);
+}
+
+#projects article .media .svg-media-accent {
+    height: 375px;
+}
+
+#projects article .media .image {
+    position: relative;
+    z-index: 3;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    padding: 1.25rem 0rem;
+    width: calc(375px - 32px);
+    height: calc(375px - 9px);
     border: var(--border--default);
-    border-radius: var(--borderRadius--default);
 
     background-position: center;
-    /* Color of the grid cells bg */
-    background-color: var(--surface--default);
-    
-    /* Use two linear gradients to create horizontal and vertical lines */
-    background-image:
-        /* Vertical lines (to the right) */
-        linear-gradient(to right, var(--outline--default) 1px, transparent 1px),
-        /* Horizontal lines (to the bottom) */
-        linear-gradient(to bottom, var(--outline--default) 1px, transparent 1px);
-    
-    /* Size of each grid square */
-    background-size: 24px 24px;
+    overflow: hidden;
 }
 
-#projects article .phones img {
+#projects article .media .image .svg-rpg {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+#projects article .media .image .svg-rpg .outer,
+#projects article .media .image .svg-rpg .inner {
+    fill: var(--surface--1)
+}
+#projects article .media .image .svg-rpg .middle,
+#projects article .media .image .svg-rpg .dragon {
+    fill: var(--white--offwhite)
+}
+
+#projects article .media .image img {
     position: relative;
-    opacity: 0;
-    transform: translateY(150px);
+    width: 300px;
+}
+
+#projects article .media .image #phoneUnder,
+#projects article .media .image #phoneOver {
     width: 150px;
     height: 312px;
 }
 
-#projects article .phones img.levitate:nth-child(1) {
-    animation: levitate 3s ease-in-out infinite;
-}
-#projects article .phones img.levitate:nth-child(2) {
-    animation: levitate 3s ease-in-out infinite;
-    animation-delay: .5s;
-}
-
-#projects article .phones #phoneUnder {
+#projects article .media .image #phoneUnder {
     margin-right: -24px;
-}
-#projects article .phones #phoneUnder.transformed {
     transform: rotate(-4deg);
 }
-#projects article .phones #phoneOver {
+#projects article .media .image #phoneOver {
     margin-left: -24px;
-}
-#projects article .phones #phoneOver.transformed {
     transform: rotate(4deg);
 }
-
 @media screen and (max-width: 1000px) {
-    #projects article .phones {
-        width: 100%;
-        max-width: 500px;
+    #projects article .media .svg-media-accent {
+        height: 250px;
+    }
+    #projects article .media .image {
+        width: calc(250px - 32px);
+        height: calc(250px - 6px);
+    }
+    #projects article .media .image {
+        width: calc(250px - 32px);
+        height: calc(250px - 6px);
+    }
+    #projects article .media .image #phoneUnder,
+    #projects article .media .image #phoneOver {
+        width: 100px;
+        height: 210px;
+    }
+    #projects article .media .image .svg-rpg {
+        width: 200px;
     }
 }
 
@@ -79,24 +131,12 @@
 }
 
 @media screen and (max-width: 500px) {
-    #projects article .phones {
-        max-width: 100%;
-    }
+    /* #projects article .image {
+        width: 275px;
+    } */
 
-    #projects article .phones img {
+    #projects article .image img {
         width: 100px;
         height: 212px;
     }
-}
-
-#availo .content {
-    position: relative;
-}
-
-/* === */
-
-@keyframes levitate {
-    0% { top: 0rem; }
-    50% { top: .25rem; }
-    100% { top: .0rem; }
 }

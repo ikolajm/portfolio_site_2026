@@ -1,9 +1,10 @@
 /* GSAP */
-#about .content video {
+#about .content .media {
     opacity: 0;
-    transform: translateX(-50px);
 }
-
+#about .content .media .video {
+    width: 0%;
+}
 #about .content .text {
     transform: translateX(50px);
     opacity: 0;
@@ -11,51 +12,63 @@
 /* === */
 
 #about .content {
-    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
     gap: var(--section__gap);
+    align-items: center;
+}
+
+#about .content .media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#about .content .svg-media-accent {
+    height: 240px;
+}
+
+#about .content .video {
+    position: relative;
+    height: 234px;
+    border: 2px solid var(--white--default);
+}
+#about .content .video .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(to top, var(--surface-default) 0%, transparent 10%),
+        linear-gradient(to bottom, var(--surface-default) 0%, transparent 10%),
+        linear-gradient(to right, var(--surface-default) 0%, transparent 10%);
+    z-index: 2;
 }
 
 #about .content video {
+    position: relative;
+    z-index: 1;
     display: block;
-    border: var(--border--default);
-    width: 480px;
-    max-width: calc(100% - 48px);
-    height: 360px;
-    object-fit: cover;
-    border-radius: var(--borderRadius--default);
+    width: 100%;
+    height: 100%;
     filter: brightness(1.25);
-    opacity: 0;
-    transform: translateX(-50px);
-}
-
-@media screen and (max-width: 1000px) {
-    #about .content video {
-        width: 360px;
-        height: 275px;
-    }
-}
-
-@media screen and (max-width: 750px) {
-    #about .content {
-        flex-direction: column-reverse;
-        gap: var(--section__gap--mobile);
-    }
-
-    #about .content video {
-        width: auto;
-        height: auto;
-        aspect-ratio: 5 / 3;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    #about .content video {
-        width: auto;
-        height: auto;
-        aspect-ratio: 5 / 3;
-    }
+    object-fit: cover;
 }
 
 #about .content .text {
     position: relative;
+    width: 100%;
+    max-width: var(--content__maxWidth);
+}
+
+#about .content .text p:last-of-type {
+    margin-bottom: 0rem;
+}
+
+@media screen and (max-width: 999px) {
+    #about .content {
+        flex-direction: column-reverse;
+    }
 }
