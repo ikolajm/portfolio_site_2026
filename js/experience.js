@@ -126,8 +126,8 @@ async function init() {
   createPoints(noiseTarget);
 
   startMorphToNoise();
-
   setupScrollTriggers();
+  clock.getDelta();
   animate();
 }
 

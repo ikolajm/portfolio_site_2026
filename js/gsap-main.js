@@ -103,7 +103,7 @@ function initAboutAnimation() {
         isRow ? tl.to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
           .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
           .to(textElement, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" })
-        : tl.to(textElement, { delay: 0, duration: fadeDurationLong, opacity: 1, x: "0px" })
+        : tl.to(textElement, { delay: 0, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" })
         .to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
         .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
         
@@ -187,14 +187,14 @@ function initExperienceArticleAnimations() {
             }
         });
     });
-    gsap.to(particleColumn, {
-        duration: ANIMATION_CONFIG.fadeDurationLong,
-        opacity: 1,
-        scrollTrigger: {
-            trigger: particleColumn,
-            ...scrollTriggerOptions
-        }
-    });
+    // gsap.to(particleColumn, {
+    //     duration: ANIMATION_CONFIG.fadeDurationLong,
+    //     opacity: 1,
+    //     scrollTrigger: {
+    //         trigger: particleColumn,
+    //         ...scrollTriggerOptions
+    //     }
+    // });
 }
 
 function initProjectFeature() {
