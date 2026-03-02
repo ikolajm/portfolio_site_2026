@@ -77,7 +77,6 @@ function initHeroAnimation() {
 function initAboutAnimation() {
     const mediaContainer = document.querySelector("#about .content .media");
     const videoContainer = document.querySelector("#about .content .media .video");
-    const contentElement = document.querySelector("#about .content");
     const textElement = document.querySelector("#about .content .text");
 
     const mm = gsap.matchMedia();
@@ -95,17 +94,39 @@ function initAboutAnimation() {
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: isRow ? contentElement : textElement,
+                trigger: textElement,
                 ...scrollTriggerOptions
             }
         });
 
-        isRow ? tl.to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
-          .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
-          .to(textElement, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" })
-        : tl.to(textElement, { delay: 0, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" })
-        .to(mediaContainer, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
-        .to(videoContainer, { duration: ANIMATION_CONFIG.expandDuration, width: "100%" }, "<")
+        isRow ? tl.to(mediaContainer, { 
+                duration: ANIMATION_CONFIG.fadeDurationLong, 
+                opacity: 1 
+            })
+            .to(videoContainer, { 
+                duration: ANIMATION_CONFIG.expandDuration, 
+                width: "100%" 
+            }, "<")
+            .to(textElement, {
+                delay: ANIMATION_CONFIG.defaultDelay,
+                duration: ANIMATION_CONFIG.fadeDurationLong, 
+                opacity: 1, 
+                x: "0px" 
+            })
+        : tl.to(textElement, { 
+            delay: 0, 
+            duration: ANIMATION_CONFIG.fadeDurationLong, 
+            opacity: 1, 
+            x: "0px" 
+        })
+        .to(mediaContainer, { 
+            duration: ANIMATION_CONFIG.fadeDurationLong, 
+            opacity: 1 
+        })
+        .to(videoContainer, { 
+            duration: ANIMATION_CONFIG.expandDuration, 
+            width: "100%" 
+        }, "<")
         
 
         return () => tl.kill();
@@ -168,7 +189,6 @@ function pinParticleLogos() {
 
 function initExperienceArticleAnimations() {
     const ease = ANIMATION_CONFIG.defaultEase;
-    const particleColumn = document.querySelector("#experience .particle-column");
     const experienceArticles = document.querySelectorAll("#experience article");
     const scrollTriggerOptions = {
         ease,
@@ -187,68 +207,74 @@ function initExperienceArticleAnimations() {
             }
         });
     });
-    // gsap.to(particleColumn, {
-    //     duration: ANIMATION_CONFIG.fadeDurationLong,
-    //     opacity: 1,
-    //     scrollTrigger: {
-    //         trigger: particleColumn,
-    //         ...scrollTriggerOptions
-    //     }
-    // });
 }
 
 function initProjectFeature() {
-    const ease = ANIMATION_CONFIG.defaultEase;
-    const mm = gsap.matchMedia();
-
     const mediaElement = document.querySelector("#projects .media");
     const imageElement = mediaElement.querySelector(":scope .image");
     const controlsElement = mediaElement.querySelector(":scope .controls");
     const contentElement = document.querySelector("#projects .project .content");
 
+    const mm = gsap.matchMedia();
     mm.add({
         isColumn: "(max-width: 750px)",
         isRow: "(min-width: 751px)" 
     }, (context) => {
         const { isRow } = context.conditions;
+
         const scrollTriggerOptions = {
-            ease,
+            ease: ANIMATION_CONFIG.defaultEase,
             start: "top 50%",
             toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        }
+        };
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: contentElement,
+                ...scrollTriggerOptions
+            }
+        });
+
+        isRow ? tl.to(mediaElement, {
+                duration: ANIMATION_CONFIG.fadeDurationLong,
+                opacity: 1,
+            })
+            .to(imageElement, {
+                duration: ANIMATION_CONFIG.fadeDurationLong,
+                maxWidth: "100%",
+            }, "<")
+            .to(contentElement, { 
+                delay: ANIMATION_CONFIG.defaultDelay,
+                duration: ANIMATION_CONFIG.fadeDurationLong, 
+                opacity: 1, 
+                x: "0px" 
+            })
+            .to(controlsElement, {
+                duration: ANIMATION_CONFIG.fadeDuration,
+                opacity: 1,
+            })
+        :   tl.to(contentElement, { 
+                delay: 0, 
+                duration: ANIMATION_CONFIG.fadeDurationLong, 
+                opacity: 1, 
+                x: "0px" 
+            })
+            .to(mediaElement, {
+                duration: ANIMATION_CONFIG.fadeDurationLong,
+                opacity: 1,
+            })
+            .to(imageElement, {
+                duration: ANIMATION_CONFIG.fadeDurationLong,
+                maxWidth: "100%",
+            }, "<")
+            .to(controlsElement, {
+                duration: ANIMATION_CONFIG.fadeDuration,
+                opacity: 1,
+            })
         
-        // Image
-        const imageTL = gsap.timeline({
-            scrollTrigger: {
-                trigger: mediaElement,
-                ...scrollTriggerOptions
-            }
-        });
-        imageTL.to(mediaElement, {
-            duration: ANIMATION_CONFIG.fadeDurationLong,
-            opacity: 1,
-        });
-        imageTL.to(imageElement, {
-            duration: ANIMATION_CONFIG.fadeDurationLong,
-            maxWidth: "100%",
-        });
-        imageTL.to(controlsElement, {
-            delay: ANIMATION_CONFIG.defaultDelay,
-            duration: ANIMATION_CONFIG.fadeDuration,
-            opacity: 1,
-        });
-        // Content
-        gsap.to(contentElement, {
-            delay: isRow ? 1 : 0,
-            duration: ANIMATION_CONFIG.fadeDurationLong,
-            x: "0px",
-            opacity: 1,
-            scrollTrigger: {
-                trigger: isRow ? mediaElement : contentElement,
-                ...scrollTriggerOptions
-            }
-        });
-    });  
+
+        return () => tl.kill();
+    });
 }
 
 function animatePageTransition() {
@@ -280,57 +306,6 @@ function initInternalLinks() {
     });
 }
 
-function initSectionReveal(indicator, start) {
-    const entireSVG = indicator.querySelector(":scope > .icon");
-    const headerText = indicator.querySelector(":scope > .text");
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: indicator,
-            start,
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        }
-    });
-    tl.to(entireSVG, {
-        duration: ANIMATION_CONFIG.fadeDuration,
-        opacity: 1
-    });
-    tl.to(entireSVG, {
-        duration: ANIMATION_CONFIG.flickerDuration,
-        opacity: 0
-    });
-    tl.to(entireSVG, {
-        duration: ANIMATION_CONFIG.flickerDuration,
-        opacity: 1
-    });
-    tl.to(entireSVG, {
-        duration: ANIMATION_CONFIG.flickerDuration,
-        opacity: 0
-    });
-    tl.to(entireSVG, {
-        duration: ANIMATION_CONFIG.flickerDuration,
-        opacity: 1
-    });
-    tl.to(headerText, {
-        delay: ANIMATION_CONFIG.defaultDelay,
-        duration: ANIMATION_CONFIG.fadeDurationLong,
-        ease: ANIMATION_CONFIG.defaultEase,
-        left: "0px",
-        opacity: 1
-    });
-}
-
-function initTextIndicators() {
-    const sectionIndicators = document.querySelectorAll(".indicator");
-
-    // Main Indicators (Default Trigger Position)
-    for (let i=0; i<=sectionIndicators.length; i++) {
-        const indicator = sectionIndicators[i];
-        if (indicator) {
-            initSectionReveal(indicator, "top 70%");
-        }
-    }
-}
-
 function initContactAnimation() {
     const bumper = document.querySelector(".svg-location-bumper");
     const maskBorder = document.querySelector("#contact .location-column .row .svg-location-border");
@@ -352,10 +327,7 @@ function initContactAnimation() {
       .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
 }
 
-gsap.registerPlugin(SplitText, ScrollTrigger);
-document.fonts.ready.then(() => {
-    // initTextIndicators();
-});
+gsap.registerPlugin(ScrollTrigger);
 window.onload = () => {
     initLoadIn();
     initHeroAnimation();
