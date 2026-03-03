@@ -111,7 +111,6 @@ function initAboutAnimation() {
                 delay: ANIMATION_CONFIG.defaultDelay,
                 duration: ANIMATION_CONFIG.fadeDurationLong, 
                 opacity: 1, 
-                x: "0px" 
             })
         : tl.to(textElement, { 
             delay: 0, 
@@ -321,8 +320,8 @@ function initContactAnimation() {
         }
     });
 
-    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 })
-      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" })
+    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
+      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" }, "<")
       .to(maskBorder, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "100%", opacity: 1 }, "<")
       .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
 }

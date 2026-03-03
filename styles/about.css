@@ -6,7 +6,6 @@
     width: 0%;
 }
 #about .content .text {
-    transform: translateX(50px);
     opacity: 0;
 }
 /* === */
