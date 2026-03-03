@@ -147,15 +147,14 @@ scene.add(waves);
 let lastColorUpdate = 0;
 function animationLoop() {
     const time = getElapsedTime();
-    // -- Wrap time to prevent float precision loss over long sessions
-    const wrappedTime = time % (WAVE_LOOP_SECONDS * 100);
 
     // -- Wave
-    for( let i=0; i<pos.count; i++ ) {
-      pos.setZ(i, simplex.noise3d( xCache[i]/4, yCache[i]/4, wrappedTime/WAVE_LOOP_SECONDS ));
+    const timeInput = time / WAVE_LOOP_SECONDS;
+    const inv4 = 0.25;
+    for (let i = 0; i < pos.count; i++) {
+        pos.array[i * 3 + 2] = simplex.noise3d(xCache[i] * inv4, yCache[i] * inv4, timeInput);
     }
     pos.needsUpdate = true;
-
 
     // -- Color Drift
     if (time - lastColorUpdate >= ColorFieldConfig.COLOR_UPDATE_INTERVAL) {
