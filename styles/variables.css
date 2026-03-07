@@ -1,3 +1,21 @@
+/*
+ * BREAKPOINTS
+ * -----------
+ * Always reference these values when writing new @media rules.
+ * CSS custom properties cannot be used inside @media conditions,
+ * so these are documented here for consistency.
+ *
+ * Core (defined in main.css, apply globally):
+ *   1000px  — Tablet / reduced desktop layout
+ *    750px  — Small tablet / large mobile
+ *    500px  — Standard mobile
+ *
+ * Component-specific (use sparingly, scoped to their file):
+ *    600px  — full_project_feature: hero height shift, phones hidden
+ *    550px  — full_project_feature: details section stacks to column
+ *    425px  — full_project_feature: card spread narrows further
+ */
+
 :root {
     /* COLORS */
     /* - Primary */

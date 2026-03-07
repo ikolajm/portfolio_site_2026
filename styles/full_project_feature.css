@@ -50,7 +50,6 @@ main {
         gap: var(--section__gap--mobile);
     }
 }
-@media screen and (max-width: 750px) {}
 @media screen and (max-width: 600px) {
     #hero .svg-media-accent {
         height: 259px;
@@ -60,8 +59,6 @@ main {
         height: 250px;
     }
 }
-@media screen and (max-width: 500px) {}
-
 #hero .text-content {
     display: flex;
     justify-content: center;
@@ -107,7 +104,6 @@ main {
         height: 100px;
     }
 }
-@media screen and (max-width: 750px) {}
 @media screen and (max-width: 500px) {
     #hero .text-content {
         flex-direction: column;
@@ -155,12 +151,6 @@ main {
     #hero .phones img {
         width: 100px;
         height: 212px;
-    }
-}
-@media screen and (max-width: 750px) {
-    #hero .phones img {
-        /* width: 100px; */
-        /* height: 212px; */
     }
 }
 @media screen and (max-width: 600px) {
@@ -228,7 +218,6 @@ main {
         width: auto;
     }
 }
-@media screen and (max-width: 750px) {}
 @media screen and (max-width: 550px) {
     #details {
         flex-direction: column;
@@ -390,7 +379,6 @@ main {
         --y-displacement: 0px;
     }
 }
-@media screen and (max-width: 750px) {}
 @media screen and (max-width: 550px) {
     #card1,
     #card7 {

@@ -28,10 +28,6 @@
     opacity: .85;
 }
 
-@media screen and (max-width: 1000px) {}
-@media screen and (max-width: 750px) {}
-@media screen and (max-width: 500px) {}
-
 /* Content */
 #home .content {
     position: relative;
@@ -121,6 +117,3 @@
     color: var(--white--offwhite);
 }
 
-@media screen and (max-width: 1000px) {}
-@media screen and (max-width: 750px) {}
-@media screen and (max-width: 500px) {}
