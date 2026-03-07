@@ -107,7 +107,7 @@
 
 .svg-location-bumper {
     height: 240px;
-    width: 16px;
+    width: var(--svg-accent--width--sm);
     transform: scaleX(-1);
     fill: var(--white--default);
     position: relative;

@@ -27,7 +27,7 @@
     fill: var(--white--default);
     stroke: none;
     height: auto;
-    width: 16px;
+    width: var(--svg-accent--width--sm);
 }
 .svg-media-accent--flipXY {
     transform: scale(-1, -1);
@@ -41,7 +41,7 @@
 .svg-location-bumper {
     position: relative;
     height: auto;
-    width: 16px;
+    width: var(--svg-accent--width--sm);
     fill: var(--white--default);
 }
 .svg-location-border {
@@ -112,7 +112,7 @@ a {
 a {
     display: inline;
     color: var(--primary--default);
-    transition: .3s;
+    transition: var(--transition--default);
     text-underline-offset: 4px;
 }
 

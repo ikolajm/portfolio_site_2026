@@ -32,6 +32,11 @@
     /* - Outline */
     --outline--default: rgba(110, 116, 119, .65);
     --outline--subtle: rgba(110, 116, 119, .1);
+    /* - Project (scoped to project pages) */
+    --availo--brand: #398ff9;
+
+    /* TRANSITIONS */
+    --transition--default: .3s;
 
     /* TYPOGRAPHY */
     /* Font Family */
@@ -49,4 +54,7 @@
     --border--default: 2px solid var(--white--default);
     --borderRadius--default: 24px;
     --content__maxWidth: 500px;
+    /* SVG Accents */
+    --svg-accent--width: 32px;
+    --svg-accent--width--sm: 16px;
 }

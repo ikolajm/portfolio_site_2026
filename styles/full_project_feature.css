@@ -17,7 +17,7 @@ main {
 #hero .svg-media-accent {
     height: 492px;
     transform: translateY(-6px);
-    width: 32px;
+    width: var(--svg-accent--width);
 }
 #hero .svg-media-accent--flipXY {
     transform: scale(-1, -1) translateY(6px);
@@ -34,12 +34,12 @@ main {
     gap: var(--section__gap);
     padding: 2rem;
     border: var(--border--default);
-    background: #398ff9 /* Brand Color (Toned for darker theme) */
+    background: var(--availo--brand) /* Brand Color (Toned for darker theme) */
 }
 @media screen and (max-width: 1000px) {
     #hero .svg-media-accent {
         height: 310px;
-        width: 16px;
+        width: var(--svg-accent--width--sm);
     }
     #hero,
     #hero .content-container {
@@ -304,7 +304,7 @@ main {
     transform: 
         translate(var(--x-displacement), var(--y-displacement))
         rotate(var(--rotation-degree));
-    transition: .3s;
+    transition: var(--transition--default);
 }
 /* On hover */
 .card:hover {
@@ -393,7 +393,7 @@ main {
 #figma .svg-media-accent {
     height: 492px;
     transform: translateY(-6px);
-    width: 32px;
+    width: var(--svg-accent--width);
 }
 #figma .svg-media-accent--flipX {
     transform: scaleY(-1);
@@ -413,7 +413,7 @@ main {
 
 @media screen and (max-width: 1000px) {
     #figma .svg-media-accent {
-        width: 16px;
+        width: var(--svg-accent--width--sm);
     }
 }
 @media screen and (max-width: 750px) {

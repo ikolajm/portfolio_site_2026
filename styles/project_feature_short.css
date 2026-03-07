@@ -35,7 +35,7 @@
     color: var(--surface--default);
     outline: none;
     border: none;
-    transition: .3s;
+    transition: var(--transition--default);
     cursor: pointer;
     width: 32px;
     height: 32px;
@@ -55,7 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(375px - 32px);
+    width: calc(375px - var(--svg-accent--width));
     height: calc(375px - 9px);
     border: var(--border--default);
 
@@ -101,11 +101,11 @@
         height: 250px;
     }
     #projects article .media .image {
-        width: calc(250px - 32px);
+        width: calc(250px - var(--svg-accent--width));
         height: calc(250px - 6px);
     }
     #projects article .media .image {
-        width: calc(250px - 32px);
+        width: calc(250px - var(--svg-accent--width));
         height: calc(250px - 6px);
     }
     #projects article .media .image #phoneUnder,
