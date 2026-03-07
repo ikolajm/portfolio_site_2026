@@ -1,20 +1,5 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-
-function initLoadIn() {
-    return new Promise((resolve) => {
-        const tl = gsap.timeline({
-            onComplete: resolve
-        })
-        tl.to(
-            "main",
-            {
-                opacity: 1,
-                ease: "power1.out",
-                duration: .3,
-            }
-        )
-    });
-}
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
 
 function initHeroAnimation() {
     const homeContent = document.querySelector("#home .content");
@@ -74,6 +59,15 @@ function initHeroAnimation() {
     });  
 }
 
+// Media containers are visually heavier — fade in at fadeDurationLong (.6).
+// SVGs, text, controls use fadeDuration (.3).
+// expandProp: the CSS property to animate to "100%" (e.g. "width", "maxWidth")
+function addMediaReveal(tl, mediaEl, expandEl, expandProp) {
+    return tl
+        .to(mediaEl, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
+        .to(expandEl, { duration: ANIMATION_CONFIG.expandDuration, [expandProp]: "100%" }, "<");
+}
+
 function initAboutAnimation() {
     const mediaContainer = document.querySelector("#about .content .media");
     const videoContainer = document.querySelector("#about .content .media .video");
@@ -86,46 +80,24 @@ function initAboutAnimation() {
     }, (context) => {
         const { isRow } = context.conditions;
 
-        const scrollTriggerOptions = {
-            ease: ANIMATION_CONFIG.defaultEase,
-            start: "top 50%",
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        };
-
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: textElement,
-                ...scrollTriggerOptions
+                ...DEFAULT_SCROLL_TRIGGER
             }
         });
 
-        isRow ? tl.to(mediaContainer, { 
-                duration: ANIMATION_CONFIG.fadeDurationLong, 
-                opacity: 1 
-            })
-            .to(videoContainer, { 
-                duration: ANIMATION_CONFIG.expandDuration, 
-                width: "100%" 
-            }, "<")
-            .to(textElement, {
-                delay: ANIMATION_CONFIG.defaultDelay,
-                duration: ANIMATION_CONFIG.fadeDurationLong, 
-                opacity: 1, 
-            })
-        : tl.to(textElement, { 
-            delay: 0, 
-            duration: ANIMATION_CONFIG.fadeDurationLong, 
-            opacity: 1, 
-            x: "0px" 
-        })
-        .to(mediaContainer, { 
-            duration: ANIMATION_CONFIG.fadeDurationLong, 
-            opacity: 1 
-        })
-        .to(videoContainer, { 
-            duration: ANIMATION_CONFIG.expandDuration, 
-            width: "100%" 
-        }, "<")
+        if (isRow) {
+            addMediaReveal(tl, mediaContainer, videoContainer, "width")
+                .to(textElement, {
+                    delay: ANIMATION_CONFIG.defaultDelay,
+                    duration: ANIMATION_CONFIG.fadeDurationLong,
+                    opacity: 1,
+                });
+        } else {
+            tl.to(textElement, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" });
+            addMediaReveal(tl, mediaContainer, videoContainer, "width");
+        }
         
 
         return () => tl.kill();
@@ -141,7 +113,7 @@ function pinParticleLogos() {
     const ENTRY_RANGE = 0.3;
     const EXIT_RANGE = 0.3;
 
-    const nav = document.querySelector("nav"); // adjust selector to match yours
+    const nav = document.querySelector("nav");
     const navHeight = nav ? nav.offsetHeight : 0;
     const topBuffer = document.querySelector(".article-column .noise-trigger:first-of-type");
     const bottomBuffer = document.querySelector(".article-column .noise-trigger:last-of-type");
@@ -150,8 +122,8 @@ function pinParticleLogos() {
     const vh = window.innerHeight;
     const availableVh = vh - navHeight;
 
-    let TOP_OFFSET = -(availableVh / 2 - LOGO_HEIGHT / 2 - topBufferHeight);
-    let BOTTOM_OFFSET = availableVh / 2 - LOGO_HEIGHT / 2 - bottomBufferHeight;
+    const TOP_OFFSET = -(availableVh / 2 - LOGO_HEIGHT / 2 - topBufferHeight);
+    const BOTTOM_OFFSET = availableVh / 2 - LOGO_HEIGHT / 2 - bottomBufferHeight;
 
     gsap.set(logo, { y: TOP_OFFSET }); // Initial state for no jump on gsap
 
@@ -187,13 +159,7 @@ function pinParticleLogos() {
 }
 
 function initExperienceArticleAnimations() {
-    const ease = ANIMATION_CONFIG.defaultEase;
     const experienceArticles = document.querySelectorAll("#experience article");
-    const scrollTriggerOptions = {
-        ease,
-        start: "top 50%",
-        toggleActions: ANIMATION_CONFIG.defaultToggleActions
-    }
 
     experienceArticles.forEach(article => {
         gsap.to(article, {
@@ -202,7 +168,7 @@ function initExperienceArticleAnimations() {
             opacity: 1,
             scrollTrigger: {
                 trigger: article,
-                ...scrollTriggerOptions
+                ...DEFAULT_SCROLL_TRIGGER
             }
         });
     });
@@ -221,109 +187,31 @@ function initProjectFeature() {
     }, (context) => {
         const { isRow } = context.conditions;
 
-        const scrollTriggerOptions = {
-            ease: ANIMATION_CONFIG.defaultEase,
-            start: "top 50%",
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        };
-
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: contentElement,
-                ...scrollTriggerOptions
+                ...DEFAULT_SCROLL_TRIGGER
             }
         });
 
-        isRow ? tl.to(mediaElement, {
-                duration: ANIMATION_CONFIG.fadeDurationLong,
-                opacity: 1,
-            })
-            .to(imageElement, {
-                duration: ANIMATION_CONFIG.fadeDurationLong,
-                maxWidth: "100%",
-            }, "<")
-            .to(contentElement, { 
-                delay: ANIMATION_CONFIG.defaultDelay,
-                duration: ANIMATION_CONFIG.fadeDurationLong, 
-                opacity: 1, 
-                x: "0px" 
-            })
-            .to(controlsElement, {
-                duration: ANIMATION_CONFIG.fadeDuration,
-                opacity: 1,
-            })
-        :   tl.to(contentElement, { 
-                delay: 0, 
-                duration: ANIMATION_CONFIG.fadeDurationLong, 
-                opacity: 1, 
-                x: "0px" 
-            })
-            .to(mediaElement, {
-                duration: ANIMATION_CONFIG.fadeDurationLong,
-                opacity: 1,
-            })
-            .to(imageElement, {
-                duration: ANIMATION_CONFIG.fadeDurationLong,
-                maxWidth: "100%",
-            }, "<")
-            .to(controlsElement, {
-                duration: ANIMATION_CONFIG.fadeDuration,
-                opacity: 1,
-            })
+        if (isRow) {
+            addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
+                .to(contentElement, {
+                    delay: ANIMATION_CONFIG.defaultDelay,
+                    duration: ANIMATION_CONFIG.fadeDurationLong,
+                    opacity: 1,
+                    x: "0px"
+                })
+                .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
+        } else {
+            tl.to(contentElement, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" });
+            addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
+                .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
+        }
         
 
         return () => tl.kill();
     });
-}
-
-function animatePageTransition() {
-    return new Promise((resolve) => {
-        const tl = gsap.timeline({
-            onComplete: resolve
-        });
-        tl.to(
-            "main",
-            {
-                opacity: 0,
-                ease: "power1.out",
-                duration: .3,
-            }
-        );
-    });
-}
-
-function initInternalLinks() {
-    const internalLinks = document.querySelectorAll('[data-linkType="internal"]');
-    
-    internalLinks.forEach(link => {
-        link.addEventListener("click", e => {
-            e.preventDefault();
-            const href = link.getAttribute("href");
-
-            animatePageTransition().then(() => window.location.href = href);
-        });
-    });
-}
-
-function initContactAnimation() {
-    const bumper = document.querySelector(".svg-location-bumper");
-    const maskBorder = document.querySelector("#contact .location-column .row .svg-location-border");
-    const container = document.querySelector("#contact .location-column .row .container");
-    const content = container.querySelector(":scope > .location");
-
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: bumper,
-            start: "top 70%",
-            ease: ANIMATION_CONFIG.defaultEase,
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        }
-    });
-
-    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
-      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" }, "<")
-      .to(maskBorder, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "100%", opacity: 1 }, "<")
-      .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
 }
 
 gsap.registerPlugin(ScrollTrigger);
