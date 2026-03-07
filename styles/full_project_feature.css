@@ -154,7 +154,6 @@ main {
 #details .metadata {
     opacity: 0;
     transform: translateX(-50px);
-    margin: 0;
 }
 #details .description {
     opacity: 0;

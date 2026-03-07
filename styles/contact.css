@@ -36,7 +36,7 @@
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 1.5px;
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 #contact .header.header--large {
     font-size: var(--section__title);
@@ -47,7 +47,7 @@
 
 #contact .signoff p {
     width: 300px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 #contact .links {
@@ -147,7 +147,7 @@
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 1.5px;
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 #contact .svg-container {
@@ -217,7 +217,7 @@
 
     #contact .copyright {
         text-align: left;
-        padding-right: 0rem;
+        padding-right: 0;
         padding-left: .25rem;
     }
 }

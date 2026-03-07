@@ -46,10 +46,6 @@
     max-width: var(--content__maxWidth);
 }
 
-#about .content .text p:last-of-type {
-    margin-bottom: 0rem;
-}
-
 @media screen and (max-width: 999px) {
     #about .content {
         flex-direction: column-reverse;

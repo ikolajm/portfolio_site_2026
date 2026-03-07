@@ -95,11 +95,6 @@
     opacity: 0;
 }
 
-#home .content .text h1,
-#home .content .text h2 {
-    margin: 0;
-}
-
 #home .content .text h1 {
     font-size: var(--section__title);
 }
