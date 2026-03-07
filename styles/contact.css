@@ -56,11 +56,6 @@
     gap: 1rem;
 }
 
-#contact .links .group {
-    display: flex;
-    flex-direction: column;
-}
-
 #contact .links .group .icons {
     display: flex;
     flex-direction: row;
@@ -159,9 +154,6 @@
     position: relative;
     height: 125px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #contact .svg-container svg {

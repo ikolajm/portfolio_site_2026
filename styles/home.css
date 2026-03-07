@@ -1,9 +1,6 @@
 #home {
     position: relative;
     height: calc(100vh - 24px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow-x: visible;
     margin-top: -108px; /* Nav height + 1rem */
 }
@@ -93,8 +90,6 @@
 }
 
 #home .content .text {
-    display: flex;
-    flex-direction: column;
     gap: .25rem;
     width: 100%;
     opacity: 0;

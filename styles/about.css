@@ -20,12 +20,6 @@
     align-items: center;
 }
 
-#about .content .media {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 #about .content .svg-media-accent {
     height: 240px;
 }

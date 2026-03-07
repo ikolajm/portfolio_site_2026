@@ -49,6 +49,17 @@
     fill: var(--white--default);
 }
 
+/* Flex Utilities */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Core */
 body {
     background-color: var(--surface--default);

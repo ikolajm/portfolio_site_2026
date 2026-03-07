@@ -17,9 +17,6 @@
 
 #projects article .media {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #projects article .media .controls {
@@ -38,9 +35,6 @@
     color: var(--surface--default);
     outline: none;
     border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: .3s;
     cursor: pointer;
     width: 32px;

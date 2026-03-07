@@ -60,9 +60,6 @@ main {
     }
 }
 #hero .text-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 24px;
 }
 
@@ -121,12 +118,6 @@ main {
 
 /* Phones */
 
-#hero .phones {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #hero .phones img {
     position: relative;
     width: 200px;
@@ -163,6 +154,7 @@ main {
 #details .metadata {
     opacity: 0;
     transform: translateX(-50px);
+    margin: 0;
 }
 #details .description {
     opacity: 0;
@@ -184,8 +176,6 @@ main {
 }
 
 #details .metadata .detail {
-    display: flex;
-    flex-direction: column;
     width: 400px;
 }
 
@@ -204,8 +194,6 @@ main {
 }
 
 #details .description {
-    display: flex;
-    flex-direction: column;
     width: 600px;
 }
 
@@ -394,9 +382,6 @@ main {
 
 /* Figma */
 #figma .file-preview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 0;
     opacity: 0;
 }
