@@ -202,9 +202,6 @@
     .svg-location-bumper {
         transform: scaleX(1);
     }
-    #contact .location-column .location {
-        clip-path: url(#contactLocationClip--flipped);
-    }
     #contact .svg-location-border {
         transform: scaleX(-1)translateY(-1px);
         left: 16px;
