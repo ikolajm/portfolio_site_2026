@@ -29,6 +29,15 @@
     height: auto;
     width: 16px;
 }
+.svg-media-accent--flipXY {
+    transform: scale(-1, -1);
+}
+.svg-media-accent--flipY {
+    transform: scaleY(-1);
+}
+.svg-media-accent--flipX {
+    transform: scaleX(-1);
+}
 .svg-location-bumper {
     position: relative;
     height: auto;
@@ -133,14 +142,6 @@ p:last-of-type {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-.indicator .icon svg path {
-    fill: none;
-    stroke: var(--white--default);
-    stroke-width: 1;
-}
-.indicator .icon svg .kickstand {
-    stroke: none
 }
 .indicator .text {
     position: relative;

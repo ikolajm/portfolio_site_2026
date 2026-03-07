@@ -31,6 +31,43 @@
         <title>Jacob Ikola, Digital Product Development</title>
     </head>
     <body>
+        <svg width="0" height="0" aria-hidden="true" style="position:absolute;">
+            <defs>
+                <symbol id="svg-indicator" viewBox="0 0 26.249998 26.249998">
+                    <g transform="translate(-37.499998,-39.40476)">
+                        <path
+                            d="M 62.529759,40.624997 H 38.720235 v 23.809524 l 17.529762,-0.02976 c 2.5,-3.75 3.75,-6.250002 6.25,-10.000002 z"
+                            class="outline"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1"
+                        />
+                        <path
+                            d="m 24.999999,17.499999 -3.75,7.499999 h 3.749999 z"
+                            class="kickstand"
+                            transform="translate(37.499998,39.40476)"
+                            fill="none"
+                            stroke="none"
+                        />
+                        <path
+                            d="M 60.007036,43.14772 H 41.347958 v 18.659078 l 13.737746,-0.02332 c 1.959203,-2.938806 2.95509,-4.439915 4.914293,-7.378719 z"
+                            class="fill"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1"
+                        />
+                    </g>
+                </symbol>
+                <symbol id="svg-media-accent" viewBox="0 0 3.75 53.75" preserveAspectRatio="none">
+                    <g transform="translate(-25.69325,-19.44325)">
+                        <path
+                            d="M 27.429062,72.56825 V 44.096626 l -1.25,-1.25 V 21.31825 l 1.25,-1.25 h 1.528376 v 52.5 z"
+                            vector-effect="non-scaling-stroke"
+                        />
+                    </g>
+                </symbol>
+            </defs>
+        </svg>
         <nav>
             <a href="./index.html" data-linkType="internal">
                 <img src="/assets/svg/personal_logo_white.svg" alt="Jacob Ikola's personal logo" />
@@ -66,65 +103,24 @@
                 <div class="indicator">
                     <div class="icon">
                         <i class="fa-solid fa-info"></i>
-                        <svg
-                            viewBox="0 0 26.249998 26.249998"
-                            class="svg-indicator"
-                        >
-                            <g
-                                transform="translate(-37.499998,-39.40476)">
-                                <path
-                                d="M 62.529759,40.624997 H 38.720235 v 23.809524 l 17.529762,-0.02976 c 2.5,-3.75 3.75,-6.250002 6.25,-10.000002 z"
-                                class="outline"
-                                />
-                                <path
-                                d="m 24.999999,17.499999 -3.75,7.499999 h 3.749999 z"
-                                class="kickstand"
-                                transform="translate(37.499998,39.40476)"
-                                />
-                                <path
-                                d="M 60.007036,43.14772 H 41.347958 v 18.659078 l 13.737746,-0.02332 c 1.959203,-2.938806 2.95509,-4.439915 4.914293,-7.378719 z"
-                                class="fill"
-                                />
-                            </g>
+                        <svg class="svg-indicator" viewBox="0 0 26.249998 26.249998">
+                            <use href="#svg-indicator"></use>
                         </svg>
                     </div>
                     <h3 class="text text--large">About me</h3>
                 </div>
                 <div class="content">
                     <div class="media">
-                        <svg
-                            class="svg-media-accent"
-                            viewBox="0 0 3.75 53.75"
-                            preserveAspectRatio="none"
-                        >
-                            <g
-                                transform="translate(-25.69325,-19.44325)"
-                            >
-                                <path
-                                d="M 27.429062,72.56825 V 44.096626 l -1.25,-1.25 V 21.31825 l 1.25,-1.25 h 1.528376 v 52.5 z"
-                                vector-effect="non-scaling-stroke"
-                                />
-                            </g>
+                        <svg class="svg-media-accent" viewBox="0 0 3.75 53.75" preserveAspectRatio="none">
+                            <use href="#svg-media-accent"></use>
                         </svg>
                         <div class="video">
                             <video autoplay muted playsinline loop>
                                 <source src="assets/videos/ds_gif_reel.mp4" type="video/mp4">
                             </video>
                         </div>
-                        <svg
-                            class="svg-media-accent svg-media-accent--flipXY"
-                            viewBox="0 0 3.75 53.75"
-                            preserveAspectRatio="none"
-                            style="transform: scale(-1, -1);"
-                        >
-                            <g
-                                transform="translate(-25.69325,-19.44325)"
-                            >
-                                <path
-                                d="M 27.429062,72.56825 V 44.096626 l -1.25,-1.25 V 21.31825 l 1.25,-1.25 h 1.528376 v 52.5 z"
-                                vector-effect="non-scaling-stroke"
-                                />
-                            </g>
+                        <svg class="svg-media-accent svg-media-accent--flipXY" viewBox="0 0 3.75 53.75" preserveAspectRatio="none">
+                            <use href="#svg-media-accent"></use>
                         </svg>
                     </div>
                     <div class="text">
@@ -139,26 +135,8 @@
                 <div class="indicator">
                     <div class="icon">
                         <i class="fa-solid fa-timeline"></i>
-                        <svg
-                            viewBox="0 0 26.249998 26.249998"
-                            class="svg-indicator"
-                        >
-                            <g
-                                transform="translate(-37.499998,-39.40476)">
-                                <path
-                                d="M 62.529759,40.624997 H 38.720235 v 23.809524 l 17.529762,-0.02976 c 2.5,-3.75 3.75,-6.250002 6.25,-10.000002 z"
-                                class="outline"
-                                />
-                                <path
-                                d="m 24.999999,17.499999 -3.75,7.499999 h 3.749999 z"
-                                class="kickstand"
-                                transform="translate(37.499998,39.40476)"
-                                />
-                                <path
-                                d="M 60.007036,43.14772 H 41.347958 v 18.659078 l 13.737746,-0.02332 c 1.959203,-2.938806 2.95509,-4.439915 4.914293,-7.378719 z"
-                                class="fill"
-                                />
-                            </g>
+                        <svg class="svg-indicator" viewBox="0 0 26.249998 26.249998">
+                            <use href="#svg-indicator"></use>
                         </svg>
                     </div>
                     <h3 class="text text--large">Past Experiences</h3>
@@ -276,65 +254,23 @@
                 <div class="indicator">
                     <div class="icon">
                         <i class="fa-solid fa-arrows-to-dot"></i>
-                        <svg
-                            viewBox="0 0 26.249998 26.249998"
-                            class="svg-indicator"
-                        >
-                            <g
-                                transform="translate(-37.499998,-39.40476)">
-                                <path
-                                d="M 62.529759,40.624997 H 38.720235 v 23.809524 l 17.529762,-0.02976 c 2.5,-3.75 3.75,-6.250002 6.25,-10.000002 z"
-                                class="outline"
-                                />
-                                <path
-                                d="m 24.999999,17.499999 -3.75,7.499999 h 3.749999 z"
-                                class="kickstand"
-                                transform="translate(37.499998,39.40476)"
-                                />
-                                <path
-                                d="M 60.007036,43.14772 H 41.347958 v 18.659078 l 13.737746,-0.02332 c 1.959203,-2.938806 2.95509,-4.439915 4.914293,-7.378719 z"
-                                class="fill"
-                                />
-                            </g>
+                        <svg class="svg-indicator" viewBox="0 0 26.249998 26.249998">
+                            <use href="#svg-indicator"></use>
                         </svg>
                     </div>
                     <h3 class="text text--large">Featured Projects</h3>
                 </div>
                 <article class="project">
                     <div class="media">
-                        <svg
-                            class="svg-media-accent svg-media-accent--flipY"
-                            viewBox="0 0 3.75 53.75"
-                            preserveAspectRatio="none"
-                            style="transform: scaleY(-1);"
-                        >
-                            <g
-                                transform="translate(-25.69325,-19.44325)"
-                            >
-                                <path
-                                d="M 27.429062,72.56825 V 44.096626 l -1.25,-1.25 V 21.31825 l 1.25,-1.25 h 1.528376 v 52.5 z"
-                                vector-effect="non-scaling-stroke"
-                                />
-                            </g>
+                        <svg class="svg-media-accent svg-media-accent--flipY" viewBox="0 0 3.75 53.75" preserveAspectRatio="none">
+                            <use href="#svg-media-accent"></use>
                         </svg>
                         <div class="image grid-bg">
                             <img id="phoneUnder" src="/assets/photos/availo/phone/seven_day_shadow.png" />
                             <img id="phoneOver" src="/assets/photos/availo/phone/thirty_day_shadow.png" />
                         </div>
-                        <svg
-                            class="svg-media-accent svg-media-accent--flipX"
-                            viewBox="0 0 3.75 53.75"
-                            preserveAspectRatio="none"
-                            style="transform: scaleX(-1);"
-                        >
-                            <g
-                                transform="translate(-25.69325,-19.44325)"
-                            >
-                                <path
-                                d="M 27.429062,72.56825 V 44.096626 l -1.25,-1.25 V 21.31825 l 1.25,-1.25 h 1.528376 v 52.5 z"
-                                vector-effect="non-scaling-stroke"
-                                />
-                            </g>
+                        <svg class="svg-media-accent svg-media-accent--flipX" viewBox="0 0 3.75 53.75" preserveAspectRatio="none">
+                            <use href="#svg-media-accent"></use>
                         </svg>
                         <div class="controls">
                             <button data-buttonType="prev">
