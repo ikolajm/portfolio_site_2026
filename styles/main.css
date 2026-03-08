@@ -60,6 +60,20 @@
     flex-direction: column;
 }
 
+/* Pillars background */
+.pillars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.pillars.is-visible {
+    opacity: 0.35;
+}
+
 /* Core */
 body {
     background-color: var(--surface--default);
