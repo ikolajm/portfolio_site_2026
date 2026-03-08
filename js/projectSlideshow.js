@@ -34,7 +34,8 @@ const slides = [
             "Some of the best plans start with a quick run-in, a shared moment, or a mutual “sure, why not?”. This app makes it easy to float ideas, discover who’s free, and turn everyday moments into shared experiences. Less overthinking, more showing up—just like it should be!"
         ],
         tools: [
-            "Figma",
+            "Figma (Design, Make)",
+            "Claude Code",
             "React Native",
             "TypeScript",
             "GraphQL",
@@ -86,6 +87,8 @@ const slides = [
             "D&D is a great way to spend time with friends — but the setup can scare people off before the adventure even begins. This app gives players a clean, classic RPG interface for their character and party, and gives GMs the tools to run the world without the paperwork. The same game everyone's heard of, now with less friction."
         ],
         tools: [
+            "Figma (Design, Make)",
+            "Claude Code",
             "TypeScript",
             "GraphQL",
             "PostgreSQL",
