@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { SimplexNoise } from "three/addons/math/SimplexNoise.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+// import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { AfterimagePass } from "three/addons/postprocessing/AfterimagePass.js";
 import {
     createBaseHSL,
@@ -59,13 +59,13 @@ const afterimagePass = new AfterimagePass();
 afterimagePass.uniforms['damp'].value = OrbConfig.AFTERIMAGE_THRESHOLD;
 composer.addPass(afterimagePass);
 
-const bloomPass = new UnrealBloomPass(
-  new THREE.Vector2(innerWidth, innerHeight),
-  OrbConfig.BLOOM_STRENGTH,
-  OrbConfig.BLOOM_RADIUS,
-  OrbConfig.BLOOM_THRESHOLD
-);
-composer.addPass(bloomPass);
+// const bloomPass = new UnrealBloomPass(
+//   new THREE.Vector2(innerWidth, innerHeight),
+//   OrbConfig.BLOOM_STRENGTH,
+//   OrbConfig.BLOOM_RADIUS,
+//   OrbConfig.BLOOM_THRESHOLD
+// );
+// composer.addPass(bloomPass);
 			
 window.addEventListener( "resize", (event) => {
   camera.aspect = innerWidth/innerHeight;

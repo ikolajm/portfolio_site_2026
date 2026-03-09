@@ -2,6 +2,93 @@
     box-sizing: border-box;
 }
 
+/* ── SVG Background System ───────────────────────────────────────────────── */
+.inner-content {
+    position: relative;
+}
+
+.inner-content > section {
+    position: relative;
+    z-index: 1;
+}
+
+.bg-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    width: calc(100vw + 48px);
+    left: -24px;
+    height: calc(100% + max(2rem, 15vh));
+    top: calc(-1 * (max(2rem, 15vh)));
+    /* Vertical fade — transparent at both edges, fully opaque in the middle.
+       Single 4-stop gradient avoids mask-composite cross-browser issues.
+       Adjust the 15% / 85% stops to taste. */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
+}
+
+/* Size, position, and rotation are set by svgBG.js inline styles */
+.bg-layer {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* width and height set by svgBG.js inline styles */
+    animation: bg-scroll var(--scroll-duration, 10s) linear infinite;
+    will-change: transform;
+    /* Force GPU layer promotion on older Android WebViews that don't
+       honour will-change alone */
+    backface-visibility: hidden;
+}
+
+@keyframes bg-scroll {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+
+/* Users who prefer reduced motion: belt-and-suspenders alongside the JS guard */
+@media (prefers-reduced-motion: reduce) {
+    .bg-inner { animation-play-state: paused !important; }
+}
+
+.bg-icon {
+    position: absolute;
+    display: block;
+    width: 48px;
+    height: 48px;
+    transform-origin: center;
+    /* Self-contained layout — nothing inside affects external flow.
+       Reduces browser paint scope for the 70–100+ elements per layer. */
+    contain: layout style;
+    /* Shared mask properties — background-color and mask-image URL
+       are set per-icon by svgBG.js. background-color is the icon colour;
+       the SVG acts as an alpha mask through which that colour shows. */
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
 /* SVG Accents */
 .svg-edge {
     position: absolute;
@@ -77,6 +164,10 @@ main {
 main section {
     position: relative;
     margin-bottom: max(2rem, 15vh);
+}
+main section#projects {
+    margin-bottom: 0rem;
+    padding-bottom: max(2rem, 15vh); /* Allow marching svg background to show in visual "gap" */
 }
 
 @media screen and (max-width: 1000px) {
@@ -183,7 +274,7 @@ nav {
     padding: 1rem;
     align-items: flex-end;
     justify-content: flex-start;
-    background: linear-gradient(to bottom, var(--surface--default) 64px, transparent); /* 64px total */
+    background: linear-gradient(to bottom, var(--surface--default) 72px, transparent); /* 64px total */
 }
 
 nav a,

@@ -17,7 +17,7 @@ const BACKGROUND_COLOR = "#141515";
 // -- Particle Init
 const MAX_PARTICLES = 2000;
 const PARTICLE_SIZE = 5;
-const EXTRUDE_DEPTH = 2;
+const EXTRUDE_DEPTH = 3;
 const MORPH_SPEED = 7;
 const NOISE_RADIUS = 120;
 const IDLE_JITTER = 1.75;
@@ -57,7 +57,7 @@ let lastColorUpdate = 0;
   Three.js Setup
 --------------------------- */
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(BACKGROUND_COLOR);
+// scene.background = new THREE.Color(BACKGROUND_COLOR);
 
 const camera = new THREE.PerspectiveCamera(45, 1, 1, 2000);
 camera.position.z = CAMERA_DISTANCE;
@@ -76,17 +76,17 @@ composer.addPass(new RenderPass(scene, camera));
 /* --------------------------
   Orb Trails
 --------------------------- */
-const afterimagePass = new AfterimagePass();
-afterimagePass.uniforms['damp'].value = .5;
-composer.addPass(afterimagePass);
+// const afterimagePass = new AfterimagePass();
+// afterimagePass.uniforms['damp'].value = .5;
+// composer.addPass(afterimagePass);
 
-const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(innerWidth, innerHeight),
-    OrbConfig.BLOOM_STRENGTH,
-    OrbConfig.BLOOM_RADIUS,
-    OrbConfig.BLOOM_THRESHOLD
-);
-composer.addPass(bloomPass);
+// const bloomPass = new UnrealBloomPass(
+//     new THREE.Vector2(innerWidth, innerHeight),
+//     OrbConfig.BLOOM_STRENGTH,
+//     OrbConfig.BLOOM_RADIUS,
+//     OrbConfig.BLOOM_THRESHOLD
+// );
+// composer.addPass(bloomPass);
 
 function resize() {
   const r = container.getBoundingClientRect();
