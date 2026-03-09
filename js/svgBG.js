@@ -12,6 +12,8 @@ export function initBackground(container, options = {}) {
 
   let observer;
   const config = {
+    iconColor: "#E4E6E7",
+
     spacingX: 400,
     spacingY: 400,
 
@@ -24,7 +26,15 @@ export function initBackground(container, options = {}) {
     ],
 
     iconSets: {
-      default: ['/assets/svg/personal_logo_white.svg']
+        default: ['/assets/svg/personal_logo_white.svg'],
+        about: ['/assets/svg/personal_logo_white.svg'],
+        as: ['/assets/svg/auctioneer_software.svg'],
+        ji: ['/assets/svg/personal_logo_white.svg'],
+        pu: ['/assets/svg/propelup.svg'],
+        projects: [
+            '/assets/svg/code-solid.svg',
+            '/assets/svg/terminal-solid.svg',
+        ],
     },
 
     activeSet: 'default',
@@ -97,7 +107,7 @@ export function initBackground(container, options = {}) {
   initVisibilityPause()
   initResizeObserver()
 
-  return { setIconSet, destroy }
+  return { setIconSet, setIconColor, destroy, initScrollTriggers }
 
   // ─── Geometry ────────────────────────────────────────────────────────────
   // Returns a plain object so it can be recomputed on resize without closures.
@@ -198,15 +208,17 @@ export function initBackground(container, options = {}) {
           const baseY = row * config.spacingY
 
           // Column A — left half of bg-inner (visible at translateX(0))
-          const elA = makeIcon(currentSet, baseX + jitterX, baseY + jitterY, scale, opacity)
+          const srcA = randomFrom(currentSet)
+          const elA  = makeIcon(srcA, baseX + jitterX, baseY + jitterY, scale, opacity)
           innerEl.appendChild(elA)
-          colA.push({ el: elA, opacity })
+          colA.push({ el: elA, opacity, src: srcA })
 
           // Column B — right half, offset by gridWidth; scrolls into view first.
           // Same jitter ensures the seam tiles perfectly.
-          const elB = makeIcon(currentSet, baseX + gridWidth + jitterX, baseY + jitterY, scale, opacity)
+          const srcB = randomFrom(currentSet)
+          const elB  = makeIcon(srcB, baseX + gridWidth + jitterX, baseY + jitterY, scale, opacity)
           innerEl.appendChild(elB)
-          colB.push({ el: elB, opacity })
+          colB.push({ el: elB, opacity, src: srcB })
         }
       }
 
@@ -226,41 +238,99 @@ export function initBackground(container, options = {}) {
   }
 
   // ─── Icon factory ────────────────────────────────────────────────────────
+  // Uses <div> + CSS mask-image rather than <img>.
+  // mask-image composites background-color through the SVG's alpha channel,
+  // giving full control over icon colour via config.iconColor.
+  // fill/stroke on <img> have no effect — they only work on inline <svg>.
 
-  function makeIcon(iconSet, x, y, scale, opacity) {
-    const el      = document.createElement('img')
-    el.className  = 'bg-icon'
-    el.decoding   = 'async'   // decode off the main thread
-    el.onerror    = () => { el.style.display = 'none' }  // silent fail
-    el.src        = randomFrom(iconSet)
+  function makeIcon(src, x, y, scale, opacity) {
+    const el     = document.createElement('div')
+    el.className = 'bg-icon'
     el.style.cssText = [
       `left: ${x}px`,
       `top: ${y}px`,
       `transform: scale(${scale})`,
-      `opacity: ${opacity}`
+      `opacity: ${opacity}`,
+      `background-color: ${config.iconColor}`,
+      `-webkit-mask-image: url("${src}")`,
+      `mask-image: url("${src}")`
     ].join(';')
     return el
   }
 
   // ─── Icon transitions ────────────────────────────────────────────────────
+  // Fades the icon out, waits for transitionend, swaps the mask-image URL,
+  // then fades back in. icon.src tracks the current URL so we can skip
+  // redundant swaps.
 
   function swapIcon(icon, iconSet) {
     const next = randomFrom(iconSet)
-    if (icon.el.src.endsWith(next)) return
-    icon.el.onload = null              // clear any in-flight handler first
+    if (icon.src === next) return
+    icon.src = next   // update tracked src immediately to block duplicate calls
+
     icon.el.style.transition = 'opacity 0.3s'
     icon.el.style.opacity    = 0
-    icon.el.onload = () => { icon.el.style.opacity = icon.opacity }
-    icon.el.src    = next
+
+    icon.el.addEventListener('transitionend', () => {
+      icon.el.style.setProperty('-webkit-mask-image', `url("${next}")`)
+      icon.el.style.setProperty('mask-image',         `url("${next}")`)
+      icon.el.style.opacity = icon.opacity
+    }, { once: true })
   }
 
   // ─── Public API ──────────────────────────────────────────────────────────
+
+  function setIconColor(color) {
+    config.iconColor = color
+    state.layers.forEach(layer => {
+      ;[...layer.colA, ...layer.colB].forEach(icon => {
+        icon.el.style.backgroundColor = color
+      })
+    })
+  }
 
   function setIconSet(name) {
     const set = config.iconSets[name]
     if (!set) { console.warn(`svgBG: unknown icon set "${name}"`); return }
     state.activeSet = name
-    state.layers.forEach(layer => { layer.pendingIconSet = set })
+    // Swap immediately with a fade — do not defer to animationiteration.
+    // The loop period can be many minutes with large spacingX values, so
+    // pendingIconSet would never resolve during normal browsing.
+    state.layers.forEach(layer => {
+      ;[...layer.colA, ...layer.colB].forEach(icon => swapIcon(icon, set))
+    })
+  }
+
+  // ─── Scroll-triggered icon set switching ─────────────────────────────────
+  // Called by the host page after GSAP's ScrollTrigger is registered.
+  // Accepts ScrollTrigger as a parameter so svgBG.js stays dependency-free.
+  //
+  // Map:  section/article DOM id → { set: icon set on enter, back: icon set on leave-back }
+  // onEnter     fires scrolling DOWN when the element's top crosses 'start'
+  // onLeaveBack fires scrolling UP   when the element's top recrosses 'start'
+  // No onLeave / onEnterBack needed — the chain of onLeaveBack calls restores
+  // state correctly in reverse order when scrolling back up.
+
+  function initScrollTriggers(ST) {
+    const sectionMap = [
+      { selector: '#about',       set: 'about',    back: 'default' },
+      { selector: '#as-article',  set: 'as',       back: 'about'   },
+      { selector: '#jmi-article', set: 'ji',       back: 'as'      },
+      { selector: '#pu-article',  set: 'pu',       back: 'ji'      },
+      { selector: '#projects',    set: 'projects', back: 'pu'      },
+    ]
+
+    sectionMap.forEach(({ selector, set, back }) => {
+      const el = document.querySelector(selector)
+      if (!el) return   // graceful skip — section may not exist on every page
+
+      ST.create({
+        trigger:     el,
+        start:       'top 55%',   // fires when element top hits 55% down the viewport
+        onEnter:     () => setIconSet(set),
+        onLeaveBack: () => setIconSet(back),
+      })
+    })
   }
 
   // ─── Visibility pause (IntersectionObserver) ─────────────────────────────

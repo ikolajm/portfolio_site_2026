@@ -61,6 +61,15 @@
     /* Self-contained layout — nothing inside affects external flow.
        Reduces browser paint scope for the 70–100+ elements per layer. */
     contain: layout style;
+    /* Shared mask properties — background-color and mask-image URL
+       are set per-icon by svgBG.js. background-color is the icon colour;
+       the SVG acts as an alpha mask through which that colour shows. */
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
 }
 
 /* SVG Accents */
