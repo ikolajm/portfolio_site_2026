@@ -1,5 +1,6 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
 import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { initBackground } from "./svgBG.js";
 
 function initHeroAnimation() {
     const homeContent = document.querySelector("#home .content");
@@ -216,6 +217,7 @@ function initProjectFeature() {
 
 gsap.registerPlugin(ScrollTrigger);
 window.onload = () => {
+    initBackground(document.querySelector('.inner-content'));
     initLoadIn();
     initHeroAnimation();
     initAboutAnimation();

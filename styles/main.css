@@ -2,6 +2,67 @@
     box-sizing: border-box;
 }
 
+/* ── SVG Background System ───────────────────────────────────────────────── */
+.inner-content {
+    position: relative;
+}
+
+.inner-content > section {
+    position: relative;
+    z-index: 1;
+}
+
+.bg-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    width: calc(100vw + 48px);
+    left: -24px;
+    height: calc(100% + 250px);
+    top: -250px;
+}
+
+/* Size, position, and rotation are set by svgBG.js inline styles */
+.bg-layer {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* width and height set by svgBG.js inline styles */
+    animation: bg-scroll var(--scroll-duration, 10s) linear infinite;
+    will-change: transform;
+    /* Force GPU layer promotion on older Android WebViews that don't
+       honour will-change alone */
+    backface-visibility: hidden;
+}
+
+@keyframes bg-scroll {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+
+/* Users who prefer reduced motion: belt-and-suspenders alongside the JS guard */
+@media (prefers-reduced-motion: reduce) {
+    .bg-inner { animation-play-state: paused !important; }
+}
+
+.bg-icon {
+    position: absolute;
+    display: block;
+    width: 48px;
+    height: 48px;
+    transform-origin: center;
+    /* Self-contained layout — nothing inside affects external flow.
+       Reduces browser paint scope for the 70–100+ elements per layer. */
+    contain: layout style;
+}
+
 /* SVG Accents */
 .svg-edge {
     position: absolute;
@@ -77,6 +138,10 @@ main {
 main section {
     position: relative;
     margin-bottom: max(2rem, 15vh);
+}
+main section#projects {
+    margin-bottom: 0rem;
+    padding-bottom: max(2rem, 15vh); /* Allow marching svg background to show in visual "gap" */
 }
 
 @media screen and (max-width: 1000px) {
