@@ -35,6 +35,7 @@ export function initBackground(container, options = {}) {
             '/assets/svg/code-solid.svg',
             '/assets/svg/terminal-solid.svg',
         ],
+        availo: ['assets/svg/availo.svg'],
     },
 
     activeSet: 'default',
@@ -318,6 +319,7 @@ export function initBackground(container, options = {}) {
       { selector: '#jmi-article', set: 'ji',       back: 'as'      },
       { selector: '#pu-article',  set: 'pu',       back: 'ji'      },
       { selector: '#projects',    set: 'projects', back: 'pu'      },
+      { selector: '#availo-project', set: 'availo', back: null      },
     ]
 
     sectionMap.forEach(({ selector, set, back }) => {

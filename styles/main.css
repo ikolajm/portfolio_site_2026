@@ -20,8 +20,25 @@
     z-index: 0;
     width: calc(100vw + 48px);
     left: -24px;
-    height: calc(100% + 250px);
-    top: -250px;
+    height: calc(100% + max(2rem, 15vh));
+    top: calc(-1 * (max(2rem, 15vh)));
+    /* Vertical fade — transparent at both edges, fully opaque in the middle.
+       Single 4-stop gradient avoids mask-composite cross-browser issues.
+       Adjust the 15% / 85% stops to taste. */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
 }
 
 /* Size, position, and rotation are set by svgBG.js inline styles */
@@ -257,7 +274,7 @@ nav {
     padding: 1rem;
     align-items: flex-end;
     justify-content: flex-start;
-    background: linear-gradient(to bottom, var(--surface--default) 64px, transparent); /* 64px total */
+    background: linear-gradient(to bottom, var(--surface--default) 72px, transparent); /* 64px total */
 }
 
 nav a,
