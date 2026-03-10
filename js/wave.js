@@ -156,9 +156,11 @@ const material = new THREE.ShaderMaterial({
         uRungSizeMult:    { value: WaveConfig.RUNG_SIZE_MULT },
         uStrandSizeMult:  { value: WaveConfig.STRAND_SIZE_MULT },
         // Opacity / appearance per particle type
-        uRungAlpha:       { value: WaveConfig.RUNG_ALPHA },
-        uStrandAlpha:     { value: WaveConfig.STRAND_ALPHA },
-        uStrandCoreBoost: { value: WaveConfig.STRAND_CORE_BOOST },
+        uRungAlpha:     { value: WaveConfig.RUNG_ALPHA },
+        uStrandAlpha:   { value: WaveConfig.STRAND_ALPHA },
+        // Orb core — universal bright center for all particle types
+        uCoreRadius:    { value: WaveConfig.ORB_CORE_RADIUS },
+        uCoreStrength:  { value: WaveConfig.ORB_CORE_STRENGTH },
     },
     transparent: true,
     depthWrite:  false,

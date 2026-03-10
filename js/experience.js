@@ -4,24 +4,19 @@ import { MeshSurfaceSampler } from "three/addons/math/MeshSurfaceSampler.js";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-import { AfterimagePass } from "three/addons/postprocessing/AfterimagePass.js";
 import { getElapsedTime } from "./elapsedTime.js";
 import { applyColorField, createBaseHSL, createLightnessOffsets, ColorFieldConfig } from "./colorField.js";
-import { createOrbTexture, OrbConfig } from "./orbs.js";
+import { ExperienceConfig } from "./sceneConfig.js";
+import { particleVertexShader, particleFragmentShader } from "./particleShader.js";
 
 /* --------------------------
   Config
 --------------------------- */
-const BACKGROUND_COLOR = "#141515";
 // -- Particle Init
-const MAX_PARTICLES = 2000;
-const PARTICLE_SIZE = 5;
-const EXTRUDE_DEPTH = 3;
+const MAX_PARTICLES = ExperienceConfig.MAX_PARTICLES;
+const EXTRUDE_DEPTH = 2;
 const MORPH_SPEED = 7;
 const NOISE_RADIUS = 120;
-const IDLE_JITTER = 1.75;
-const PARTICLE_COLOR = "#0099E5";
 // -- Camera, Position
 const BBOX_SIZE = 275;
 const CAMERA_DISTANCE = 350;
@@ -45,6 +40,7 @@ let basePositions;
 let currentBase;
 let morphFrom = null;
 let noiseSeeds;
+let jitterAmps; // per-particle drift-radius multiplier (set in createPoints)
 // =
 let jitterStrength = .7;
 // =
@@ -52,6 +48,9 @@ let baseHSL = null;
 let lightnessOffsets = null;
 // =
 let lastColorUpdate = 0;
+// =
+let orbitPhase; // per-particle initial orbit angle (radians)
+let orbitSpeed; // per-particle orbital angular velocity (rad/s)
 
 /* --------------------------
   Three.js Setup
@@ -229,7 +228,7 @@ function createPoints(initial) {
   currentBase = buf.slice();
 
   // -- Create per-point color buffer
-  baseHSL = createBaseHSL(PARTICLE_COLOR);
+  baseHSL = createBaseHSL(ExperienceConfig.COLOR);
   lightnessOffsets = createLightnessOffsets(MAX_PARTICLES, ColorFieldConfig.LIGHTNESS_VARIATION_RANGE);
 
   const colors = new Float32Array(initial.length * 3);
@@ -243,17 +242,50 @@ function createPoints(initial) {
   });
   g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-  const orbTexture = createOrbTexture();
-  const mat = new THREE.PointsMaterial({
-    size: PARTICLE_SIZE,
-    vertexColors: true,
-    map: orbTexture,
+  // Split into anchors (tight to logo shape) and drifters (orbital halo cloud).
+  // Anchors (aType 1.0): large blobs that preserve the readable logo form.
+  // Drifters (aType 0.0): medium glows that orbit outward, forming the liquid halo.
+  // jitterAmps drives per-particle drift radius in updateMorph — see ExperienceConfig.
+  const types = new Float32Array(MAX_PARTICLES);
+  jitterAmps   = new Float32Array(MAX_PARTICLES);
+
+  for (let j = 0; j < MAX_PARTICLES; j++) {
+    const isAnchor = Math.random() < ExperienceConfig.ANCHOR_RATIO;
+    types[j]      = isAnchor ? 1.0 : 0.0;
+    jitterAmps[j] = isAnchor
+      ? Math.random() * ExperienceConfig.ANCHOR_JITTER_MAX
+      : ExperienceConfig.DRIFT_JITTER_MIN
+        + Math.random() * (ExperienceConfig.DRIFT_JITTER_MAX - ExperienceConfig.DRIFT_JITTER_MIN);
+  }
+  g.setAttribute("aType", new THREE.BufferAttribute(types, 1));
+
+  // Per-particle orbit params — each drifter traces a unique circular arc.
+  // Anchors (jAmp ≈ 0) orbit with near-zero radius regardless of phase/speed.
+  orbitPhase = new Float32Array(MAX_PARTICLES);
+  orbitSpeed = new Float32Array(MAX_PARTICLES);
+  for (let j = 0; j < MAX_PARTICLES; j++) {
+    orbitPhase[j] = Math.random() * Math.PI * 2;
+    orbitSpeed[j] = ExperienceConfig.ORBIT_SPEED_MIN
+      + Math.random() * (ExperienceConfig.ORBIT_SPEED_MAX - ExperienceConfig.ORBIT_SPEED_MIN);
+  }
+
+  const mat = new THREE.ShaderMaterial({
+    vertexShader:   particleVertexShader,
+    fragmentShader: particleFragmentShader,
+    uniforms: {
+      uPointSizeBase:   { value: ExperienceConfig.POINT_SIZE_BASE },
+      uRungSizeMult:    { value: ExperienceConfig.RUNG_SIZE_MULT },
+      uStrandSizeMult:  { value: ExperienceConfig.STRAND_SIZE_MULT },
+      uRungAlpha:    { value: ExperienceConfig.RUNG_ALPHA },
+      uStrandAlpha:  { value: ExperienceConfig.STRAND_ALPHA },
+      // Orb core — universal bright center for all particle types
+      uCoreRadius:   { value: ExperienceConfig.ORB_CORE_RADIUS },
+      uCoreStrength: { value: ExperienceConfig.ORB_CORE_STRENGTH },
+    },
     transparent: true,
-    opacity: 1,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
+    depthWrite:  false,
+    blending:    THREE.AdditiveBlending,
   });
-  mat.sizeAttenuation = false;
 
   pointSystem = new THREE.Points(g, mat);
   scene.add(pointSystem);
@@ -307,9 +339,16 @@ function updateMorph(dt) {
       bz = THREE.MathUtils.lerp(morphFrom[i + 2], t[i + 2], morphProgress);
     }
 
-    const jx = Math.sin(now + noiseSeeds[i])     * IDLE_JITTER;
-    const jy = Math.cos(now + noiseSeeds[i + 1]) * IDLE_JITTER;
-    const jz = Math.sin(now + noiseSeeds[i + 2]) * IDLE_JITTER * 0.5;
+    // Per-particle circular orbital motion.
+    // Anchors (jAmp ≈ 0) orbit with near-zero radius → stay tight to logo shape.
+    // Drifters orbit at IDLE_JITTER × jitterAmps[ji] radius → smooth predictable arcs.
+    // Scaled by jitterStrength (0 during morph → clean transitions; 1 at idle → full orbit).
+    const ji    = i / 3;
+    const jAmp  = ExperienceConfig.IDLE_JITTER * jitterAmps[ji];
+    const angle = orbitPhase[ji] + now * orbitSpeed[ji];
+    const jx = Math.cos(angle) * jAmp;
+    const jy = Math.sin(angle) * jAmp;
+    const jz = Math.sin(angle * 0.3 + orbitPhase[ji]) * jAmp * 0.25; // gentle elliptic z bob
 
     pos[i]     = bx + jx * jitterStrength;
     pos[i + 1] = by + jy * jitterStrength;
