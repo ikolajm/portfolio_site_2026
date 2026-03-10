@@ -93,8 +93,8 @@ export const ExperienceConfig = {
     // Sparse enough for individual blobs to be distinct; dense enough to read as logos.
     MAX_PARTICLES: 3000,
 
-    // Point size tuned for the experience camera setup; mobile gets a smaller base.
-    POINT_SIZE_BASE: IS_MOBILE ? 3.5 : 10.0,
+    // Point size tuned for the experience camera setup.
+    POINT_SIZE_BASE: 10.0,
 
     // All logo particles are blobby (aType = 1.0 everywhere).
     // Logo shapes need soft, luminous blobs for readability — no sparkle spikes.
