@@ -14,7 +14,7 @@ function initHeroAnimation() {
         const { isRow } = context.conditions;
         
         gsap.to(text, {
-            delay: 2.5, // Delay to match reveal of .home__content bg
+            delay: 2.75, // Delay to match reveal of .home__content bg
             duration: ANIMATION_CONFIG.fadeDuration,
             opacity: 1
         });
