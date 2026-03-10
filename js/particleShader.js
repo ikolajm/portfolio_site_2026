@@ -39,31 +39,38 @@ export const particleVertexShader = `
 
 /* --------------------------
    Fragment Shader
-   - Rungs  (vType = 1.0): dense, high-opacity soft blob
-   - Strands (vType = 0.0): lower-opacity with bright white-hot center spike (sparkle)
-   - uStrandCoreBoost controls sparkle intensity; set to 0 to disable
+   - Rungs  (vType = 1.0): dense, high-opacity luminous sphere
+   - Strands (vType = 0.0): lower-opacity sphere with the same bright core
+   - uCoreRadius:   0–0.5 fraction of point radius that becomes white-hot
+   - uCoreStrength: 0–1 how fully the center bleaches toward white
+   All particle types share the same "white-hot core → colored body → soft halo"
+   layering. Orbs remain visually distinct until their centers collide (additive blending).
 --------------------------- */
 export const particleFragmentShader = `
     varying vec3  vColor;
     varying float vType;
 
-    uniform float uRungAlpha;        // center opacity for rung blobs   (e.g. 0.95)
-    uniform float uStrandAlpha;      // center opacity for strand sparks (e.g. 0.65)
-    uniform float uStrandCoreBoost;  // 0–1: brightness of white-hot spike at strand center
+    uniform float uRungAlpha;     // center opacity for rung/anchor blobs
+    uniform float uStrandAlpha;   // center opacity for strand/drifter orbs
+    uniform float uCoreRadius;    // 0–0.5: fraction of point radius that is white-hot center
+    uniform float uCoreStrength;  // 0–1: how fully the center bleaches to white
 
     void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.5) discard;
 
-        // Blend opacity target between strand and rung modes
+        // Outer soft body — opacity blends between strand and rung modes
         float baseAlpha = mix(uStrandAlpha, uRungAlpha, vType);
-        float alpha     = (1.0 - smoothstep(0.0, 0.5, dist)) * baseAlpha;
+        float body      = (1.0 - smoothstep(0.0, 0.5, dist)) * baseAlpha;
 
-        // Sparkle core: white-hot spike at the center of strand particles only
-        // Ramp falls off quickly (smoothstep 0→0.15) so it stays a tight highlight
-        float core      = (1.0 - vType) * uStrandCoreBoost
-                          * (1.0 - smoothstep(0.0, 0.15, dist));
-        vec3 finalColor = clamp(vColor + vec3(core), 0.0, 1.0);
+        // Bright inner core — luminous sphere center, universal across all particle types
+        float core = 1.0 - smoothstep(0.0, uCoreRadius, dist);
+
+        // White-hot at center → particle color at body → transparent at edge
+        vec3 finalColor = mix(vColor, vec3(1.0), core * uCoreStrength);
+
+        // Core adds full presence at center; body provides the soft outer glow
+        float alpha = clamp(body + core * 0.45, 0.0, 1.0);
 
         gl_FragColor = vec4(finalColor, alpha);
     }
