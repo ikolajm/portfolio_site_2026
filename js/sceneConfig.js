@@ -5,7 +5,7 @@
  * Each scene (wave, experience, state) imports only what it needs.
  *
  * StateConfig will be added in a future branch.
- */
+*/
 
 /* --------------------------
    Shared Color Palette
@@ -59,12 +59,12 @@ export const WaveConfig = {
 
     // Particle budget — allocated once at module load, not rebuilt on resize.
     // Mobile gets ~50% fewer particles to reduce CPU work in the position loop.
-    STRAND_PARTICLES: IS_MOBILE ? 160 : 300, // per strand (×2 for both strands)
-    RUNG_PARTICLES:   IS_MOBILE ? 80 : 100, // bridge particles between strands
+    STRAND_PARTICLES: IS_MOBILE ? 200 : 300, // per strand (×2 for both strands)
+    RUNG_PARTICLES:   IS_MOBILE ? 65 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
     // Smaller on mobile reduces GPU fill rate without changing geometry.
-    POINT_SIZE_BASE: IS_MOBILE ? 1.15 : 1.5,
+    POINT_SIZE_BASE: IS_MOBILE ? 1.3 : 1.5,
 
     // --- Particle type appearance ----------------------------------------
     // Rungs
