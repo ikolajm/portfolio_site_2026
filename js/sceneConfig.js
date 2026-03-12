@@ -46,7 +46,7 @@ export const WaveConfig = {
     COLOR: BASE_COLOR,
 
     // XMB diagonal tilt applied to the Points object
-    ROTATION_X: 0.15,
+    ROTATION_X: 0.25,
     ROTATION_Z: 0.15,
 
     // Traversal speed: increasing LOOP_SECONDS slows the spiral orbit;
@@ -55,30 +55,30 @@ export const WaveConfig = {
 
     // Helix shape
     HELIX_RADIUS: 0.5, // orbital radius of each strand from the central axis
-    HELIX_TWISTS: 6,   // number of full rotations along the length
+    HELIX_TWISTS: IS_MOBILE ? 3 : 6,   // number of full rotations along the length
 
     // Particle budget — allocated once at module load, not rebuilt on resize.
-    // Mobile gets ~53% fewer particles to reduce CPU work in the position loop.
-    STRAND_PARTICLES: IS_MOBILE ? 160 : 400, // per strand (×2 for both strands)
-    RUNG_PARTICLES:   IS_MOBILE ? 80 : 200, // bridge particles between strands
+    // Mobile gets ~50% fewer particles to reduce CPU work in the position loop.
+    STRAND_PARTICLES: IS_MOBILE ? 160 : 300, // per strand (×2 for both strands)
+    RUNG_PARTICLES:   IS_MOBILE ? 80 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
     // Smaller on mobile reduces GPU fill rate without changing geometry.
-    POINT_SIZE_BASE: IS_MOBILE ? 1.25 : 1.5,
+    POINT_SIZE_BASE: IS_MOBILE ? 1.15 : 1.5,
 
     // --- Particle type appearance ----------------------------------------
-    // Rungs (bridge particles):  blobby — soft, large, luminous bubbles
-    RUNG_SIZE_MULT: .5,  // rungs rendered larger than POINT_SIZE_BASE
-    RUNG_ALPHA:     0.25, // dense, high center opacity
+    // Rungs
+    RUNG_SIZE_MULT: .25,
+    RUNG_ALPHA:     0.10,
 
-    // Strands (helix spine):     sparkly — tight, precise glints
-    STRAND_SIZE_MULT: 2,    // strands rendered slightly smaller than POINT_SIZE_BASE
-    STRAND_ALPHA:     0.85, // lower base opacity for contrast against rungs
+    // Strands (helix spine):
+    STRAND_SIZE_MULT: 1.25,
+    STRAND_ALPHA:     0.5,
 
     // Orb core — universal bright center applied to all particle types.
     // Wave orbs are prominent: large viewport, user is up-close.
-    ORB_CORE_RADIUS:   0.22, // controls the radius of the white-hot center zone
-    ORB_CORE_STRENGTH: 0.20, // controls how strongly the center bleeds to white
+    ORB_CORE_RADIUS:   0.20, // controls the radius of the white-hot center zone
+    ORB_CORE_STRENGTH: 0.05, // controls how strongly the center bleeds to white
     // --------------------------------------------------------------------
 };
 
@@ -97,20 +97,19 @@ export const ExperienceConfig = {
     POINT_SIZE_BASE: 10.0,
 
     // All logo particles are blobby (aType = 1.0 everywhere).
-    // Logo shapes need soft, luminous blobs for readability — no sparkle spikes.
-    RUNG_SIZE_MULT:   1.5,  // larger than base — luminous soft bubble
-    RUNG_ALPHA:       0.90, // high center opacity for blob fill
+    RUNG_SIZE_MULT:   1.75,
+    RUNG_ALPHA:       0.025,
 
     // Drifter particles (aType = 0.0): medium orbital glows forming the liquid halo
     // These values ARE active — drifters use the strand path in the shared shader
-    STRAND_SIZE_MULT: 1.25, // medium size for the orbital halo cloud
-    STRAND_ALPHA:     0.25, // softer, atmospheric — lighter than anchors
+    STRAND_SIZE_MULT: 1.0, // medium size for the orbital halo cloud
+    STRAND_ALPHA:     0.05, // softer, atmospheric — lighter than anchors
 
     // Orb core — universal bright center applied to all particle types.
     // Experience orbs are slightly dimmer / more distant-feeling than wave orbs
     // (conveyed through opacity and core intensity, not actual z position).
-    ORB_CORE_RADIUS:   0.18, // controls the radius of the white-hot center zone
-    ORB_CORE_STRENGTH: 0.60, // controls how strongly the center bleeds to white
+    ORB_CORE_RADIUS:   0.3, // controls the radius of the white-hot center zone
+    ORB_CORE_STRENGTH: 0.0, // controls how strongly the center bleeds to white
 
     // --- Per-particle jitter distribution --------------------------------
     // Creates the "liquified orb entity" feel through internal population layering.
