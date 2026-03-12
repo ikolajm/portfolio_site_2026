@@ -69,15 +69,15 @@ export const WaveConfig = {
     // --- Particle type appearance ----------------------------------------
     // Rungs (bridge particles):  blobby — soft, large, luminous bubbles
     RUNG_SIZE_MULT: .5,  // rungs rendered larger than POINT_SIZE_BASE
-    RUNG_ALPHA:     0.25, // dense, high center opacity
+    RUNG_ALPHA:     0.2, // dense, high center opacity
 
     // Strands (helix spine):     sparkly — tight, precise glints
     STRAND_SIZE_MULT: 2,    // strands rendered slightly smaller than POINT_SIZE_BASE
-    STRAND_ALPHA:     0.85, // lower base opacity for contrast against rungs
+    STRAND_ALPHA:     0.8, // lower base opacity for contrast against rungs
 
     // Orb core — universal bright center applied to all particle types.
     // Wave orbs are prominent: large viewport, user is up-close.
-    ORB_CORE_RADIUS:   0.22, // controls the radius of the white-hot center zone
+    ORB_CORE_RADIUS:   0.20, // controls the radius of the white-hot center zone
     ORB_CORE_STRENGTH: 0.20, // controls how strongly the center bleeds to white
     // --------------------------------------------------------------------
 };
@@ -98,8 +98,8 @@ export const ExperienceConfig = {
 
     // All logo particles are blobby (aType = 1.0 everywhere).
     // Logo shapes need soft, luminous blobs for readability — no sparkle spikes.
-    RUNG_SIZE_MULT:   1.5,  // larger than base — luminous soft bubble
-    RUNG_ALPHA:       0.90, // high center opacity for blob fill
+    RUNG_SIZE_MULT:   2.0,  // larger than base — luminous soft bubble
+    RUNG_ALPHA:       0.20, // high center opacity for blob fill
 
     // Drifter particles (aType = 0.0): medium orbital glows forming the liquid halo
     // These values ARE active — drifters use the strand path in the shared shader
@@ -110,7 +110,7 @@ export const ExperienceConfig = {
     // Experience orbs are slightly dimmer / more distant-feeling than wave orbs
     // (conveyed through opacity and core intensity, not actual z position).
     ORB_CORE_RADIUS:   0.18, // controls the radius of the white-hot center zone
-    ORB_CORE_STRENGTH: 0.60, // controls how strongly the center bleeds to white
+    ORB_CORE_STRENGTH: 0.20, // controls how strongly the center bleeds to white
 
     // --- Per-particle jitter distribution --------------------------------
     // Creates the "liquified orb entity" feel through internal population layering.

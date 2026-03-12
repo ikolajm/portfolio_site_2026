@@ -164,7 +164,6 @@ const material = new THREE.ShaderMaterial({
     },
     transparent: true,
     depthWrite:  false,
-    blending:    THREE.AdditiveBlending,
 });
 
 /* --------------------------

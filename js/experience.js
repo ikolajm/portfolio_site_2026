@@ -19,7 +19,7 @@ const MORPH_SPEED = 7;
 const NOISE_RADIUS = 120;
 // -- Camera, Position
 const BBOX_SIZE = 275;
-const CAMERA_DISTANCE = 350;
+const CAMERA_DISTANCE = 375;
 
 /* --------------------------
   State
@@ -71,21 +71,6 @@ container.appendChild(renderer.domElement);
 
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-
-/* --------------------------
-  Orb Trails
---------------------------- */
-// const afterimagePass = new AfterimagePass();
-// afterimagePass.uniforms['damp'].value = .5;
-// composer.addPass(afterimagePass);
-
-// const bloomPass = new UnrealBloomPass(
-//     new THREE.Vector2(innerWidth, innerHeight),
-//     OrbConfig.BLOOM_STRENGTH,
-//     OrbConfig.BLOOM_RADIUS,
-//     OrbConfig.BLOOM_THRESHOLD
-// );
-// composer.addPass(bloomPass);
 
 function resize() {
   const r = container.getBoundingClientRect();
@@ -284,7 +269,6 @@ function createPoints(initial) {
     },
     transparent: true,
     depthWrite:  false,
-    blending:    THREE.AdditiveBlending,
   });
 
   pointSystem = new THREE.Points(g, mat);
