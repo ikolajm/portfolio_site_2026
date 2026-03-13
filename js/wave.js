@@ -14,20 +14,22 @@ import { particleVertexShader, particleFragmentShader } from "./particleShader.j
 /* --------------------------
    Config (derived from WaveConfig)
 --------------------------- */
-const HELIX_LENGTH   = computeHelixLength();         // responsive: 2.5× visible frustum width
-const WAVE_SPEED     = (Math.PI * 2) / WaveConfig.LOOP_SECONDS; // rad/s; controls orbit traversal
-const STRAND_PARTICLES = WaveConfig.STRAND_PARTICLES;
-const RUNG_PARTICLES   = WaveConfig.RUNG_PARTICLES;
-const PARTICLE_COUNT   = STRAND_PARTICLES * 2 + RUNG_PARTICLES;
+// helixLength is mutable so rebuildGeometry() can update it; getHelixPos reads it by closure
+let helixLength          = computeHelixLength(); // responsive: 2.5× visible frustum width
+const WAVE_SPEED         = (Math.PI * 2) / WaveConfig.LOOP_SECONDS; // rad/s; controls orbit traversal
+const STRAND_PARTICLES   = WaveConfig.STRAND_PARTICLES;
+const RUNG_PARTICLES     = WaveConfig.RUNG_PARTICLES;
+const PARTICLE_COUNT     = STRAND_PARTICLES * 2 + RUNG_PARTICLES;
 
 /* --------------------------
    Three.js Setup
 --------------------------- */
 const scene = new THREE.Scene();
 
+// Aspect is locked to the initial innerWidth/innerHeight so URL-bar retraction
+// (height-only resize) never changes the camera frustum. See the resize handler below.
 const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight);
 camera.position.set(4, 2, 8);
-camera.aspect = innerWidth / innerHeight;
 camera.updateProjectionMatrix();
 camera.lookAt(scene.position);
 
@@ -47,9 +49,7 @@ composer.addPass(new RenderPass(scene, camera));
    Helix Math
 --------------------------- */
 function getHelixPos(t, strand, time) {
-    const x     = (t - 0.5) * HELIX_LENGTH;
-    // WAVE_SPEED derived from WaveConfig.LOOP_SECONDS — adjust that value to
-    // speed up or slow down the spiral traversal
+    const x     = (t - 0.5) * helixLength; // reads the mutable helixLength
     const angle = t * Math.PI * 2 * WaveConfig.HELIX_TWISTS
                   + strand * Math.PI
                   + time * WAVE_SPEED;
@@ -61,75 +61,85 @@ function getHelixPos(t, strand, time) {
 }
 
 /* --------------------------
-   Geometry & Per-Particle Metadata
+   Geometry Builder
+   Extracted so it can be called both at startup and by rebuildGeometry().
 --------------------------- */
-const geometry  = new THREE.BufferGeometry();
-const positions = new Float32Array(PARTICLE_COUNT * 3);
-const colors    = new Float32Array(PARTICLE_COUNT * 3);
-const types     = new Float32Array(PARTICLE_COUNT);   // 0.0 = strand, 1.0 = rung
-// Per-particle: [tParam, helixIndex, noisePhase, noiseAmp]
-const meta      = new Float32Array(PARTICLE_COUNT * 4);
+function buildWaveGeometry() {
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const colors    = new Float32Array(PARTICLE_COUNT * 3);
+    const types     = new Float32Array(PARTICLE_COUNT);   // 0.0 = strand, 1.0 = rung
+    // Per-particle: [tParam, helixIndex, noisePhase, noiseAmp]
+    const meta      = new Float32Array(PARTICLE_COUNT * 4);
 
-let idx = 0;
+    let idx = 0;
 
-// Strand particles (2 strands)
-for (let strand = 0; strand < 2; strand++) {
-    for (let i = 0; i < STRAND_PARTICLES; i++) {
+    // Strand particles (2 strands)
+    for (let strand = 0; strand < 2; strand++) {
+        for (let i = 0; i < STRAND_PARTICLES; i++) {
+            const t          = Math.random();
+            const noisePhase = Math.random() * Math.PI * 2;
+            const noiseAmp   = 0.02 + Math.random() * 0.15;
+            const [x, y, z]  = getHelixPos(t, strand, 0);
+            const scatter    = 0.12;
+
+            positions[idx * 3]     = x + (Math.random() - 0.5) * scatter;
+            positions[idx * 3 + 1] = y + (Math.random() - 0.5) * scatter;
+            positions[idx * 3 + 2] = z + (Math.random() - 0.5) * scatter;
+
+            types[idx] = 0; // strand particle — rendered as sparkle
+
+            meta[idx * 4]     = t;
+            meta[idx * 4 + 1] = strand;
+            meta[idx * 4 + 2] = noisePhase;
+            meta[idx * 4 + 3] = noiseAmp;
+
+            idx++;
+        }
+    }
+
+    // Rung / bridge particles connecting the two strands
+    for (let i = 0; i < RUNG_PARTICLES; i++) {
         const t          = Math.random();
+        const lerpAlong  = Math.random();
         const noisePhase = Math.random() * Math.PI * 2;
-        const noiseAmp   = 0.02 + Math.random() * 0.15;
-        const [x, y, z]  = getHelixPos(t, strand, 0);
-        const scatter    = 0.12;
+        const noiseAmp   = 0.02 + Math.random() * 0.1;
+        const [x0, y0, z0] = getHelixPos(t, 0, 0);
+        const [x1, y1, z1] = getHelixPos(t, 1, 0);
 
-        positions[idx * 3]     = x + (Math.random() - 0.5) * scatter;
-        positions[idx * 3 + 1] = y + (Math.random() - 0.5) * scatter;
-        positions[idx * 3 + 2] = z + (Math.random() - 0.5) * scatter;
+        positions[idx * 3]     = x0 + (x1 - x0) * lerpAlong;
+        positions[idx * 3 + 1] = y0 + (y1 - y0) * lerpAlong;
+        positions[idx * 3 + 2] = z0 + (z1 - z0) * lerpAlong;
 
-        types[idx] = 0; // strand particle — rendered as sparkle
+        types[idx] = 1; // rung particle — rendered as blobby bubble
 
         meta[idx * 4]     = t;
-        meta[idx * 4 + 1] = strand;
+        meta[idx * 4 + 1] = 2 + lerpAlong; // 2+ flags rung; fractional part = lerp
         meta[idx * 4 + 2] = noisePhase;
         meta[idx * 4 + 3] = noiseAmp;
 
         idx++;
     }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute("aType",    new THREE.BufferAttribute(types, 1));
+
+    return { geometry, meta };
 }
 
-// Rung / bridge particles connecting the two strands
-for (let i = 0; i < RUNG_PARTICLES; i++) {
-    const t          = Math.random();
-    const lerpAlong  = Math.random();
-    const noisePhase = Math.random() * Math.PI * 2;
-    const noiseAmp   = 0.02 + Math.random() * 0.1;
-    const [x0, y0, z0] = getHelixPos(t, 0, 0);
-    const [x1, y1, z1] = getHelixPos(t, 1, 0);
+/* --------------------------
+   Geometry & Per-Particle Metadata (initial build)
+--------------------------- */
+let { geometry, meta } = buildWaveGeometry();
 
-    positions[idx * 3]     = x0 + (x1 - x0) * lerpAlong;
-    positions[idx * 3 + 1] = y0 + (y1 - y0) * lerpAlong;
-    positions[idx * 3 + 2] = z0 + (z1 - z0) * lerpAlong;
-
-    types[idx] = 1; // rung particle — rendered as blobby bubble
-
-    meta[idx * 4]     = t;
-    meta[idx * 4 + 1] = 2 + lerpAlong; // 2+ flags rung; fractional part = lerp
-    meta[idx * 4 + 2] = noisePhase;
-    meta[idx * 4 + 3] = noiseAmp;
-
-    idx++;
-}
-
-geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-geometry.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
-geometry.setAttribute("aType",    new THREE.BufferAttribute(types, 1));
-
-const posAttr   = geometry.attributes.position;
-const colorAttr = geometry.attributes.color;
+let posAttr   = geometry.attributes.position;
+let colorAttr = geometry.attributes.color;
 
 /* --------------------------
    Color Init (colorField)
 --------------------------- */
-const baseHSL         = createBaseHSL(WaveConfig.COLOR);
+const baseHSL          = createBaseHSL(WaveConfig.COLOR);
 const lightnessOffsets = createLightnessOffsets(PARTICLE_COUNT, ColorFieldConfig.LIGHTNESS_VARIATION_RANGE);
 
 // Seed initial colors so first frame isn't blank
@@ -161,6 +171,8 @@ const material = new THREE.ShaderMaterial({
         // Orb core — universal bright center for all particle types
         uCoreRadius:    { value: WaveConfig.ORB_CORE_RADIUS },
         uCoreStrength:  { value: WaveConfig.ORB_CORE_STRENGTH },
+        // HiDPI compensation: keeps CSS-pixel size consistent across 1×/2× DPR devices
+        uPixelRatio:    { value: renderer.getPixelRatio() },
     },
     transparent: true,
     depthWrite:  false,
@@ -175,15 +187,69 @@ points.rotation.z = WaveConfig.ROTATION_Z;
 scene.add(points);
 
 /* --------------------------
-   Resize
+   Geometry Rebuild
+   Called by the debounced resize handler when viewport WIDTH changes.
+   Recomputes helixLength for the current viewport, rebuilds BufferGeometry,
+   swaps it onto the Points object, and disposes the old one to free GPU memory.
 --------------------------- */
+function rebuildGeometry() {
+    helixLength = computeHelixLength(); // re-reads current innerWidth / innerHeight
+
+    const old = points.geometry;
+    const built = buildWaveGeometry();
+
+    // Update live refs used by the animation loop
+    meta      = built.meta;
+    posAttr   = built.geometry.attributes.position;
+    colorAttr = built.geometry.attributes.color;
+
+    // Seed colors on the fresh geometry before the next frame
+    applyColorField({
+        positions: posAttr.array,
+        colors:    colorAttr.array,
+        baseHSL,
+        lightnessOffsets,
+        time:      getElapsedTime(),
+        config:    ColorFieldConfig
+    });
+    colorAttr.needsUpdate = true;
+
+    points.geometry = built.geometry;
+    old.dispose(); // release GPU buffer memory
+}
+
+/* --------------------------
+   Resize
+   Only responds to WIDTH changes — height-only events (e.g. iOS URL-bar
+   retraction) are ignored so the wave never shifts in perceived size when
+   the browser chrome collapses during scroll.
+
+   Camera + renderer update immediately on width change; geometry rebuilds
+   3 s after the last width-resize event to avoid thrashing during window drags.
+--------------------------- */
+let cachedWidth         = innerWidth;
+let geometryRebuildTimer = null;
+
 window.addEventListener("resize", () => {
+    const widthChanged = Math.abs(innerWidth - cachedWidth) > 5;
+
+    // Height-only change (e.g. mobile URL-bar hide) — skip entirely to prevent
+    // the frustum shift that makes the wave appear to jump in size.
+    if (!widthChanged) return;
+
+    cachedWidth = innerWidth;
+
+    // Immediate visual update: camera frustum + renderer canvas dimensions
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
     composer.setSize(innerWidth, innerHeight);
-    // Note: HELIX_LENGTH and particle count are startup-computed and do not rebuild on resize.
-    // Resize only updates the camera frustum and renderer/composer dimensions.
+    material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
+
+    // Debounced geometry rebuild — waits 3 s after the last width-resize so
+    // dragging the window edge doesn't thrash GPU allocations.
+    clearTimeout(geometryRebuildTimer);
+    geometryRebuildTimer = setTimeout(rebuildGeometry, 3000);
 });
 
 /* --------------------------
@@ -192,7 +258,7 @@ window.addEventListener("resize", () => {
 let lastColorUpdate = 0;
 
 function animationLoop() {
-    const time    = getElapsedTime();
+    const time     = getElapsedTime();
     const posArray = posAttr.array;
 
     // -- Update helix positions
