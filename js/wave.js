@@ -161,6 +161,8 @@ const material = new THREE.ShaderMaterial({
         // Orb core — universal bright center for all particle types
         uCoreRadius:    { value: WaveConfig.ORB_CORE_RADIUS },
         uCoreStrength:  { value: WaveConfig.ORB_CORE_STRENGTH },
+        // HiDPI compensation: keeps CSS-pixel size consistent across 1×/2× DPR devices
+        uPixelRatio:    { value: renderer.getPixelRatio() },
     },
     transparent: true,
     depthWrite:  false,
@@ -182,6 +184,7 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
     composer.setSize(innerWidth, innerHeight);
+    material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
     // Note: HELIX_LENGTH and particle count are startup-computed and do not rebuild on resize.
     // Resize only updates the camera frustum and renderer/composer dimensions.
 });

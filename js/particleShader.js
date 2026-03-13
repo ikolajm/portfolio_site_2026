@@ -23,6 +23,7 @@ export const particleVertexShader = `
     uniform float uPointSizeBase;   // base size multiplier (desktop vs mobile via config)
     uniform float uRungSizeMult;    // rungs are blobby — larger than base
     uniform float uStrandSizeMult;  // strands are tight — slightly smaller than base
+    uniform float uPixelRatio;      // renderer pixel ratio — compensates for HiDPI drawing buffers
 
     void main() {
         vColor = color;
@@ -31,8 +32,10 @@ export const particleVertexShader = `
         vec4  mvPosition = modelViewMatrix * vec4(position, 1.0);
         float sizeMult   = mix(uStrandSizeMult, uRungSizeMult, aType);
 
-        // Depth-aware sizing: particles closer to camera appear larger
-        gl_PointSize = max(1.0, uPointSizeBase * sizeMult * (280.0 / -mvPosition.z));
+        // Depth-aware sizing: particles closer to camera appear larger.
+        // Multiplied by uPixelRatio so gl_PointSize (in physical drawing-buffer pixels)
+        // maps to consistent CSS pixels across 1×/2× DPR devices.
+        gl_PointSize = max(1.0, uPointSizeBase * sizeMult * (280.0 / -mvPosition.z) * uPixelRatio);
         gl_Position  = projectionMatrix * mvPosition;
     }
 `;

@@ -63,8 +63,10 @@ export const WaveConfig = {
     RUNG_PARTICLES:   IS_MOBILE ? 65 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
-    // Smaller on mobile reduces GPU fill rate without changing geometry.
-    POINT_SIZE_BASE: IS_MOBILE ? 1.3 : 1.5,
+    // uPixelRatio in the shader handles DPR compensation, so this value is
+    // purely an aesthetic tuning knob — reduce mobile below 1.5 if particles
+    // look disproportionately large on the smaller viewport.
+    POINT_SIZE_BASE: IS_MOBILE ? 1.5 : 1.5,
 
     // --- Particle type appearance ----------------------------------------
     // Rungs
