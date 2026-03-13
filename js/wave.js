@@ -177,7 +177,12 @@ scene.add(points);
 /* --------------------------
    Resize
 --------------------------- */
+let cachedWidth         = innerWidth;
 window.addEventListener("resize", () => {
+    const widthChanged = Math.abs(innerWidth - cachedWidth) > 5;
+    if (!widthChanged) return;
+    cachedWidth = innerWidth;
+    
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
