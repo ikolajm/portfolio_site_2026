@@ -46,7 +46,7 @@ export const WaveConfig = {
     COLOR: BASE_COLOR,
 
     // XMB diagonal tilt applied to the Points object
-    ROTATION_X: 0.25,
+    ROTATION_X: 0.15,
     ROTATION_Z: 0.15,
 
     // Traversal speed: increasing LOOP_SECONDS slows the spiral orbit;
@@ -63,10 +63,8 @@ export const WaveConfig = {
     RUNG_PARTICLES:   IS_MOBILE ? 65 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
-    // uPixelRatio in the shader handles DPR compensation, so this value is
-    // purely an aesthetic tuning knob — reduce mobile below 1.5 if particles
-    // look disproportionately large on the smaller viewport.
-    POINT_SIZE_BASE: IS_MOBILE ? 1.5 : 1.5,
+    // Smaller on mobile reduces GPU fill rate without changing geometry.
+    POINT_SIZE_BASE: 1.5,
 
     // --- Particle type appearance ----------------------------------------
     // Rungs

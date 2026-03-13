@@ -33,7 +33,7 @@ camera.position.set(4, 2, 8);
 camera.updateProjectionMatrix();
 camera.lookAt(scene.position);
 
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.LinearToneMapping;
@@ -192,64 +192,19 @@ scene.add(points);
    Recomputes helixLength for the current viewport, rebuilds BufferGeometry,
    swaps it onto the Points object, and disposes the old one to free GPU memory.
 --------------------------- */
-function rebuildGeometry() {
-    helixLength = computeHelixLength(); // re-reads current innerWidth / innerHeight
-
-    const old = points.geometry;
-    const built = buildWaveGeometry();
-
-    // Update live refs used by the animation loop
-    meta      = built.meta;
-    posAttr   = built.geometry.attributes.position;
-    colorAttr = built.geometry.attributes.color;
-
-    // Seed colors on the fresh geometry before the next frame
-    applyColorField({
-        positions: posAttr.array,
-        colors:    colorAttr.array,
-        baseHSL,
-        lightnessOffsets,
-        time:      getElapsedTime(),
-        config:    ColorFieldConfig
-    });
-    colorAttr.needsUpdate = true;
-
-    points.geometry = built.geometry;
-    old.dispose(); // release GPU buffer memory
-}
-
-/* --------------------------
-   Resize
-   Only responds to WIDTH changes — height-only events (e.g. iOS URL-bar
-   retraction) are ignored so the wave never shifts in perceived size when
-   the browser chrome collapses during scroll.
-
-   Camera + renderer update immediately on width change; geometry rebuilds
-   3 s after the last width-resize event to avoid thrashing during window drags.
---------------------------- */
 let cachedWidth         = innerWidth;
-let geometryRebuildTimer = null;
-
 window.addEventListener("resize", () => {
     const widthChanged = Math.abs(innerWidth - cachedWidth) > 5;
-
-    // Height-only change (e.g. mobile URL-bar hide) — skip entirely to prevent
-    // the frustum shift that makes the wave appear to jump in size.
     if (!widthChanged) return;
-
     cachedWidth = innerWidth;
 
-    // Immediate visual update: camera frustum + renderer canvas dimensions
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
     composer.setSize(innerWidth, innerHeight);
     material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
-
-    // Debounced geometry rebuild — waits 3 s after the last width-resize so
-    // dragging the window edge doesn't thrash GPU allocations.
-    clearTimeout(geometryRebuildTimer);
-    geometryRebuildTimer = setTimeout(rebuildGeometry, 3000);
+    // Note: HELIX_LENGTH and particle count are startup-computed and do not rebuild on resize.
+    // Resize only updates the camera frustum and renderer/composer dimensions.
 });
 
 /* --------------------------

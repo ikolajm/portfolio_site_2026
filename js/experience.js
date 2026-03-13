@@ -61,7 +61,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, 1, 1, 2000);
 camera.position.z = CAMERA_DISTANCE;
 
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.LinearToneMapping;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
