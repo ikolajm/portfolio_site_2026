@@ -31,7 +31,7 @@ camera.aspect = innerWidth / innerHeight;
 camera.updateProjectionMatrix();
 camera.lookAt(scene.position);
 
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.LinearToneMapping;
