@@ -216,7 +216,7 @@ function initProjectFeature() {
 }
 
 gsap.registerPlugin(ScrollTrigger);
-window.onload = () => {
+window.addEventListener("pageshow", () => {
     const bg = initBackground(document.querySelector('.inner-content'));
     initLoadIn();
     initHeroAnimation();
@@ -227,4 +227,4 @@ window.onload = () => {
     initInternalLinks();
     initContactAnimation();
     bg.initScrollTriggers(ScrollTrigger);
-}
+});
