@@ -46,7 +46,7 @@ export const WaveConfig = {
     COLOR: BASE_COLOR,
 
     // XMB diagonal tilt applied to the Points object
-    ROTATION_X: 0.25,
+    ROTATION_X: 0.15,
     ROTATION_Z: 0.15,
 
     // Traversal speed: increasing LOOP_SECONDS slows the spiral orbit;
