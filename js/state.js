@@ -95,13 +95,21 @@ scene.add(svgGroup);
 // Animation loop
 // ------------------
 
-function animate() {
-  renderer.render(scene, camera);
+let animId = null;
 
-  // Rotate out group 
+function animate() {
   svgGroup.rotation.y += 0.01;
-  
-  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+  animId = requestAnimationFrame(animate);
 }
 
-animate();
+// Visibility-gated render — pauses when the contact section is off-screen
+const observer = new IntersectionObserver(([entry]) => {
+  if (entry.isIntersecting && animId === null) {
+    animate();
+  } else if (!entry.isIntersecting && animId !== null) {
+    cancelAnimationFrame(animId);
+    animId = null;
+  }
+}, { threshold: 0.01 });
+observer.observe(container);

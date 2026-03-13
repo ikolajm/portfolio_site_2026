@@ -13,18 +13,15 @@
 }
 
 .bg-container {
-    position: absolute;
+    /* Fixed to the viewport so icons fill the screen without needing
+       to extend beyond the inner-content height. Sections sit at z-index 1
+       so they always paint above this layer. */
+    position: fixed;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
-    width: calc(100vw + 48px);
-    left: -24px;
-    height: calc(100% + max(2rem, 15vh));
-    top: calc(-1 * (max(2rem, 15vh)));
-    /* Vertical fade — transparent at both edges, fully opaque in the middle.
-       Single 4-stop gradient avoids mask-composite cross-browser issues.
-       Adjust the 15% / 85% stops to taste. */
+    /* Vertical fade — transparent at both edges, fully opaque in the middle. */
     -webkit-mask-image: linear-gradient(
         to bottom,
         transparent 0%,
@@ -51,22 +48,18 @@
     position: absolute;
     top: 0;
     left: 0;
-    /* width and height set by svgBG.js inline styles */
-    animation: bg-scroll var(--scroll-duration, 10s) linear infinite;
-    will-change: transform;
-    /* Force GPU layer promotion on older Android WebViews that don't
-       honour will-change alone */
-    backface-visibility: hidden;
+    /* width and height set by svgBG.js inline styles; no animation on the
+       container — individual icons carry their own bg-float keyframe. */
 }
 
-@keyframes bg-scroll {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
+@keyframes bg-float {
+    0%, 100% { transform: scale(var(--icon-scale)) translateY(0px); }
+    50%       { transform: scale(var(--icon-scale)) translateY(-8px); }
 }
 
 /* Users who prefer reduced motion: belt-and-suspenders alongside the JS guard */
 @media (prefers-reduced-motion: reduce) {
-    .bg-inner { animation-play-state: paused !important; }
+    .bg-icon { animation-play-state: paused !important; }
 }
 
 .bg-icon {
@@ -75,8 +68,9 @@
     width: 48px;
     height: 48px;
     transform-origin: center;
-    /* Self-contained layout — nothing inside affects external flow.
-       Reduces browser paint scope for the 70–100+ elements per layer. */
+    /* GPU layer promotion — each icon runs its own bg-float transform animation. */
+    will-change: transform;
+    /* Self-contained layout — nothing inside affects external flow. */
     contain: layout style;
     /* Shared mask properties — background-color and mask-image URL
        are set per-icon by svgBG.js. background-color is the icon colour;
@@ -163,6 +157,7 @@ main {
 
 main section {
     position: relative;
+    z-index: 1; /* Paint above the position:fixed bg-container (z-index: 0) */
     margin-bottom: max(2rem, 15vh);
 }
 main section#projects {
