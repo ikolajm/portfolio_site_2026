@@ -64,7 +64,7 @@ export const WaveConfig = {
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
     // Smaller on mobile reduces GPU fill rate without changing geometry.
-    POINT_SIZE_BASE: IS_MOBILE ? 1.3 : 1.5,
+    POINT_SIZE_BASE: 1.5,
 
     // --- Particle type appearance ----------------------------------------
     // Rungs

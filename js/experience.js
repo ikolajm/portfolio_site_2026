@@ -79,6 +79,10 @@ function resize() {
 
   renderer.setSize(r.width, r.height);
   composer.setSize(r.width, r.height);
+
+  if (pointSystem) {
+    pointSystem.material.uniforms.uPixelRatio.value = renderer.getPixelRatio();
+  }
 }
 resize();
 window.addEventListener("resize", resize);
@@ -266,6 +270,8 @@ function createPoints(initial) {
       // Orb core — universal bright center for all particle types
       uCoreRadius:   { value: ExperienceConfig.ORB_CORE_RADIUS },
       uCoreStrength: { value: ExperienceConfig.ORB_CORE_STRENGTH },
+      // HiDPI compensation: keeps CSS-pixel size consistent across 1×/2× DPR devices
+      uPixelRatio:   { value: renderer.getPixelRatio() },
     },
     transparent: true,
     depthWrite:  false,
