@@ -10,7 +10,6 @@ export function initBackground(container, options = {}) {
 
   // ─── Config ──────────────────────────────────────────────────────────────
 
-  let observer;
   const config = {
     iconColor: "#E4E6E7",
 
@@ -105,7 +104,6 @@ export function initBackground(container, options = {}) {
   let varTable = buildVarTable(geo.cols * geo.rows)
 
   initLayers(geo, varTable)
-  initVisibilityPause()
   initResizeObserver()
 
   return { setIconSet, setIconColor, destroy, initScrollTriggers }
@@ -114,21 +112,23 @@ export function initBackground(container, options = {}) {
   // Returns a plain object so it can be recomputed on resize without closures.
 
   function buildGeometry() {
-    const rect       = container.getBoundingClientRect()
-    const containerW = rect.width  || window.innerWidth
-    const containerH = rect.height || window.innerHeight
+    // Use viewport dimensions — bgContainer is position:fixed so it always
+    // covers exactly the viewport, not the (much taller) inner-content height.
+    const containerW = window.innerWidth
+    const containerH = window.innerHeight
 
-    // Expand the bg-layer so its rotated footprint fully covers the container.
-    const layerW  = containerW + containerH * sinA + 2 * config.spacingX
-    const layerH  = containerH + containerW * sinA + 2 * config.spacingY
-    const offsetX = -((layerW - containerW) / 2)
-    const offsetY = -((layerH - containerH) / 2)
+    // One spacing unit of padding on each side so the rotated layer fully
+    // bleeds to the viewport edges. No 2× doubling needed — there is no
+    // horizontal scroll loop to maintain.
+    const layerW  = containerW + 2 * config.spacingX
+    const layerH  = containerH + 2 * config.spacingY
+    const offsetX = -config.spacingX
+    const offsetY = -config.spacingY
 
-    const cols      = Math.ceil(layerW / config.spacingX) + 1
-    const rows      = Math.ceil(layerH / config.spacingY) + 1
-    const gridWidth = cols * config.spacingX   // X-axis double-buffer period
+    const cols = Math.ceil(layerW / config.spacingX) + 1
+    const rows = Math.ceil(layerH / config.spacingY) + 1
 
-    return { containerW, containerH, layerW, layerH, offsetX, offsetY, cols, rows, gridWidth }
+    return { containerW, containerH, layerW, layerH, offsetX, offsetY, cols, rows }
   }
 
   // ─── Variation table ─────────────────────────────────────────────────────
@@ -153,17 +153,15 @@ export function initBackground(container, options = {}) {
 
   // ─── Layer setup ─────────────────────────────────────────────────────────
 
-  function initLayers({ layerW, layerH, offsetX, offsetY, cols, rows, gridWidth }, vars) {
+  function initLayers({ layerW, layerH, offsetX, offsetY, cols, rows }, vars) {
 
     const currentSet = config.iconSets[state.activeSet] ?? Object.values(config.iconSets)[0]
 
-    config.layers.forEach((layerConfig, layerIndex) => {
+    config.layers.forEach((layerConfig) => {
 
       const layerEl = document.createElement('div')
       layerEl.className = 'bg-layer'
 
-      // Sizing and rotation applied as inline styles — CSS carries only
-      // overflow and pointer-events so these are easy to override.
       layerEl.style.cssText = `
         position: absolute;
         width: ${layerW}px;
@@ -179,22 +177,12 @@ export function initBackground(container, options = {}) {
 
       const innerEl = document.createElement('div')
       innerEl.className = 'bg-inner'
-      // JS owns width/height — CSS provides animation + will-change only.
-      innerEl.style.width  = `${2 * gridWidth}px`
+      innerEl.style.width  = `${layerW}px`
       innerEl.style.height = `${layerH}px`
-
-      // Stagger each layer's starting phase so they don't all begin at
-      // translateX(-50%) simultaneously — which causes all icons to visually
-      // stack on load before slowly drifting apart.
-      // Layer 0 → phase 0, Layer 1 → phase 33%, Layer 2 → phase 66%.
-      const duration    = gridWidth / layerConfig.speed
-      const phaseOffset = layerIndex / config.layers.length   // 0, 0.33, 0.66…
-      innerEl.style.setProperty('--scroll-duration', `${duration}s`)
-      innerEl.style.animationDelay = `${-(duration * phaseOffset)}s`
       layerEl.appendChild(innerEl)
 
-      const colA = []
-      const colB = []
+      // Flat icon list — no colA/colB split since there is no scroll loop seam.
+      const icons = []
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
@@ -208,33 +196,14 @@ export function initBackground(container, options = {}) {
           const baseX = col * config.spacingX
           const baseY = row * config.spacingY
 
-          // Column A — left half of bg-inner (visible at translateX(0))
-          const srcA = randomFrom(currentSet)
-          const elA  = makeIcon(srcA, baseX + jitterX, baseY + jitterY, scale, opacity)
-          innerEl.appendChild(elA)
-          colA.push({ el: elA, opacity, src: srcA })
-
-          // Column B — right half, offset by gridWidth; scrolls into view first.
-          // Same jitter ensures the seam tiles perfectly.
-          const srcB = randomFrom(currentSet)
-          const elB  = makeIcon(srcB, baseX + gridWidth + jitterX, baseY + jitterY, scale, opacity)
-          innerEl.appendChild(elB)
-          colB.push({ el: elB, opacity, src: srcB })
+          const src = randomFrom(currentSet)
+          const el  = makeIcon(src, baseX + jitterX, baseY + jitterY, scale, opacity)
+          innerEl.appendChild(el)
+          icons.push({ el, opacity, src })
         }
       }
 
-      const layer = { innerEl, colA, colB, pendingIconSet: null }
-
-      // At each loop boundary, Column B is off-screen (translateX(-50%) → reset),
-      // so we swap its icons invisibly while Column A is fully visible.
-      innerEl.addEventListener('animationiteration', () => {
-        if (!layer.pendingIconSet) return
-        const nextSet = layer.pendingIconSet
-        layer.colB.forEach(icon => swapIcon(icon, nextSet))
-        layer.pendingIconSet = null
-      })
-
-      state.layers.push(layer)
+      state.layers.push({ innerEl, icons })
     })
   }
 
@@ -247,15 +216,22 @@ export function initBackground(container, options = {}) {
   function makeIcon(src, x, y, scale, opacity) {
     const el     = document.createElement('div')
     el.className = 'bg-icon'
+    // Float duration and a randomised negative delay give each icon an
+    // independent phase so the whole grid doesn't pulse in unison.
+    const floatDuration = 6 + Math.random() * 6    // 6 – 12 s per cycle
+    const floatDelay    = -(Math.random() * 12)     // randomise start phase
     el.style.cssText = [
       `left: ${x}px`,
       `top: ${y}px`,
-      `transform: scale(${scale})`,
       `opacity: ${opacity}`,
       `background-color: ${config.iconColor}`,
       `-webkit-mask-image: url("${src}")`,
-      `mask-image: url("${src}")`
+      `mask-image: url("${src}")`,
+      `animation: bg-float ${floatDuration}s ${floatDelay}s ease-in-out infinite`,
     ].join(';')
+    // --icon-scale is read by the bg-float keyframe so transform is fully
+    // animation-controlled (no inline transform that could conflict).
+    el.style.setProperty('--icon-scale', scale)
     return el
   }
 
@@ -284,7 +260,7 @@ export function initBackground(container, options = {}) {
   function setIconColor(color) {
     config.iconColor = color
     state.layers.forEach(layer => {
-      ;[...layer.colA, ...layer.colB].forEach(icon => {
+      layer.icons.forEach(icon => {
         icon.el.style.backgroundColor = color
       })
     })
@@ -294,11 +270,8 @@ export function initBackground(container, options = {}) {
     const set = config.iconSets[name]
     if (!set) { console.warn(`svgBG: unknown icon set "${name}"`); return }
     state.activeSet = name
-    // Swap immediately with a fade — do not defer to animationiteration.
-    // The loop period can be many minutes with large spacingX values, so
-    // pendingIconSet would never resolve during normal browsing.
     state.layers.forEach(layer => {
-      ;[...layer.colA, ...layer.colB].forEach(icon => swapIcon(icon, set))
+      layer.icons.forEach(icon => swapIcon(icon, set))
     })
   }
 
@@ -335,21 +308,9 @@ export function initBackground(container, options = {}) {
     })
   }
 
-  // ─── Visibility pause (IntersectionObserver) ─────────────────────────────
-
-  function initVisibilityPause() {
-    observer = new IntersectionObserver(([entry]) => {
-      const playState = entry.isIntersecting ? 'running' : 'paused'
-      state.layers.forEach(l => { l.innerEl.style.animationPlayState = playState })
-    }, { threshold: 0, rootMargin: '150px' })  // start 150px before entering view
-
-    observer.observe(container)
-  }
-
   // ─── Cleanup ─────────────────────────────────────────────────────────────
 
   function destroy() {
-    observer?.disconnect()
     resizeObserver?.disconnect()
     clearTimeout(resizeTimer)
     bgContainer.remove()
