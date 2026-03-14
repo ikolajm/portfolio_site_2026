@@ -12,7 +12,23 @@ export function initLoadIn() {
             opacity: 1,
             ease: ANIMATION_CONFIG.pageTransitionEase,
             duration: ANIMATION_CONFIG.fadeDuration,
-        });
+        })
+        .to(".svgBG", {
+            opacity: 1,
+            ease: ANIMATION_CONFIG.pageTransitionEase,
+            duration: ANIMATION_CONFIG.fadeDuration,
+        })
+    });
+}
+
+export function initParallaxScroll() {
+    const maxShift = 150;
+    const svgBG = document.querySelector('.svgBG');
+    window.addEventListener("scroll", () => {
+      const scroll = window.scrollY;
+      const shift = Math.min(scroll * 0.05, maxShift);
+  
+      svgBG.style.transform = `translateY(-${shift}px)`;
     });
 }
 

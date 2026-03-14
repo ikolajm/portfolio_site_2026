@@ -1,5 +1,5 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
 
 function initHeroAnimation() {
@@ -66,7 +66,7 @@ function initHeroAnimation() {
 function addMediaReveal(tl, mediaEl, expandEl, expandProp) {
     return tl
         .to(mediaEl, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
-        .to(expandEl, { duration: ANIMATION_CONFIG.expandDuration, [expandProp]: "100%" }, "<");
+        .to(expandEl, { duration: ANIMATION_CONFIG.expandDurationLong, [expandProp]: "100%" }, "<");
 }
 
 function initAboutAnimation() {
@@ -217,7 +217,6 @@ function initProjectFeature() {
 
 gsap.registerPlugin(ScrollTrigger);
 window.addEventListener("pageshow", () => {
-    const bg = initBackground(document.querySelector('.inner-content'));
     initLoadIn();
     initHeroAnimation();
     initAboutAnimation();
@@ -226,5 +225,7 @@ window.addEventListener("pageshow", () => {
     initProjectFeature();
     initInternalLinks();
     initContactAnimation();
+    const bg = initBackground(document.querySelector('.svgBG'));
+    initParallaxScroll();
     bg.initScrollTriggers(ScrollTrigger);
 });

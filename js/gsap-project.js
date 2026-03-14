@@ -1,5 +1,5 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
 
 function initDetailsAnimation() {
@@ -75,12 +75,13 @@ function initFigmaAnimation() {
 
 gsap.registerPlugin(ScrollTrigger);
 window.onload = () => {
-    const bg = initBackground(document.querySelector('.inner-content'));
     initLoadIn();
     initInternalLinks();
     initDetailsAnimation();
     initCardAnimation();
     initFigmaAnimation();
     initContactAnimation();
+    const bg = initBackground(document.querySelector('.svgBG'));
+    initParallaxScroll();
     bg.initScrollTriggers(ScrollTrigger);
 };
