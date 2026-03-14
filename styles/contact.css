@@ -1,13 +1,30 @@
 #contact {
+    position: relative;
     background: var(--surface--default);
+}
+
+#contact .svg-edge {
+    top: -35px;
+}
+
+#contact .bg-fill {
+    position: absolute;
+    background: var(--surface--default);
+    width: calc(100vw + 48px);
+    height: calc(100% + 24px);
+    transform: translateX(-24px);
+    box-shadow: 0px 1px 64px 0px var(--white--offwhite);
+}
+
+#contact .content {
+    position: relative;
     max-width: 100%;
     width: 100%;
-    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: var(--section__gap);
-    padding-top: 92px; /* Keep plate edge away from content */
+    padding-top: 24px;
 }
 
 /* CONTENT */
@@ -19,7 +36,7 @@
 }
 
 @media screen and (max-width: 550px) {
-    #contact {
+    #contact .content {
         flex-direction: column;
     }
 

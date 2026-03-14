@@ -22,23 +22,6 @@
     width: calc(100vw + 48px);
     left: -24px;
     height: 100%;
-    /* Vertical fade — transparent at both edges, fully opaque in the middle.
-       Single 4-stop gradient avoids mask-composite cross-browser issues.
-       Adjust the 15% / 85% stops to taste. */
-    -webkit-mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 15%,
-        black 85%,
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 15%,
-        black 85%,
-        transparent 100%
-    );
 }
 
 /* Size, position, and rotation are set by svgBG.js inline styles */
@@ -97,7 +80,7 @@
     height: 48px;
     left: 50%;
     transform: translateX(-50%);
-    fill: none;
+    fill: var(--surface--default);
     stroke: var(--white--default);
     stroke-width: 2px;
     z-index: 2;
@@ -105,7 +88,7 @@
 .svg-edge--up {
     bottom: auto;
     top: 0;
-    transform: 
+    transform:
         translateX(-50%)
         rotate(180deg);
 }
@@ -170,7 +153,7 @@ main section#home {
 }
 main section#projects {
     margin-bottom: 0rem;
-    padding-bottom: max(2rem, 15vh); /* Allow marching svg background to show in visual "gap" */
+    padding-bottom: max(2rem, 15vh);
 }
 
 @media screen and (max-width: 1000px) {
