@@ -2,6 +2,17 @@ import { ANIMATION_CONFIG } from "./animationConfig.js";
 import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
 
+function initParallaxScroll() {
+    const maxShift = 100;
+    const svgBG = document.querySelector('.svgBG');
+    window.addEventListener("scroll", () => {
+      const scroll = window.scrollY;
+      const shift = Math.min(scroll * 0.05, maxShift);
+  
+      svgBG.style.transform = `translateY(${shift}px)`;
+    });
+}
+
 function initHeroAnimation() {
     const homeContent = document.querySelector("#home .content");
     const text = homeContent.querySelector(":scope > .text");
@@ -217,7 +228,7 @@ function initProjectFeature() {
 
 gsap.registerPlugin(ScrollTrigger);
 window.addEventListener("pageshow", () => {
-    const bg = initBackground(document.querySelector('.inner-content'));
+    const bg = initBackground(document.querySelector('.svgBG'));
     initLoadIn();
     initHeroAnimation();
     initAboutAnimation();
@@ -226,5 +237,6 @@ window.addEventListener("pageshow", () => {
     initProjectFeature();
     initInternalLinks();
     initContactAnimation();
+    initParallaxScroll();
     bg.initScrollTriggers(ScrollTrigger);
 });
