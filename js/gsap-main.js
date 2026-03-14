@@ -7,9 +7,9 @@ function initParallaxScroll() {
     const svgBG = document.querySelector('.svgBG');
     window.addEventListener("scroll", () => {
       const scroll = window.scrollY;
-      const shift = Math.min(scroll * 0.03, maxShift);
+      const shift = Math.min(scroll * 0.05, maxShift);
   
-      svgBG.style.transform = `translateY(${shift}px)`;
+      svgBG.style.transform = `translateY(-${shift}px)`;
     });
 }
 
