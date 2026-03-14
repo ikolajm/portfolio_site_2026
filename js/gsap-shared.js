@@ -12,7 +12,12 @@ export function initLoadIn() {
             opacity: 1,
             ease: ANIMATION_CONFIG.pageTransitionEase,
             duration: ANIMATION_CONFIG.fadeDuration,
-        });
+        })
+        .to(".svgBG", {
+            opacity: 1,
+            ease: ANIMATION_CONFIG.pageTransitionEase,
+            duration: ANIMATION_CONFIG.fadeDuration,
+        })
     });
 }
 

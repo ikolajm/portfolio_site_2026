@@ -21,8 +21,8 @@ export function initBackground(container, options = {}) {
 
     layers: [
       { speed: 5,  scale: [0.30, 0.50], opacity: [0.025, 0.05] },
-      { speed: 10, scale: [0.50, 0.75], opacity: [0.05,  0.10] },
-      { speed: 15, scale: [0.75, 1.15], opacity: [0.10,  0.15] }
+      { speed: 7.5, scale: [0.50, 0.75], opacity: [0.05,  0.10] },
+      { speed: 10, scale: [0.75, 1.15], opacity: [0.10,  0.15] }
     ],
 
     iconSets: {
@@ -105,7 +105,7 @@ export function initBackground(container, options = {}) {
   let varTable = buildVarTable(geo.cols * geo.rows)
 
   initLayers(geo, varTable)
-  // initVisibilityPause()
+  initVisibilityPause()
   initResizeObserver()
 
   return { setIconSet, setIconColor, destroy, initScrollTriggers }
@@ -314,6 +314,7 @@ export function initBackground(container, options = {}) {
 
   function initScrollTriggers(ST) {
     const sectionMap = [
+      { selector: '#home',       set: 'default',    back: null },
       { selector: '#about',       set: 'about',    back: 'default' },
       { selector: '#as-article',  set: 'as',       back: 'about'   },
       { selector: '#jmi-article', set: 'ji',       back: 'as'      },
@@ -337,14 +338,14 @@ export function initBackground(container, options = {}) {
 
   // ─── Visibility pause (IntersectionObserver) ─────────────────────────────
 
-  // function initVisibilityPause() {
-  //   observer = new IntersectionObserver(([entry]) => {
-  //     const playState = entry.isIntersecting ? 'running' : 'paused'
-  //     state.layers.forEach(l => { l.innerEl.style.animationPlayState = playState })
-  //   }, { threshold: 0, rootMargin: '50px' })  // start 150px before entering view
+  function initVisibilityPause() {
+    observer = new IntersectionObserver(([entry]) => {
+      const playState = entry.isIntersecting ? 'running' : 'paused'
+      state.layers.forEach(l => { l.innerEl.style.animationPlayState = playState })
+    }, { threshold: 0, rootMargin: '50px' })  // start 150px before entering view
 
-  //   observer.observe(container)
-  // }
+    observer.observe(container)
+  }
 
   // ─── Cleanup ─────────────────────────────────────────────────────────────
 

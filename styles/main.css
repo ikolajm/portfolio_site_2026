@@ -3,6 +3,10 @@
 }
 
 /* ── SVG Background System ───────────────────────────────────────────────── */
+/* GSAP */
+.svgBG {
+    opacity: 0;
+}
 .svgBG {
     position: fixed;
     width: 100vw;
@@ -160,6 +164,9 @@ main {
 main section {
     position: relative;
     margin-bottom: max(2rem, 15vh);
+}
+main section#home {
+    margin-bottom: 0rem;
 }
 main section#projects {
     margin-bottom: 0rem;

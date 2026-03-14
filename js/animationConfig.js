@@ -7,5 +7,6 @@ export let ANIMATION_CONFIG = {
     fadeDuration: .3,
     fadeDurationLong: .6,
     expandDuration: .3,
+    expandDurationLong: .3,
     rotateDuration: .3,
 }
