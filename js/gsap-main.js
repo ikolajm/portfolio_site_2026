@@ -1,17 +1,6 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
-
-function initParallaxScroll() {
-    const maxShift = 150;
-    const svgBG = document.querySelector('.svgBG');
-    window.addEventListener("scroll", () => {
-      const scroll = window.scrollY;
-      const shift = Math.min(scroll * 0.05, maxShift);
-  
-      svgBG.style.transform = `translateY(-${shift}px)`;
-    });
-}
 
 function initHeroAnimation() {
     const homeContent = document.querySelector("#home .content");

@@ -21,6 +21,17 @@ export function initLoadIn() {
     });
 }
 
+export function initParallaxScroll() {
+    const maxShift = 150;
+    const svgBG = document.querySelector('.svgBG');
+    window.addEventListener("scroll", () => {
+      const scroll = window.scrollY;
+      const shift = Math.min(scroll * 0.05, maxShift);
+  
+      svgBG.style.transform = `translateY(-${shift}px)`;
+    });
+}
+
 export function animatePageTransition() {
     return new Promise((resolve) => {
         const tl = gsap.timeline({ onComplete: resolve });
