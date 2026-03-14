@@ -105,7 +105,7 @@ export function initBackground(container, options = {}) {
   let varTable = buildVarTable(geo.cols * geo.rows)
 
   initLayers(geo, varTable)
-  initVisibilityPause()
+  // initVisibilityPause()
   initResizeObserver()
 
   return { setIconSet, setIconColor, destroy, initScrollTriggers }
@@ -337,14 +337,14 @@ export function initBackground(container, options = {}) {
 
   // ─── Visibility pause (IntersectionObserver) ─────────────────────────────
 
-  function initVisibilityPause() {
-    observer = new IntersectionObserver(([entry]) => {
-      const playState = entry.isIntersecting ? 'running' : 'paused'
-      state.layers.forEach(l => { l.innerEl.style.animationPlayState = playState })
-    }, { threshold: 0, rootMargin: '150px' })  // start 150px before entering view
+  // function initVisibilityPause() {
+  //   observer = new IntersectionObserver(([entry]) => {
+  //     const playState = entry.isIntersecting ? 'running' : 'paused'
+  //     state.layers.forEach(l => { l.innerEl.style.animationPlayState = playState })
+  //   }, { threshold: 0, rootMargin: '50px' })  // start 150px before entering view
 
-    observer.observe(container)
-  }
+  //   observer.observe(container)
+  // }
 
   // ─── Cleanup ─────────────────────────────────────────────────────────────
 
