@@ -6,8 +6,8 @@
 .svgBG {
     position: fixed;
     width: 100vw;
-    height: calc(100vh + 200px);
-    top: -100px;
+    height: calc(100vh + 300px);
+    top: -150px;
 }
 .bg-container {
     position: relative;

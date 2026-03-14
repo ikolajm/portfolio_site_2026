@@ -3,11 +3,11 @@ import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initInternalLinks, initContactAnima
 import { initBackground } from "./svgBG.js";
 
 function initParallaxScroll() {
-    const maxShift = 100;
+    const maxShift = 150;
     const svgBG = document.querySelector('.svgBG');
     window.addEventListener("scroll", () => {
       const scroll = window.scrollY;
-      const shift = Math.min(scroll * 0.05, maxShift);
+      const shift = Math.min(scroll * 0.03, maxShift);
   
       svgBG.style.transform = `translateY(${shift}px)`;
     });
