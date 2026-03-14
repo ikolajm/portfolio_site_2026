@@ -307,22 +307,24 @@ main {
     transition: var(--transition--default);
 }
 /* On hover */
-.card:hover {
-    transform: 
-        translate(var(--x-displacement), calc(var(--y-displacement) - var(--up)))
-        rotate(var(--rotation-degree)) !important; 
-}
-/* All behind being hovered */
-.card:has(~ .card:hover) { 
-    transform: 
-        translate(calc(var(--x-displacement) + var(--behind)), var(--y-displacement)) 
-        rotate(var(--rotation-degree)) !important; 
-}
-/* All ahead being hovered */
-.card:hover ~ .card { 
-    transform: 
-        translate(calc(var(--x-displacement) + var(--ahead)), var(--y-displacement)) 
-        rotate(var(--rotation-degree)) !important; 
+@media (hover: hover) {
+    .card:hover {
+        transform: 
+            translate(var(--x-displacement), calc(var(--y-displacement) - var(--up)))
+            rotate(var(--rotation-degree)) !important; 
+    }
+    /* All behind being hovered */
+    .card:has(~ .card:hover) { 
+        transform: 
+            translate(calc(var(--x-displacement) + var(--behind)), var(--y-displacement)) 
+            rotate(var(--rotation-degree)) !important; 
+    }
+    /* All ahead being hovered */
+    .card:hover ~ .card { 
+        transform: 
+            translate(calc(var(--x-displacement) + var(--ahead)), var(--y-displacement)) 
+            rotate(var(--rotation-degree)) !important; 
+    }
 }
 
 @media screen and (max-width: 1000px) {
