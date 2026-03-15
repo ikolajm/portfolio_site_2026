@@ -91,10 +91,10 @@ export const ExperienceConfig = {
 
     // Particle budget — allocated once at startup, not rebuilt on resize.
     // Sparse enough for individual blobs to be distinct; dense enough to read as logos.
-    MAX_PARTICLES: 3000,
+    MAX_PARTICLES: 1500,
 
     // Point size tuned for the experience camera setup.
-    POINT_SIZE_BASE: 10.0,
+    POINT_SIZE_BASE: 12.0,
 
     // All logo particles are blobby (aType = 1.0 everywhere).
     RUNG_SIZE_MULT:   1.75,
@@ -103,7 +103,7 @@ export const ExperienceConfig = {
     // Drifter particles (aType = 0.0): medium orbital glows forming the liquid halo
     // These values ARE active — drifters use the strand path in the shared shader
     STRAND_SIZE_MULT: 1.0, // medium size for the orbital halo cloud
-    STRAND_ALPHA:     0.05, // softer, atmospheric — lighter than anchors
+    STRAND_ALPHA:     0.15, // softer, atmospheric — lighter than anchors
 
     // Orb core — universal bright center applied to all particle types.
     // Experience orbs are slightly dimmer / more distant-feeling than wave orbs
@@ -117,7 +117,7 @@ export const ExperienceConfig = {
     // All drift is scaled by jitterStrength (0 during morph, 1 at idle) so
     // morph transitions remain clean regardless of per-particle amplitude.
     IDLE_JITTER:       7.5,  // base world-space drift amplitude
-    ANCHOR_RATIO:      0.95, // fraction of particles tightly anchored to the logo shape
+    ANCHOR_RATIO:      0.975, // fraction of particles tightly anchored to the logo shape
     ANCHOR_JITTER_MAX: 0.40, // max drift multiplier for anchors; keep low to preserve shape readability
     DRIFT_JITTER_MIN:  1.0,  // minimum drift multiplier for halo drifters
     DRIFT_JITTER_MAX:  2.0,  // increase to widen halo; decrease to tighten it

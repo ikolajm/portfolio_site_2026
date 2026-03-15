@@ -97,8 +97,8 @@ scene.add(svgGroup);
 let animId = null;
 
 function animate() {
-  svgGroup.rotation.y += 0.01;
   renderer.render(scene, camera);
+  svgGroup.rotation.y += 0.005;
   animId = requestAnimationFrame(animate);
 }
 

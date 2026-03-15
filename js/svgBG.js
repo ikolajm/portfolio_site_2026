@@ -20,9 +20,9 @@ export function initBackground(container, options = {}) {
     angle: 5,  // degrees — direction of the diagonal march
 
     layers: [
-      { speed: 5,  scale: [0.30, 0.50], opacity: [0.025, 0.05] },
-      { speed: 7.5, scale: [0.50, 0.75], opacity: [0.05,  0.10] },
-      { speed: 10, scale: [0.75, 1.15], opacity: [0.10,  0.15] }
+      { speed: 2.5,  scale: [0.30, 0.50], opacity: [0.025, 0.05] },
+      { speed: 5, scale: [0.50, 0.75], opacity: [0.05,  0.10] },
+      { speed: 7.5, scale: [0.75, 1.15], opacity: [0.10,  0.15] }
     ],
 
     iconSets: {
@@ -67,8 +67,8 @@ export function initBackground(container, options = {}) {
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2
       pool[i] = {
-        jitterX: Math.cos(angle) * config.spacingX * 0.3,
-        jitterY: Math.sin(angle) * config.spacingY * 0.3
+        jitterX: Math.cos(angle) * config.spacingX * 0.5,
+        jitterY: Math.sin(angle) * config.spacingY * 0.5
       }
     }
     return pool

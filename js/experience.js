@@ -14,12 +14,12 @@ import { particleVertexShader, particleFragmentShader } from "./particleShader.j
 --------------------------- */
 // -- Particle Init
 const MAX_PARTICLES = ExperienceConfig.MAX_PARTICLES;
-const EXTRUDE_DEPTH = 2;
+const EXTRUDE_DEPTH = 1;
 const MORPH_SPEED = 7;
 const NOISE_RADIUS = 120;
 // -- Camera, Position
 const BBOX_SIZE = 275;
-const CAMERA_DISTANCE = 375;
+const CAMERA_DISTANCE = 350;
 
 /* --------------------------
   State

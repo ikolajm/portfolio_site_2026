@@ -43,7 +43,6 @@
 #about .content .text {
     position: relative;
     width: 100%;
-    max-width: var(--content__maxWidth);
 }
 
 #about .content .text .body {

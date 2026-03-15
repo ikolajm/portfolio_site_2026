@@ -8,8 +8,8 @@ let link = content.querySelector(":scope > .body .link a");
 let tools = content.querySelector(":scope > .tools");
 // =
 const controlsElement = document.querySelector("#projects .controls");
-const backButton = document.querySelector(":scope button[data-buttonType='prev']");
-const nextButton = document.querySelector(":scope button[data-buttonType='next']");
+const availoButton = document.querySelector(":scope button[data-slide='availo']");
+const dndButton = document.querySelector(":scope button[data-slide='dnd']");
 
 const slides = [
     {
@@ -78,13 +78,13 @@ const slides = [
           </g>
         </g>
       </svg>`,
-        title: "5eHBTTRPG",
+        title: "5e JRPG",
         tag: "Less prep, more play",
         linkText: "View the code repository",
         linkHref: "https://github.com/ikolajm/jmi-rpg-visualizer",
         linkType: "external",
         paragraphs: [
-            "D&D is a great way to spend time with friends — but the setup can scare people off before the adventure even begins. This app gives players a clean, classic RPG interface for their character and party, and gives GMs the tools to run the world without the paperwork. The same game everyone's heard of, now with less friction."
+            "D&D is a great way to spend time with friends — but the setup can scare people off before the adventure even begins. This app gives players a clean, classic JRPG interface for their character and party, and gives GMs the tools to run the world without the paperwork. The same game everyone's heard of, now with less friction."
         ],
         tools: [
             "Figma (Design, Make)",
@@ -97,14 +97,16 @@ const slides = [
 ];
 
 let currentIndex = 0;
-function resetCurrentIndex(direction) {
-    if (currentIndex === 0 && direction === "prev") {
-        currentIndex = (slides.length -1);
-    } else if (currentIndex === (slides.length -1) && direction === "next") {
-        currentIndex = 0;
-    } else {
-        currentIndex = (direction === 'next'? currentIndex + 1 : currentIndex - 1);
-    }
+function setCurrentIndex(slide) {
+    if (slide === "availo") currentIndex = 0;
+    else currentIndex = 1;
+}
+
+function setActiveButton() {
+    [availoButton, dndButton].forEach(btn => btn.classList.remove("active"));
+    
+    if (currentIndex === 0) availoButton.classList.add("active");
+    else dndButton.classList.add("active");
 }
 
 function setSlideContent() {
@@ -156,27 +158,32 @@ function slideTransition(animation, callback) {
     const tl = gsap.timeline({ onComplete: callback });
 
     if (animation === "close") {
-        tl.to(controlsElement, { duration: .15, opacity: 0 })
-            .to(contentElement, { duration: slideFadeDuration, opacity: 0, x: "0px" })
+        tl.to(contentElement, { duration: slideFadeDuration, opacity: 0, x: "0px" })
             .to(imageContainer, { duration: slideFadeDuration, maxWidth: "0%" }, "<")
             .to(mediaContainer, { duration: slideFadeDuration, opacity: 0 }, "<");
     } else {
         tl.to(mediaContainer, { duration: slideFadeDuration, opacity: 1 })
             .to(imageContainer, { duration: slideFadeDuration, maxWidth: "100%" }, "<")
             .to(contentElement, { duration: slideFadeDuration, opacity: 1, x: "0px" }, "<")
-            .to(controlsElement, { duration: .15, opacity: 1 })
     }
 }
 
-function goToSlide(direction) {
-    resetCurrentIndex(direction);
+function goToSlide(slide) {
+    if (
+        (slide === "availo" && currentIndex === 0)
+        || (slide === "dnd" && currentIndex === 1)
+    ) {
+        return;
+    }
+    setCurrentIndex(slide);
+    setActiveButton()
     slideTransition("close", () => {
         setSlideContent();
         slideTransition("open");
     });
 }
 
-[backButton, nextButton].forEach(btn => {
-    const direction = btn.dataset.buttonType === "next" ? "next" : "prev";
-    btn.addEventListener("click", () => goToSlide(direction));
+[availoButton, dndButton].forEach(btn => {
+    const slide = btn.dataset.slide;
+    btn.addEventListener("click", () => goToSlide(slide));
 });

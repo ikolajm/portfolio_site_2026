@@ -7,45 +7,24 @@ function initDetailsAnimation() {
     const metadata = document.querySelector("#details .metadata");
     const description = document.querySelector("#details .description");
 
-    const mm = gsap.matchMedia();
-    mm.add({
-        isColumn: "(max-width: 550px)",
-        isRow: "(min-width: 551px)"
-    }, (context) => {
-        const { isRow } = context.conditions;
+    const tweenDefaults = {
+        duration: ANIMATION_CONFIG.fadeDuration,
+        ease: "power4.out",
+        x: 0,
+        opacity: 1,
+    };
 
-        const tweenDefaults = {
-            duration: ANIMATION_CONFIG.fadeDurationLong,
-            ease: "power4.out",
-            x: 0,
-            opacity: 1,
-        };
-
-        const scrollTriggerBase = {
-            start: "top 65%",
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions,
-        };
-
-        if (isRow) {
-            const timeline = gsap.timeline({
-                scrollTrigger: { trigger: section, ...scrollTriggerBase }
-            });
-
-            timeline
-                .to(metadata, { ...tweenDefaults })
-                .to(description, { ...tweenDefaults }, "-=0.4");
-
-        } else {
-            gsap.to(metadata, {
-                ...tweenDefaults,
-                scrollTrigger: { trigger: metadata, ...scrollTriggerBase }
-            });
-            gsap.to(description, {
-                ...tweenDefaults,
-                scrollTrigger: { trigger: description, ...scrollTriggerBase }
-            });
-        }
+    const scrollTriggerBase = {
+        start: "top 65%",
+        toggleActions: ANIMATION_CONFIG.defaultToggleActions,
+    };
+    const timeline = gsap.timeline({
+        scrollTrigger: { trigger: section, ...scrollTriggerBase }
     });
+
+    timeline
+        .to(metadata, { ...tweenDefaults })
+        .to(description, { ...tweenDefaults });
 }
 
 function initCardAnimation() {
