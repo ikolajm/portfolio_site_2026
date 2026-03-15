@@ -15,7 +15,7 @@ function initDetailsAnimation() {
         const { isRow } = context.conditions;
 
         const tweenDefaults = {
-            duration: ANIMATION_CONFIG.fadeDurationLong,
+            duration: ANIMATION_CONFIG.fadeDuration,
             ease: "power4.out",
             x: 0,
             opacity: 1,

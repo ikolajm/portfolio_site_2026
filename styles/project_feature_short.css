@@ -19,10 +19,8 @@
 }
 
 #projects .controls {
-    /* background: var(--surface--1); */
     width: fit-content;
     display: flex;
-    /* padding: .75rem; */
     gap: .5rem;
 }
 
@@ -52,7 +50,7 @@
     z-index: 0;
     transition: .3s;
 }
-#projects .controls button:focus svg {
+#projects .controls button:focus-visible svg {
     outline: auto;
 }
 #projects .controls button:hover svg {
