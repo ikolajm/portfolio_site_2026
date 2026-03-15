@@ -33,7 +33,7 @@ function initDetailsAnimation() {
 
             timeline
                 .to(metadata, { ...tweenDefaults })
-                .to(description, { ...tweenDefaults }, "-=0.4");
+                .to(description, { ...tweenDefaults });
 
         } else {
             gsap.to(metadata, {
