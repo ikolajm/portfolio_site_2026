@@ -52,6 +52,9 @@
     z-index: 0;
     transition: .3s;
 }
+#projects .controls button:focus svg {
+    outline: auto;
+}
 #projects .controls button:hover svg {
     fill: color-mix(in srgb, var(--surface--1), white 15%);
     stroke: color-mix(in srgb, var(--surface--2), white 15%);
