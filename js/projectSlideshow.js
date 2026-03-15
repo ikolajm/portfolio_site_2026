@@ -8,8 +8,8 @@ let link = content.querySelector(":scope > .body .link a");
 let tools = content.querySelector(":scope > .tools");
 // =
 const controlsElement = document.querySelector("#projects .controls");
-const backButton = document.querySelector(":scope button[data-buttonType='prev']");
-const nextButton = document.querySelector(":scope button[data-buttonType='next']");
+const availoButton = document.querySelector(":scope button[data-slide='availo']");
+const dndButton = document.querySelector(":scope button[data-slide='dnd']");
 
 const slides = [
     {
@@ -97,14 +97,10 @@ const slides = [
 ];
 
 let currentIndex = 0;
-function resetCurrentIndex(direction) {
-    if (currentIndex === 0 && direction === "prev") {
-        currentIndex = (slides.length -1);
-    } else if (currentIndex === (slides.length -1) && direction === "next") {
-        currentIndex = 0;
-    } else {
-        currentIndex = (direction === 'next'? currentIndex + 1 : currentIndex - 1);
-    }
+function setCurrentIndex(slide) {
+    console.log(slide)
+    if (slide === "availo") currentIndex = 0;
+    else currentIndex = 1;
 }
 
 function setSlideContent() {
@@ -168,15 +164,16 @@ function slideTransition(animation, callback) {
     }
 }
 
-function goToSlide(direction) {
-    resetCurrentIndex(direction);
+function goToSlide(slide) {
+    setCurrentIndex(slide);
     slideTransition("close", () => {
         setSlideContent();
         slideTransition("open");
     });
 }
 
-[backButton, nextButton].forEach(btn => {
-    const direction = btn.dataset.buttonType === "next" ? "next" : "prev";
-    btn.addEventListener("click", () => goToSlide(direction));
+[availoButton, dndButton].forEach(btn => {
+    console.log('button', btn, btn.dataset)
+    const slide = btn.dataset.slide;
+    btn.addEventListener("click", () => goToSlide(slide));
 });

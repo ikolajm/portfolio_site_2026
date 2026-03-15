@@ -179,7 +179,8 @@ h6 {
 
 p,
 span,
-a {
+a,
+button {
     font-family: var(--ff-content);
     font-size: 14px;
     line-height: 1.5;

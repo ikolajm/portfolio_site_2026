@@ -11,37 +11,21 @@
 }
 /* === */
 
+#projects .controls button {
+    padding: 4px;
+    cursor: pointer;
+}
+#projects .controls button:hover {
+    padding: 4px;
+    cursor: pointer;
+}
+
 #projects article .content {
-    height: 275px;
+    height: 290px;
 }
 
 #projects article .media {
     position: relative;
-}
-
-#projects article .media .controls {
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    z-index: 3;
-    padding: 1rem 1.5rem;
-    display: flex;
-    gap: 8px;
-
-    opacity: 0;
-}
-#projects article .media .controls button {
-    background: var(--white--default);
-    color: var(--surface--default);
-    outline: none;
-    border: none;
-    transition: var(--transition--default);
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-}
-#projects article .media .controls button:hover {
-    background: var(--white--offwhite);
 }
 
 #projects article .media .svg-media-accent {
