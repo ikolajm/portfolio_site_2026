@@ -84,7 +84,7 @@ const slides = [
         linkHref: "https://github.com/ikolajm/jmi-rpg-visualizer",
         linkType: "external",
         paragraphs: [
-            "D&D is a great way to spend time with friends — but the setup can scare people off before the adventure even begins. This app gives players a clean, classic RPG interface for their character and party, and gives GMs the tools to run the world without the paperwork. The same game everyone's heard of, now with less friction."
+            "D&D is a great way to spend time with friends — but the setup can scare people off before the adventure even begins. This app gives players a clean, classic JRPG interface for their character and party, and gives GMs the tools to run the world without the paperwork. The same game everyone's heard of, now with less friction."
         ],
         tools: [
             "Figma (Design, Make)",
@@ -98,9 +98,15 @@ const slides = [
 
 let currentIndex = 0;
 function setCurrentIndex(slide) {
-    console.log(slide)
     if (slide === "availo") currentIndex = 0;
     else currentIndex = 1;
+}
+
+function setActiveButton() {
+    [availoButton, dndButton].forEach(btn => btn.classList.remove("active"));
+    
+    if (currentIndex === 0) availoButton.classList.add("active");
+    else dndButton.classList.add("active");
 }
 
 function setSlideContent() {
@@ -166,6 +172,7 @@ function slideTransition(animation, callback) {
 
 function goToSlide(slide) {
     setCurrentIndex(slide);
+    setActiveButton()
     slideTransition("close", () => {
         setSlideContent();
         slideTransition("open");
@@ -173,7 +180,6 @@ function goToSlide(slide) {
 }
 
 [availoButton, dndButton].forEach(btn => {
-    console.log('button', btn, btn.dataset)
     const slide = btn.dataset.slide;
     btn.addEventListener("click", () => goToSlide(slide));
 });

@@ -178,7 +178,7 @@ function initExperienceArticleAnimations() {
 function initProjectFeature() {
     const mediaElement = document.querySelector("#projects .media");
     const imageElement = mediaElement.querySelector(":scope .image");
-    const controlsElement = mediaElement.querySelector(":scope .controls");
+    // const controlsElement = mediaElement.querySelector(":scope .controls");
     const contentElement = document.querySelector("#projects .project .content");
 
     const mm = gsap.matchMedia();
@@ -203,11 +203,11 @@ function initProjectFeature() {
                     opacity: 1,
                     x: "0px"
                 })
-                .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
+                // .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
         } else {
             tl.to(contentElement, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" });
             addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
-                .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
+                // .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
         }
         
 

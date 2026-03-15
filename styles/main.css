@@ -18,7 +18,7 @@
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    z-index: 0;
+    z-index: -3;
     width: calc(100vw + 48px);
     left: -24px;
     height: 100%;
