@@ -78,7 +78,7 @@ const slides = [
           </g>
         </g>
       </svg>`,
-        title: "5eHBTTRPG",
+        title: "5e JRPG",
         tag: "Less prep, more play",
         linkText: "View the code repository",
         linkHref: "https://github.com/ikolajm/jmi-rpg-visualizer",
@@ -158,19 +158,23 @@ function slideTransition(animation, callback) {
     const tl = gsap.timeline({ onComplete: callback });
 
     if (animation === "close") {
-        tl.to(controlsElement, { duration: .15, opacity: 0 })
-            .to(contentElement, { duration: slideFadeDuration, opacity: 0, x: "0px" })
+        tl.to(contentElement, { duration: slideFadeDuration, opacity: 0, x: "0px" })
             .to(imageContainer, { duration: slideFadeDuration, maxWidth: "0%" }, "<")
             .to(mediaContainer, { duration: slideFadeDuration, opacity: 0 }, "<");
     } else {
         tl.to(mediaContainer, { duration: slideFadeDuration, opacity: 1 })
             .to(imageContainer, { duration: slideFadeDuration, maxWidth: "100%" }, "<")
             .to(contentElement, { duration: slideFadeDuration, opacity: 1, x: "0px" }, "<")
-            .to(controlsElement, { duration: .15, opacity: 1 })
     }
 }
 
 function goToSlide(slide) {
+    if (
+        (slide === "availo" && currentIndex === 0)
+        || (slide === "dnd" && currentIndex === 1)
+    ) {
+        return;
+    }
     setCurrentIndex(slide);
     setActiveButton()
     slideTransition("close", () => {
