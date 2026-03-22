@@ -35,21 +35,6 @@
     top: 0;
     left: 0;
     /* width and height set by svgBG.js inline styles */
-    animation: bg-scroll var(--scroll-duration, 10s) linear infinite;
-    will-change: transform;
-    /* Force GPU layer promotion on older Android WebViews that don't
-       honour will-change alone */
-    backface-visibility: hidden;
-}
-
-@keyframes bg-scroll {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
-}
-
-/* Users who prefer reduced motion: belt-and-suspenders alongside the JS guard */
-@media (prefers-reduced-motion: reduce) {
-    .bg-inner { animation-play-state: paused !important; }
 }
 
 .bg-icon {
