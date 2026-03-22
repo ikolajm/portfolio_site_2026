@@ -46,7 +46,7 @@ export const WaveConfig = {
     COLOR: BASE_COLOR,
 
     // XMB diagonal tilt applied to the Points object
-    ROTATION_X: 0.15,
+    ROTATION_X: 0.05,
     ROTATION_Z: 0.15,
 
     // Traversal speed: increasing LOOP_SECONDS slows the spiral orbit;
@@ -59,7 +59,7 @@ export const WaveConfig = {
 
     // Particle budget — allocated once at module load, not rebuilt on resize.
     // Mobile gets ~50% fewer particles to reduce CPU work in the position loop.
-    STRAND_PARTICLES: IS_MOBILE ? 200 : 300, // per strand (×2 for both strands)
+    STRAND_PARTICLES: IS_MOBILE ? 150 : 200, // per strand (×2 for both strands)
     RUNG_PARTICLES:   IS_MOBILE ? 65 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
