@@ -37,6 +37,11 @@
     /* width and height set by svgBG.js inline styles */
 }
 
+@keyframes sway {
+    from { transform: scale(var(--icon-scale)) translate(0px, 0px) rotate(0deg); }
+    to   { transform: scale(var(--icon-scale)) translate(var(--sway-x), var(--sway-y)) rotate(var(--sway-r)); }
+}
+
 .bg-icon {
     position: absolute;
     display: block;

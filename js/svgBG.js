@@ -21,6 +21,14 @@ export function initBackground(container, options = {}) {
 
     layer: { scale: [0.4, 0.9], opacity: [0.04, 0.12] },
 
+    sway: {
+      translateX:  10,   // px — max horizontal drift (±)
+      translateY:  10,   // px — max vertical drift (±)
+      rotate:      10, // deg — max rotation (±)
+      durationMin: 3,   // s — slowest sway cycle
+      durationMax: 6,  // s — fastest sway cycle
+    },
+
     iconSets: {
         default: ['/assets/svg/personal_logo_white.svg'],
         about: ['/assets/svg/personal_logo_white.svg'],
@@ -195,12 +203,23 @@ export function initBackground(container, options = {}) {
   // giving full control over icon colour via config.iconColor.
 
   function makeIcon(src, x, y, scale, opacity) {
+    const { translateX, translateY, rotate, durationMin, durationMax } = config.sway
+    const swayX = (Math.random() * translateX * 2 - translateX).toFixed(1)
+    const swayY = (Math.random() * translateY * 2 - translateY).toFixed(1)
+    const swayR = (Math.random() * rotate     * 2 - rotate).toFixed(1)
+    const dur   = (durationMin + Math.random() * (durationMax - durationMin)).toFixed(1)
+    const delay = -(Math.random() * durationMax).toFixed(1)
+
     const el     = document.createElement('div')
     el.className = 'bg-icon'
     el.style.cssText = [
       `left: ${x}px`,
       `top: ${y}px`,
-      `transform: scale(${scale})`,
+      `--icon-scale: ${scale}`,
+      `--sway-x: ${swayX}px`,
+      `--sway-y: ${swayY}px`,
+      `--sway-r: ${swayR}deg`,
+      `animation: sway ${dur}s ease-in-out ${delay}s infinite alternate`,
       `opacity: ${opacity}`,
       `background-color: ${config.iconColor}`,
       `-webkit-mask-image: url("${src}")`,
