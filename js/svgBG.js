@@ -30,16 +30,31 @@ export function initBackground(container, options = {}) {
     },
 
     iconSets: {
-        default: ['/assets/svg/personal_logo_white.svg'],
-        about: ['/assets/svg/personal_logo_white.svg'],
-        as: ['/assets/svg/auctioneer_software.svg'],
-        ji: ['/assets/svg/personal_logo_white.svg'],
-        pu: ['/assets/svg/propelup.svg'],
-        projects: [
-            '/assets/svg/code-solid.svg',
-            '/assets/svg/terminal-solid.svg',
+        default: [
+          '/assets/svg/personal_logo_white.svg',
+          '/assets/svg/face-laugh-beam-solid.svg',
+          '/assets/svg/hand-peace-solid.svg',
+          '/assets/svg/personal_logo_white.svg',
         ],
-        availo: ['assets/svg/availo.svg'],
+        about: [
+          '/assets/svg/code-solid.svg',
+          '/assets/svg/paintbrush-solid.svg',
+        ],
+        as: [
+          '/assets/svg/auctioneer_software.svg'
+        ],
+        ji: [
+          '/assets/svg/personal_logo_white.svg',
+        ],
+        pu: [
+          '/assets/svg/propelup.svg'
+        ],
+        projects: [
+          'assets/svg/availo.svg'
+        ],
+        availo: [
+          'assets/svg/availo.svg'
+        ],
     },
 
     activeSet: 'default',
