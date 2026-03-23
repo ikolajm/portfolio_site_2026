@@ -216,7 +216,8 @@ function initProjectFeature() {
                 .to(svgElement, {
                     duration: ANIMATION_CONFIG.fadeDurationLong,
                     ease: ANIMATION_CONFIG.defaultEase,
-                    scale: 1
+                    scale: 1,
+                    opacity: 1
                 }, "<")
         }
 
