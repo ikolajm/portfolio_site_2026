@@ -52,15 +52,16 @@
     overflow: hidden;
     font-family: var(--ff-headers);
     text-transform: uppercase;
-    font-weight: 700;
     letter-spacing: 1.5px;
     margin-bottom: 0;
 }
 #contact .header.header--large {
     font-size: var(--section__title);
+    max-width: 400px;
 }
 #contact .header.header--small {
-    font-size: var(--section__subtitle);
+    font-size: 14px;
+    color: var(--white--offwhite);
 }
 
 #contact .signoff p {
@@ -96,45 +97,20 @@
 #contact .location-column .row {
     position: relative;
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
 }
 
-/* GSAP */
-.svg-location-bumper,
-#contact .location-column .container .location {
-    opacity: 0;
-}
-#contact .location-column .container {
-    max-width: 0px;
-}
-#contact .svg-location-border {
-    opacity: 0;
-    max-width: 0%;
-}
-#contact .indicator .text {
-    opacity: 1;
-    left: 0px;
-}
 /* === */
 
-.svg-location-bumper,
+#contact .svg-media-accent,
 #contact .location-column .container {
     height: 240px;
 }
 
-.svg-location-bumper {
-    height: 240px;
-    width: var(--svg-accent--width--sm);
-    transform: scaleX(-1);
-    fill: var(--white--default);
-    position: relative;
-}
-
 #contact .location-column .container {
     position: relative;
-    width: 100%;
-    clip-path: url(#contactLocationClip);
+    border: 2px solid;
+    height: calc(240px - 5px)
 }
 
 /* Outline w/ 3d State */
@@ -147,17 +123,7 @@
     padding: 1rem;
     height: 100%;
     width: 160px;
-}
-#contact .svg-location-border {
-    position: absolute;
-    top: 0;
-    right: 16px;
-    width: 160px;
-    height: calc(100% + 5px);
-    transform: translateY(-1px);
-    fill: none;
-    stroke: var(--white--default);
-    stroke-width: 2px;
+    border: 2px soid var(--white--offwhite);
 }
 
 #contact .location-column .location .based {
@@ -166,6 +132,8 @@
     font-weight: 400;
     letter-spacing: 1.5px;
     margin-bottom: 0;
+    font-size: 14px;
+    color: var(--white--offwhite);
 }
 
 #contact .svg-container {

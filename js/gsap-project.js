@@ -1,5 +1,5 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
 
 function initDetailsAnimation() {
@@ -39,28 +39,13 @@ function initCardAnimation() {
     tl.to(spread, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
 }
 
-function initFigmaAnimation() {
-    const figmaEmbed = document.querySelector("#figma .file-preview");
-    gsap.to(figmaEmbed, {
-        duration: ANIMATION_CONFIG.fadeDurationLong,
-        opacity: 1,
-        scrollTrigger: {
-            trigger: figmaEmbed,
-            start: "top 65%",
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        }
-    });
-}
-
 gsap.registerPlugin(ScrollTrigger);
 window.onload = () => {
+    const bg = initBackground(document.querySelector('.svgBG'));
+    bg.initScrollTriggers(ScrollTrigger);
     initLoadIn();
     initInternalLinks();
     initDetailsAnimation();
     initCardAnimation();
-    initFigmaAnimation();
-    initContactAnimation();
-    const bg = initBackground(document.querySelector('.svgBG'));
     initParallaxScroll();
-    bg.initScrollTriggers(ScrollTrigger);
 };

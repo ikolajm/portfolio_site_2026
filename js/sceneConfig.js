@@ -46,7 +46,7 @@ export const WaveConfig = {
     COLOR: BASE_COLOR,
 
     // XMB diagonal tilt applied to the Points object
-    ROTATION_X: 0.15,
+    ROTATION_X: 0.05,
     ROTATION_Z: 0.15,
 
     // Traversal speed: increasing LOOP_SECONDS slows the spiral orbit;
@@ -59,7 +59,7 @@ export const WaveConfig = {
 
     // Particle budget — allocated once at module load, not rebuilt on resize.
     // Mobile gets ~50% fewer particles to reduce CPU work in the position loop.
-    STRAND_PARTICLES: IS_MOBILE ? 200 : 300, // per strand (×2 for both strands)
+    STRAND_PARTICLES: IS_MOBILE ? 150 : 200, // per strand (×2 for both strands)
     RUNG_PARTICLES:   IS_MOBILE ? 65 : 100, // bridge particles between strands
 
     // Base point-size multiplier fed into the uPointSizeBase shader uniform.
@@ -94,22 +94,22 @@ export const ExperienceConfig = {
     MAX_PARTICLES: 1500,
 
     // Point size tuned for the experience camera setup.
-    POINT_SIZE_BASE: 12.0,
+    POINT_SIZE_BASE: 6.0,
 
     // All logo particles are blobby (aType = 1.0 everywhere).
-    RUNG_SIZE_MULT:   1.75,
+    RUNG_SIZE_MULT:   2.75,
     RUNG_ALPHA:       0.025,
 
     // Drifter particles (aType = 0.0): medium orbital glows forming the liquid halo
     // These values ARE active — drifters use the strand path in the shared shader
-    STRAND_SIZE_MULT: 1.0, // medium size for the orbital halo cloud
+    STRAND_SIZE_MULT: 1.75, // medium size for the orbital halo cloud
     STRAND_ALPHA:     0.15, // softer, atmospheric — lighter than anchors
 
     // Orb core — universal bright center applied to all particle types.
     // Experience orbs are slightly dimmer / more distant-feeling than wave orbs
     // (conveyed through opacity and core intensity, not actual z position).
     ORB_CORE_RADIUS:   0.3, // controls the radius of the white-hot center zone
-    ORB_CORE_STRENGTH: 0.0, // controls how strongly the center bleeds to white
+    ORB_CORE_STRENGTH: 0.1, // controls how strongly the center bleeds to white
 
     // --- Per-particle jitter distribution --------------------------------
     // Creates the "liquified orb entity" feel through internal population layering.
