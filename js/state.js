@@ -38,8 +38,8 @@ window.addEventListener('resize', function(e) {
 
 const svgMarkup = document.getElementById('state-svg').innerHTML;
 
-const loader = new SVGLoader();
-const svgData = loader.parse(svgMarkup);
+const svgLoader = new SVGLoader();
+const svgData = svgLoader.parse(svgMarkup);
 
 // Group for all SVG paths
 const svgGroup = new THREE.Group();
