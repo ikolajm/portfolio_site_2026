@@ -100,18 +100,6 @@
     align-items: center;
 }
 
-/* GSAP */
-/* .svg-location-bumper,
-#contact .location-column .container .location {
-    opacity: 0;
-}
-#contact .location-column .container {
-    max-width: 0px;
-}
-#contact .indicator .text {
-    opacity: 1;
-    left: 0px;
-} */
 /* === */
 
 #contact .svg-media-accent,
@@ -121,7 +109,6 @@
 
 #contact .location-column .container {
     position: relative;
-    width: 100%;
     border: 2px solid;
     height: calc(240px - 5px)
 }
