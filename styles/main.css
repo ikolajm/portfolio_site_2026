@@ -365,7 +365,8 @@ article h3 {
     font-size: var(--section__subtitle);
 }
 
-article .content .body {
+article .content .body,
+article .content .body .description {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -400,11 +401,12 @@ article .content .body p {
 .tools span {
     word-wrap: none;
     padding: .25rem .5rem;
-    background: var(--primary--light);
-    color: var(--primary--dark);
+    border: 1px solid var(--white--default);
+    color: var(--white--default);
     font-size: 12px;
-    transform: skewX(-8deg);
+    border-radius: var(--button-borderRadius);
 }
+
 
 /* Grid Background */
 .grid-bg {

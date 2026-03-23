@@ -78,18 +78,10 @@
 }
 
 #projects article .media .image svg {
-    width: 300px;
+    width: 250px;
     flex-shrink: 0;
-    fill: var(--white--offwhite);
+    fill: var(--white--default);
 }
-#projects article .media .image svg.svg-rpg {
-    width: 450px;
-}
-
-/* #projects article .media .image img {
-    position: relative;
-    width: 300px;
-} */
 
 #projects article .media .image #phoneUnder,
 #projects article .media .image #phoneOver {
@@ -128,10 +120,7 @@
         height: 210px;
     }
     #projects article .media .image svg {
-        width: 200px;
-    }
-    #projects article .media .image svg.svg-rpg {
-        width: 350px;
+        width: 150px;
     }
 }
 
