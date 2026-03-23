@@ -26,49 +26,28 @@
 
 #projects .controls button {
     position: relative;
-    background: none;
-    color: var(--surface--2);
+    background: var(--primary--dark);
+    color: var(--primary--light);
     border: none;
     outline: none;
-    padding: .5rem;
+    padding: .25rem;
     cursor: pointer;
-    height: 40px;
-    width: 140px;
     text-transform: uppercase;
     letter-spacing: 1.15px;
-    transition: .3s
-}
-#projects .controls button svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    fill: var(--surface--1);
-    stroke: var(--surface--2);
-    color: var(--surface--2);
-    stroke-width: .5px;
-    z-index: 0;
     transition: .3s;
+    border-radius: var(--button-borderRadius)
 }
-#projects .controls button:focus-visible svg {
+#projects .controls button:focus-within {
     outline: auto;
 }
-#projects .controls button:hover svg {
-    fill: color-mix(in srgb, var(--surface--1), white 15%);
-    stroke: color-mix(in srgb, var(--surface--2), white 15%);
+#projects .controls button:focus-within,
+#projects .controls button:hover {
+    background: color-mix(in srgb, var(--primary--dark), white 15%);
+    color: color-mix(in srgb, var(--primary--light), black 15%);
 }
-#projects .controls button span {
-    position: relative;
-    color: var(--white--default);
-    z-index: 1;
-}
-#projects .controls button:last-of-type svg {
-    transform: scaleX(-1);
-}
-#projects .controls button.active svg {
-    fill: var(--primary--default);
-    stroke: var(--primary--light);
-    color: var(--primary--light);
+#projects .controls button.active {
+    background: var(--primary--light);
+    color: var(--primary--dark);
 }
 
 #projects article .content {
@@ -98,24 +77,19 @@
     overflow: hidden;
 }
 
-#projects article .media .image .svg-rpg {
+#projects article .media .image svg {
     width: 300px;
     flex-shrink: 0;
+    fill: var(--white--offwhite);
+}
+#projects article .media .image svg.svg-rpg {
+    width: 450px;
 }
 
-#projects article .media .image .svg-rpg .outer,
-#projects article .media .image .svg-rpg .inner {
-    fill: var(--surface--1)
-}
-#projects article .media .image .svg-rpg .middle,
-#projects article .media .image .svg-rpg .dragon {
-    fill: var(--white--offwhite)
-}
-
-#projects article .media .image img {
+/* #projects article .media .image img {
     position: relative;
     width: 300px;
-}
+} */
 
 #projects article .media .image #phoneUnder,
 #projects article .media .image #phoneOver {
@@ -153,8 +127,11 @@
         width: 100px;
         height: 210px;
     }
-    #projects article .media .image .svg-rpg {
+    #projects article .media .image svg {
         width: 200px;
+    }
+    #projects article .media .image svg.svg-rpg {
+        width: 350px;
     }
 }
 

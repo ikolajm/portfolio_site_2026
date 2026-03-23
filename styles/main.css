@@ -136,10 +136,14 @@ main {
 
 main section {
     position: relative;
+    padding-top: 1rem;
     margin-bottom: max(2rem, 15vh);
+    border-top: 1px solid var(--white--offwhite);
 }
 main section#home {
+    padding-top: 0rem;
     margin-bottom: 0rem;
+    border-top: none;
 }
 main section#projects {
     margin-bottom: 0rem;
@@ -198,8 +202,9 @@ p:last-of-type {
 /* =END GSAP= */
 .indicator {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
     z-index: 4;
 }
 .indicator .icon {
@@ -228,7 +233,7 @@ p:last-of-type {
     overflow: hidden;
     font-family: var(--ff-headers);
     text-transform: uppercase;
-    font-weight: 700;
+    /* font-weight: 700; */
     letter-spacing: 1.5px;
     margin-bottom: 0;
 }
@@ -236,7 +241,14 @@ p:last-of-type {
     font-size: var(--section__title);
 }
 .indicator .text--small {
-    font-size: var(--section__subtitle);
+    font-size: 14px;
+    color: var(--white--offwhite);
+}
+@media screen and (max-width: 550px) {
+    .indicator {
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+    }
 }
 
 /* Nav */

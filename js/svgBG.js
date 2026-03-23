@@ -39,6 +39,7 @@ export function initBackground(container, options = {}) {
         about: [
           '/assets/svg/code-solid.svg',
           '/assets/svg/paintbrush-solid.svg',
+          '/assets/svg/handshake-solid.svg',
         ],
         as: [
           '/assets/svg/auctioneer_software.svg'
