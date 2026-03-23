@@ -251,21 +251,19 @@ function setSlideContent() {
 }
 
 function slideTransition(animation, callback) {
-    const slideFadeDuration = 0.6;
+    const slideFadeDuration = 0.3;
     const mediaContainer = document.querySelector("#projects .project .media");
-    const imageContainer = document.querySelector("#projects .project .media .image");
+    const imageContainer = mediaContainer.querySelector(":scope .image");
+    const svgElement = imageContainer.querySelector(":scope svg");
     const contentElement = document.querySelector("#projects .project .content");
 
     const tl = gsap.timeline({ onComplete: callback });
-
     if (animation === "close") {
         tl.to(contentElement, { duration: slideFadeDuration, opacity: 0, x: "0px" })
-            .to(imageContainer, { duration: slideFadeDuration, maxWidth: "0%" }, "<")
-            .to(mediaContainer, { duration: slideFadeDuration, opacity: 0 }, "<");
+            tl.to(svgElement, { duration: slideFadeDuration, opacity: 0, scale: 0.75 }, "<");
     } else {
-        tl.to(mediaContainer, { duration: slideFadeDuration, opacity: 1 })
-            .to(imageContainer, { duration: slideFadeDuration, maxWidth: "100%" }, "<")
-            .to(contentElement, { duration: slideFadeDuration, opacity: 1, x: "0px" }, "<")
+        tl.to(contentElement, { duration: slideFadeDuration, opacity: 1, x: "0px" }, "<")
+            .to(svgElement, { duration: slideFadeDuration, opacity: 1, scale: 1 }, "<");
     }
 }
 

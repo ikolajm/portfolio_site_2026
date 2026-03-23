@@ -5,6 +5,10 @@
 #projects .project .media .image {
     max-width: 0%;
 }
+#projects .project .media .image svg {
+    opacity: 0;
+    transform: scale(.75);
+}
 #projects .project .content {
     opacity: 0;
 }
@@ -83,21 +87,6 @@
     fill: var(--white--default);
 }
 
-#projects article .media .image #phoneUnder,
-#projects article .media .image #phoneOver {
-    width: 150px;
-    height: 312px;
-}
-
-#projects article .media .image #phoneUnder {
-    margin-right: -24px;
-    transform: rotate(-4deg);
-}
-#projects article .media .image #phoneOver {
-    margin-left: -24px;
-    transform: rotate(4deg);
-}
-
 #projects .project .content {
     max-width: 100%;
 }
@@ -114,11 +103,6 @@
         width: calc(250px - var(--svg-accent--width));
         height: calc(250px - 6px);
     }
-    #projects article .media .image #phoneUnder,
-    #projects article .media .image #phoneOver {
-        width: 100px;
-        height: 210px;
-    }
     #projects article .media .image svg {
         width: 150px;
     }
@@ -127,16 +111,5 @@
 @media screen and (max-width: 750px) {
     #projects article {
         flex-direction: column-reverse;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    /* #projects article .image {
-        width: 275px;
-    } */
-
-    #projects article .image img {
-        width: 100px;
-        height: 212px;
     }
 }

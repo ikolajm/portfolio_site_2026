@@ -178,13 +178,14 @@ function initExperienceArticleAnimations() {
 function initProjectFeature() {
     const mediaElement = document.querySelector("#projects .media");
     const imageElement = mediaElement.querySelector(":scope .image");
+    const svgElement   = imageElement.querySelector(":scope svg");
     // const controlsElement = mediaElement.querySelector(":scope .controls");
     const contentElement = document.querySelector("#projects .project .content");
 
     const mm = gsap.matchMedia();
     mm.add({
         isColumn: "(max-width: 750px)",
-        isRow: "(min-width: 751px)" 
+        isRow: "(min-width: 751px)"
     }, (context) => {
         const { isRow } = context.conditions;
 
@@ -197,19 +198,27 @@ function initProjectFeature() {
 
         if (isRow) {
             addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
+                .to(svgElement, {
+                    duration: ANIMATION_CONFIG.fadeDurationLong,
+                    ease: ANIMATION_CONFIG.defaultEase,
+                    scale: 1,
+                    opacity: 1
+                }, "<")
                 .to(contentElement, {
                     delay: ANIMATION_CONFIG.defaultDelay,
                     duration: ANIMATION_CONFIG.fadeDurationLong,
                     opacity: 1,
                     x: "0px"
                 })
-                // .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
         } else {
             tl.to(contentElement, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" });
             addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
-                // .to(controlsElement, { duration: ANIMATION_CONFIG.fadeDuration, opacity: 1 });
+                .to(svgElement, {
+                    duration: ANIMATION_CONFIG.fadeDurationLong,
+                    ease: ANIMATION_CONFIG.defaultEase,
+                    scale: 1
+                }, "<")
         }
-        
 
         return () => tl.kill();
     });
