@@ -201,14 +201,15 @@ function initProjectFeature() {
                     duration: ANIMATION_CONFIG.fadeDurationLong,
                     ease: ANIMATION_CONFIG.defaultEase,
                     scale: 1,
-                    opacity: 1
-                }, "<")
+                    opacity: 1,
+                    delay: -.3
+                })
                 .to(contentElement, {
                     delay: ANIMATION_CONFIG.defaultDelay,
                     duration: ANIMATION_CONFIG.fadeDurationLong,
                     opacity: 1,
                     x: "0px"
-                })
+                }, "<")
         } else {
             tl.to(contentElement, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1, x: "0px" });
             addMediaReveal(tl, mediaElement, imageElement, "maxWidth")
@@ -216,8 +217,9 @@ function initProjectFeature() {
                     duration: ANIMATION_CONFIG.fadeDurationLong,
                     ease: ANIMATION_CONFIG.defaultEase,
                     scale: 1,
-                    opacity: 1
-                }, "<")
+                    opacity: 1,
+                    delay: -.3
+                })
         }
 
         return () => tl.kill();
