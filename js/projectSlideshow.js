@@ -184,9 +184,8 @@ const slides = [
     }
 ];
 
-let currentIndex = 0;
+export let currentIndex = 0;
 function setCurrentIndex(slide) {
-    console.log(slide)
     switch(slide) {
         case "dnd":
             currentIndex = 1;
@@ -233,6 +232,7 @@ function setSlideContent() {
         description.appendChild(p);
     });
     // New link
+    const linkContainer = link.parentElement;
     if (slide.linkType) {
         const newLink = document.createElement("a");
         newLink.dataset.linkType = slide.linkType;
@@ -240,6 +240,9 @@ function setSlideContent() {
         newLink.textContent = slide.linkText;
         link.replaceWith(newLink);
         link = newLink;
+        linkContainer.hidden = false;
+    } else {
+        linkContainer.hidden = true;
     }
     // New Tools
     tools.innerHTML = "";
@@ -270,12 +273,14 @@ function slideTransition(animation, callback) {
 function goToSlide(slide) {
     if (
         (slide === "availo" && currentIndex === 0)
+        || (slide === "dnd" && currentIndex === 1)
         || (slide === "paperboy" && currentIndex === 2)
     ) {
         return;
     }
     setCurrentIndex(slide);
     setActiveButton()
+    document.dispatchEvent(new CustomEvent('project:change', { detail: { slide } }))
     slideTransition("close", () => {
         setSlideContent();
         slideTransition("open");

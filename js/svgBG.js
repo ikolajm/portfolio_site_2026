@@ -50,11 +50,14 @@ export function initBackground(container, options = {}) {
         pu: [
           '/assets/svg/propelup.svg'
         ],
-        projects: [
-          'assets/svg/availo.svg'
-        ],
         availo: [
-          'assets/svg/availo.svg'
+          '/assets/svg/availo.svg'
+        ],
+        dnd: [
+          '/assets/svg/5ehblogo_cropped.svg'
+        ],
+        paperboy: [
+          '/assets/svg/paperboy-mascot.svg'
         ],
     },
 
@@ -285,13 +288,19 @@ export function initBackground(container, options = {}) {
   // Accepts ScrollTrigger as a parameter so svgBG.js stays dependency-free.
 
   function initScrollTriggers(ST) {
+    let lastProjectSet = 'availo'
+    document.addEventListener('project:change', (e) => {
+      lastProjectSet = e.detail.slide
+      setIconSet(e.detail.slide)
+    })
+
     const sectionMap = [
       { selector: '#home',       set: 'default',    back: null },
       { selector: '#about',       set: 'about',    back: 'default' },
       { selector: '#as-article',  set: 'as',       back: 'about'   },
       { selector: '#jmi-article', set: 'ji',       back: 'as'      },
       { selector: '#pu-article',  set: 'pu',       back: 'ji'      },
-      { selector: '#projects',    set: 'projects', back: 'pu'      },
+      { selector: '#projects',    set: () => lastProjectSet, back: 'pu' },
       { selector: '#availo-project', set: 'availo', back: null      },
     ]
 
@@ -302,8 +311,8 @@ export function initBackground(container, options = {}) {
       ST.create({
         trigger:     el,
         start:       'top 55%',
-        onEnter:     () => setIconSet(set),
-        onLeaveBack: () => setIconSet(back),
+        onEnter:     () => setIconSet(typeof set === 'function' ? set() : set),
+        onLeaveBack: () => { if (back) setIconSet(back) },
       })
     })
   }
