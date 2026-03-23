@@ -32,7 +32,7 @@ export function initBackground(container, options = {}) {
     iconSets: {
         default: [
           '/assets/svg/personal_logo_white.svg',
-          '/assets/svg/face-laugh-beam-solid.svg',
+          '/assets/svg/shaka-04.svg',
           '/assets/svg/hand-peace-solid.svg',
           '/assets/svg/personal_logo_white.svg',
         ],
