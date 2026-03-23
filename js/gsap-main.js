@@ -1,5 +1,5 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
-import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks, initContactAnimation } from "./gsap-shared.js";
+import { DEFAULT_SCROLL_TRIGGER, initLoadIn, initParallaxScroll, initInternalLinks } from "./gsap-shared.js";
 import { initBackground } from "./svgBG.js";
 
 function initHeroAnimation() {
@@ -224,7 +224,6 @@ window.addEventListener("pageshow", () => {
     initExperienceArticleAnimations();
     initProjectFeature();
     initInternalLinks();
-    initContactAnimation();
     const bg = initBackground(document.querySelector('.svgBG'));
     initParallaxScroll();
     bg.initScrollTriggers(ScrollTrigger);

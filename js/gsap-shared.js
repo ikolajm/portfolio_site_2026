@@ -52,23 +52,3 @@ export function initInternalLinks() {
         });
     });
 }
-
-export function initContactAnimation() {
-    const bumper = document.querySelector(".svg-location-bumper");
-    const maskBorder = document.querySelector("#contact .location-column .row .svg-location-border");
-    const container = document.querySelector("#contact .location-column .row .container");
-    const content = container.querySelector(":scope > .location");
-
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: bumper,
-            start: "top 70%",
-            toggleActions: ANIMATION_CONFIG.defaultToggleActions
-        }
-    });
-
-    tl.to(bumper, { delay: ANIMATION_CONFIG.defaultDelay, duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 })
-      .to(container, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "160px" }, "<")
-      .to(maskBorder, { duration: ANIMATION_CONFIG.expandDuration, maxWidth: "100%", opacity: 1 }, "<")
-      .to(content, { duration: ANIMATION_CONFIG.fadeDurationLong, opacity: 1 });
-}
