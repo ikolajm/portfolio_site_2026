@@ -10,7 +10,6 @@ export function initBackground(container, options = {}) {
 
   // ─── Config ──────────────────────────────────────────────────────────────
 
-  let observer;
   const config = {
     iconColor: "#E4E6E7",
 
@@ -73,6 +72,24 @@ export function initBackground(container, options = {}) {
     activeSet: config.activeSet
   }
 
+  // ─── Section → icon-set map (closure-level so detectActiveSet can use it) ─
+
+  let lastProjectSet = 'availo'
+  document.addEventListener('project:change', (e) => {
+    lastProjectSet = e.detail.slide
+    setIconSet(e.detail.slide)
+  })
+
+  const sectionMap = [
+    { selector: '#home',          set: 'default',            back: null      },
+    { selector: '#about',         set: 'about',              back: 'default' },
+    { selector: '#as-article',    set: 'as',                 back: 'about'   },
+    { selector: '#jmi-article',   set: 'ji',                 back: 'as'      },
+    { selector: '#pu-article',    set: 'pu',                 back: 'ji'      },
+    { selector: '#projects',      set: () => lastProjectSet, back: 'pu'      },
+    { selector: '#availo-project',set: 'availo',             back: null      },
+  ]
+
   // ─── Constants (angle never changes at runtime) ──────────────────────────
 
   const angleRad = config.angle * Math.PI / 180
@@ -108,7 +125,9 @@ export function initBackground(container, options = {}) {
 
   let resizeObserver, resizeTimer
   function initResizeObserver() {
+    let ready = false
     resizeObserver = new ResizeObserver(() => {
+      if (!ready) { ready = true; return }
       clearTimeout(resizeTimer)
       resizeTimer = setTimeout(() => {
         bgContainer.innerHTML = ''
@@ -121,8 +140,26 @@ export function initBackground(container, options = {}) {
     resizeObserver.observe(container)
   }
 
+  // ─── Detect the correct initial icon set from current scroll position ────
+  // Walks sectionMap in order; last entry whose top edge is above the 55%
+  // viewport threshold wins — matching the ScrollTrigger start point exactly.
+
+  function detectActiveSet() {
+    const threshold = window.innerHeight * 0.55
+    let active = config.activeSet
+    for (const { selector, set } of sectionMap) {
+      const el = document.querySelector(selector)
+      if (!el) continue
+      if (el.getBoundingClientRect().top < threshold) {
+        active = typeof set === 'function' ? set() : set
+      }
+    }
+    return active
+  }
+
   // ─── Init ────────────────────────────────────────────────────────────────
 
+  state.activeSet = detectActiveSet()
   let geo = buildGeometry()
   let varTable = buildVarTable(geo.cols * geo.rows)
 
@@ -288,22 +325,6 @@ export function initBackground(container, options = {}) {
   // Accepts ScrollTrigger as a parameter so svgBG.js stays dependency-free.
 
   function initScrollTriggers(ST) {
-    let lastProjectSet = 'availo'
-    document.addEventListener('project:change', (e) => {
-      lastProjectSet = e.detail.slide
-      setIconSet(e.detail.slide)
-    })
-
-    const sectionMap = [
-      { selector: '#home',       set: 'default',    back: null },
-      { selector: '#about',       set: 'about',    back: 'default' },
-      { selector: '#as-article',  set: 'as',       back: 'about'   },
-      { selector: '#jmi-article', set: 'ji',       back: 'as'      },
-      { selector: '#pu-article',  set: 'pu',       back: 'ji'      },
-      { selector: '#projects',    set: () => lastProjectSet, back: 'pu' },
-      { selector: '#availo-project', set: 'availo', back: null      },
-    ]
-
     sectionMap.forEach(({ selector, set, back }) => {
       const el = document.querySelector(selector)
       if (!el) return   // graceful skip — section may not exist on every page

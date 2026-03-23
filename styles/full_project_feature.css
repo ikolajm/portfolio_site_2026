@@ -5,6 +5,12 @@ main {
     gap: 1.5rem;
 }
 
+main section#hero,
+main section#details {
+    border-top: none;
+    padding-top: 0rem;
+}
+
 /* Hero */
 #hero {
     width: 100%;

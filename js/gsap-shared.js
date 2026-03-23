@@ -1,7 +1,7 @@
 import { ANIMATION_CONFIG } from "./animationConfig.js";
 
 export const DEFAULT_SCROLL_TRIGGER = {
-    start: "top 50%",
+    start: "top 55%",
     toggleActions: ANIMATION_CONFIG.defaultToggleActions
 };
 
@@ -17,7 +17,7 @@ export function initLoadIn() {
             opacity: 1,
             ease: ANIMATION_CONFIG.pageTransitionEase,
             duration: ANIMATION_CONFIG.fadeDuration,
-        })
+        }, "<")
     });
 }
 
@@ -39,7 +39,12 @@ export function animatePageTransition() {
             opacity: 0,
             ease: ANIMATION_CONFIG.pageTransitionEase,
             duration: ANIMATION_CONFIG.fadeDuration,
-        });
+        })
+        .to(".svgBG", {
+            opacity: 0,
+            ease: ANIMATION_CONFIG.pageTransitionEase,
+            duration: ANIMATION_CONFIG.fadeDuration,
+        }, "<")
     });
 }
 

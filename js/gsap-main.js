@@ -179,7 +179,6 @@ function initProjectFeature() {
     const mediaElement = document.querySelector("#projects .media");
     const imageElement = mediaElement.querySelector(":scope .image");
     const svgElement   = imageElement.querySelector(":scope svg");
-    // const controlsElement = mediaElement.querySelector(":scope .controls");
     const contentElement = document.querySelector("#projects .project .content");
 
     const mm = gsap.matchMedia();
