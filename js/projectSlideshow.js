@@ -235,7 +235,9 @@ function setSlideContent() {
     const linkContainer = link.parentElement;
     if (slide.linkType) {
         const newLink = document.createElement("a");
-        newLink.dataset.linkType = slide.linkType;
+        if (slide.linkType === "external") {
+            newLink.target = "_blank";
+        }
         newLink.href = slide.linkHref;
         newLink.textContent = slide.linkText;
         link.replaceWith(newLink);
