@@ -1,7 +1,7 @@
 export function ScrollIndicator({ className = '' }: { className?: string }) {
   return (
     <div
-      className={`pointer-events-none font-mono text-[11px] uppercase tracking-[0.22em] opacity-60 ${className}`}
+      className={`pointer-events-none font-mono text-xs uppercase tracking-tag opacity-60 ${className}`}
       aria-hidden
     >
       <span className="opacity-50">{'> '}</span>

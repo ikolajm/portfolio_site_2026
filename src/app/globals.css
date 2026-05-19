@@ -42,11 +42,33 @@
   --color-on-warning: var(--on-warning);
   --color-info: var(--info);
   --color-on-info: var(--on-info);
+
+  /* Brand-specific tracking + leading. */
+  /* Encoded once so call sites stop reaching for arbitrary values. */
+  --tracking-eyebrow: 0.24em;
+  --tracking-tag: 0.22em;
+  --tracking-nav: 0.18em;
+  --leading-display: 1.05;
 }
 
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+/* CSS-mask logo treatment — lets monochrome SVGs inherit currentColor */
+/* regardless of how their internal fills are authored. Use via inline */
+/* style: `style={{ '--logo-mask': 'url(/path.svg)' }}`. */
+.logo-mask {
+  background-color: currentColor;
+  mask-image: var(--logo-mask, none);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: var(--logo-mask, none);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
 }
 
 body {

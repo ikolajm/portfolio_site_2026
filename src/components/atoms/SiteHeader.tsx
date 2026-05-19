@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { BracketLabel } from '@/components/atoms/BracketLabel';
 
 const SECTIONS = [
   { id: 'hero', label: 'LANDING' },
@@ -17,16 +18,6 @@ const CASE_STUDIES = [
   { slug: 'paperboy', label: 'PAPERBOY' },
   { slug: 'party-wipe', label: 'PARTY WIPE' },
 ] as const;
-
-function Bracketed({ children, active }: { children: React.ReactNode; active: boolean }) {
-  return (
-    <span className={active ? 'opacity-100' : 'opacity-55 hover:opacity-100 transition-opacity'}>
-      <span className="opacity-50">[ </span>
-      <span className={active ? 'text-primary' : ''}>{children}</span>
-      <span className="opacity-50"> ]</span>
-    </span>
-  );
-}
 
 export function SiteHeader() {
   const [activeId, setActiveId] = useState<string>('hero');
@@ -67,7 +58,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" aria-label="Jacob Ikola — home" className="group">
-          <span className="inline-flex h-8 items-center gap-2 rounded-sm border border-outline-subtle bg-surface-1/40 px-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-on-surface transition-colors group-hover:bg-surface-2/40">
+          <span className="inline-flex h-8 items-center gap-2 rounded-sm border border-outline-subtle bg-surface-1/40 px-2.5 font-mono text-xs uppercase tracking-nav text-on-surface transition-colors group-hover:bg-surface-2/40">
             <img
               src="/assets/svg/personal_logo_white.svg"
               alt=""
@@ -77,22 +68,22 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.18em]">
+        <nav className="flex items-center gap-5">
           {SECTIONS.map((section) => (
-            <a key={section.id} href={`#${section.id}`}>
-              <Bracketed active={activeId === section.id}>{section.label}</Bracketed>
+            <a key={section.id} href={`#${section.id}`} className="group">
+              <BracketLabel active={activeId === section.id}>{section.label}</BracketLabel>
             </a>
           ))}
 
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="cursor-pointer font-mono text-[11px] uppercase tracking-[0.18em] outline-none focus-visible:opacity-100">
-              <Bracketed active={false}>CASE STUDIES ↓</Bracketed>
+            <DropdownMenu.Trigger className="group cursor-pointer outline-none">
+              <BracketLabel>CASE STUDIES ↓</BracketLabel>
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
               <DropdownMenu.Content
                 align="end"
                 sideOffset={10}
-                className="z-50 min-w-[14rem] rounded-sm border border-outline-subtle bg-surface-1/95 p-1 font-mono text-[11px] uppercase tracking-[0.18em] shadow-xl backdrop-blur-md"
+                className="z-50 min-w-[14rem] rounded-sm border border-outline-subtle bg-surface-1/95 p-1 font-mono text-xs uppercase tracking-nav shadow-xl backdrop-blur-md"
               >
                 {CASE_STUDIES.map((cs) => (
                   <DropdownMenu.Item key={cs.slug} asChild>
