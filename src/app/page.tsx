@@ -12,7 +12,7 @@ import { ScrollIndicator } from '@/components/atoms/ScrollIndicator';
 import { CaseStudyCTA } from '@/components/atoms/CaseStudyCTA';
 import { TagChip } from '@/components/atoms/TagChip';
 import { CompanyLogo } from '@/components/atoms/CompanyLogo';
-import { BracketLabel } from '@/components/atoms/BracketLabel';
+import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 
 export default function Home() {
   return (
@@ -51,14 +51,7 @@ export default function Home() {
         aria-label="About"
         className="flex flex-col gap-12 py-24"
       >
-        <div className="flex items-center gap-4">
-          <h2 className="font-mono text-xs uppercase tracking-nav opacity-60 whitespace-nowrap">
-            <span className="opacity-50">[ </span>
-            About
-            <span className="opacity-50"> ]</span>
-          </h2>
-          <span aria-hidden className="h-px flex-1 bg-outline-subtle/60" />
-        </div>
+        <SectionAnchor>About</SectionAnchor>
 
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
@@ -115,14 +108,7 @@ export default function Home() {
         aria-label="Selected Work"
         className="flex flex-col gap-12 py-24"
       >
-        <div className="flex items-center gap-4">
-          <h2 className="font-mono text-xs uppercase tracking-nav opacity-60 whitespace-nowrap">
-            <span className="opacity-50">[ </span>
-            Selected Work
-            <span className="opacity-50"> ]</span>
-          </h2>
-          <span aria-hidden className="h-px flex-1 bg-outline-subtle/60" />
-        </div>
+        <SectionAnchor>Selected Work</SectionAnchor>
 
         <div className="flex flex-col gap-6">
           <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
@@ -230,14 +216,7 @@ export default function Home() {
         aria-label="Experience"
         className="flex flex-col gap-12 py-24"
       >
-        <div className="flex items-center gap-4">
-          <h2 className="font-mono text-xs uppercase tracking-nav opacity-60 whitespace-nowrap">
-            <span className="opacity-50">[ </span>
-            Experience
-            <span className="opacity-50"> ]</span>
-          </h2>
-          <span aria-hidden className="h-px flex-1 bg-outline-subtle/60" />
-        </div>
+        <SectionAnchor>Experience</SectionAnchor>
 
         <div className="flex flex-col gap-10">
           <article className="flex flex-col gap-4 md:flex-row md:gap-6">
@@ -303,54 +282,6 @@ export default function Home() {
         </div>
       </section>
 
-      <footer
-        id="footer"
-        aria-label="Contact"
-        className="flex flex-col gap-8 border-t border-outline-subtle py-16"
-      >
-        <div className="flex flex-col gap-3">
-          <p className="text-3xl font-semibold leading-display tracking-tight">
-            Always open to a new hat.
-          </p>
-          <p className="text-lg leading-relaxed opacity-80">
-            Design Engineering, Full Stack Development — or something that
-            doesn&apos;t <em>quite</em> fit one job description.
-          </p>
-        </div>
-
-        <ul className="flex flex-wrap gap-4">
-          <li>
-            <a href="mailto:ikolajm@gmail.com" className="group inline-block">
-              <BracketLabel>Email</BracketLabel>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.linkedin.com/in/jacob-ikola"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group inline-block"
-            >
-              <BracketLabel>LinkedIn</BracketLabel>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/ikolajm"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group inline-block"
-            >
-              <BracketLabel>GitHub</BracketLabel>
-            </a>
-          </li>
-          <li>
-            <a href="#" className="group inline-block">
-              <BracketLabel>Resume</BracketLabel>
-            </a>
-          </li>
-        </ul>
-      </footer>
       </div>
     </main>
   );

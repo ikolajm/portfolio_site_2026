@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { BracketLabel } from '@/components/atoms/BracketLabel';
 
@@ -20,6 +21,9 @@ const CASE_STUDIES = [
 ] as const;
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  const isLanding = pathname === '/';
+
   const [activeId, setActiveId] = useState<string>('hero');
   const [scrolled, setScrolled] = useState(false);
 
@@ -31,6 +35,8 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    if (!isLanding) return;
+
     const sections = SECTIONS.map(({ id }) => document.getElementById(id)).filter(
       (el): el is HTMLElement => Boolean(el)
     );
@@ -48,7 +54,7 @@ export function SiteHeader() {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [isLanding]);
 
   return (
     <header
@@ -68,38 +74,85 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-5">
-          {SECTIONS.map((section) => (
-            <a key={section.id} href={`#${section.id}`} className="group">
-              <BracketLabel active={activeId === section.id}>{section.label}</BracketLabel>
-            </a>
-          ))}
+        {isLanding ? (
+          <>
+            {/* Desktop nav — md and up */}
+            <nav className="hidden items-center gap-5 md:flex">
+              {SECTIONS.map((section) => (
+                <a key={section.id} href={`/#${section.id}`} className="group">
+                  <BracketLabel active={activeId === section.id}>{section.label}</BracketLabel>
+                </a>
+              ))}
 
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="group cursor-pointer outline-none">
-              <BracketLabel>CASE STUDIES ↓</BracketLabel>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Portal>
-              <DropdownMenu.Content
-                align="end"
-                sideOffset={10}
-                className="z-50 min-w-[14rem] rounded-sm border border-outline-subtle bg-surface-1/95 p-1 font-mono text-xs uppercase tracking-nav shadow-xl backdrop-blur-md"
-              >
-                {CASE_STUDIES.map((cs) => (
-                  <DropdownMenu.Item key={cs.slug} asChild>
-                    <Link
-                      href={`/case-studies/${cs.slug}`}
-                      className="flex cursor-pointer items-center gap-2 rounded-sm px-3 py-2 outline-none transition-colors hover:bg-surface-2/40 focus:bg-surface-2/40"
-                    >
-                      <span className="opacity-40">→</span>
-                      <span>{cs.label}</span>
-                    </Link>
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Content>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Root>
-        </nav>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger className="group cursor-pointer outline-none">
+                  <BracketLabel>CASE STUDIES ↓</BracketLabel>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Portal>
+                  <DropdownMenu.Content
+                    align="end"
+                    sideOffset={10}
+                    className="z-50 min-w-[14rem] rounded-sm border border-outline-subtle bg-surface-1/95 p-1 font-mono text-xs uppercase tracking-nav shadow-xl backdrop-blur-md"
+                  >
+                    {CASE_STUDIES.map((cs) => (
+                      <DropdownMenu.Item key={cs.slug} asChild>
+                        <Link
+                          href={`/case-studies/${cs.slug}`}
+                          className="flex cursor-pointer items-center gap-2 rounded-sm px-3 py-2 outline-none transition-colors hover:bg-surface-2/40 focus:bg-surface-2/40"
+                        >
+                          <span className="opacity-40">→</span>
+                          <span>{cs.label}</span>
+                        </Link>
+                      </DropdownMenu.Item>
+                    ))}
+                  </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+              </DropdownMenu.Root>
+            </nav>
+
+            {/* Mobile nav — below md, single MENU dropdown containing sections + case studies */}
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className="group cursor-pointer outline-none md:hidden">
+                <BracketLabel>MENU ↓</BracketLabel>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  align="end"
+                  sideOffset={10}
+                  className="z-50 min-w-[16rem] rounded-sm border border-outline-subtle bg-surface-1/95 p-1 font-mono text-xs uppercase tracking-nav shadow-xl backdrop-blur-md"
+                >
+                  {SECTIONS.map((section) => (
+                    <DropdownMenu.Item key={section.id} asChild>
+                      <a
+                        href={`/#${section.id}`}
+                        className="flex cursor-pointer items-center gap-2 rounded-sm px-3 py-2 outline-none transition-colors hover:bg-surface-2/40 focus:bg-surface-2/40"
+                      >
+                        <span className="opacity-40">#</span>
+                        <span>{section.label}</span>
+                      </a>
+                    </DropdownMenu.Item>
+                  ))}
+                  <DropdownMenu.Separator className="my-1 h-px bg-outline-subtle/60" />
+                  {CASE_STUDIES.map((cs) => (
+                    <DropdownMenu.Item key={cs.slug} asChild>
+                      <Link
+                        href={`/case-studies/${cs.slug}`}
+                        className="flex cursor-pointer items-center gap-2 rounded-sm px-3 py-2 outline-none transition-colors hover:bg-surface-2/40 focus:bg-surface-2/40"
+                      >
+                        <span className="opacity-40">→</span>
+                        <span>{cs.label}</span>
+                      </Link>
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+          </>
+        ) : (
+          <Link href="/" className="group">
+            <BracketLabel>← Landing</BracketLabel>
+          </Link>
+        )}
       </div>
     </header>
   );
