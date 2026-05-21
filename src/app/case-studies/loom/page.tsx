@@ -6,6 +6,7 @@ import { PipelineFlow } from '@/components/atoms/PipelineFlow';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { ProcessSteps, type ProcessStep } from '@/components/atoms/ProcessSteps';
 import { InlineCode } from '@/components/atoms/InlineCode';
+import { Reveal } from '@/components/atoms/Reveal';
 import { ClipboardList, Braces, Palette, Boxes, Terminal } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -207,7 +208,7 @@ export default function LoomCaseStudy() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-20 px-6 pt-32 pb-24">
       {/* HERO */}
-      <section aria-label="Hero" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Hero" className="flex flex-col gap-8">
         <SectionAnchor>Case Study</SectionAnchor>
 
         {/* intro */}
@@ -240,13 +241,15 @@ export default function LoomCaseStudy() {
           </ul>
         </div>
 
-      </section>
+      </Reveal>
 
       {/* PIPELINE DIAGRAM — questionnaire in, two synchronized worlds out */}
-      <PipelineFlow />
+      <Reveal>
+        <PipelineFlow />
+      </Reveal>
 
       {/* PROBLEM */}
-      <section aria-label="Problem" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Problem" className="flex flex-col gap-8">
         <SectionAnchor>The Problem</SectionAnchor>
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
@@ -268,10 +271,10 @@ export default function LoomCaseStudy() {
           </p>
           <p>That system is Loom.</p>
         </div>
-      </section>
+      </Reveal>
 
       {/* ARCHITECTURE */}
-      <section aria-label="Architecture" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Architecture" className="flex flex-col gap-8">
         <SectionAnchor>Architecture</SectionAnchor>
         <p className="text-lg leading-relaxed">
           Loom is five things working in series.
@@ -298,10 +301,10 @@ export default function LoomCaseStudy() {
           own projects — a way to turn a short questionnaire into a working
           design system instead of six months of foundation work.
         </p>
-      </section>
+      </Reveal>
 
       {/* UNDER THE HOOD */}
-      <section aria-label="Under the Hood" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Under the Hood" className="flex flex-col gap-8">
         <SectionAnchor>Under the Hood</SectionAnchor>
         <p className="text-lg leading-relaxed">
           JSON in, files out. The four slices below show the shape of the
@@ -309,9 +312,11 @@ export default function LoomCaseStudy() {
         </p>
 
         <TerminalGallery entries={UNDER_HOOD} />
-      </section>
+      </Reveal>
 
-      <CrossLinkSection currentSlug="loom" />
+      <Reveal>
+        <CrossLinkSection currentSlug="loom" />
+      </Reveal>
     </main>
   );
 }

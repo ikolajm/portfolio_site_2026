@@ -6,6 +6,7 @@ import { MediaBlock } from '@/components/atoms/MediaBlock';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { CalloutBlock } from '@/components/atoms/CalloutBlock';
 import { StatGrid } from '@/components/atoms/StatGrid';
+import { Reveal } from '@/components/atoms/Reveal';
 
 export const metadata: Metadata = {
   title: 'Paperboy — Jacob Ikola',
@@ -17,7 +18,7 @@ export default function PaperboyCaseStudy() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-20 px-6 pt-32 pb-24">
       {/* HERO */}
-      <section aria-label="Hero" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Hero" className="flex flex-col gap-8">
         <SectionAnchor>Case Study</SectionAnchor>
 
         <div className="flex flex-col gap-4">
@@ -42,17 +43,19 @@ export default function PaperboyCaseStudy() {
             <li><TagChip>TMDB</TagChip></li>
           </ul>
         </div>
-      </section>
+      </Reveal>
 
       {/* MEDIABLOCK — product-first position 2 */}
-      <MediaBlock
-        aspect="16/10"
-        placeholder="the dashboard — opening, switching News / Media / Scores, expanding an NBA card to linescore + leaders + injuries, filtering News by Topics → AI"
-        caption="actual product, not a mockup"
-      />
+      <Reveal>
+        <MediaBlock
+          aspect="16/10"
+          placeholder="the dashboard — opening, switching News / Media / Scores, expanding an NBA card to linescore + leaders + injuries, filtering News by Topics → AI"
+          caption="actual product, not a mockup"
+        />
+      </Reveal>
 
       {/* PROBLEM */}
-      <section aria-label="Problem" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Problem" className="flex flex-col gap-8">
         <SectionAnchor>The Problem</SectionAnchor>
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
@@ -71,10 +74,10 @@ export default function PaperboyCaseStudy() {
             listening to or watching that night.
           </p>
         </div>
-      </section>
+      </Reveal>
 
       {/* ARCHITECTURE */}
-      <section aria-label="Architecture" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Architecture" className="flex flex-col gap-8">
         <SectionAnchor>Architecture</SectionAnchor>
         <p className="text-lg leading-relaxed">
           Paperboy is two halves that don&apos;t talk to each other in real
@@ -136,10 +139,10 @@ export default function PaperboyCaseStudy() {
           <code className="font-mono text-base">Logo.tsx</code>. The 55
           atoms covered every interaction surface.
         </p>
-      </section>
+      </Reveal>
 
       {/* DECISIONS */}
-      <section aria-label="Decisions" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Decisions" className="flex flex-col gap-8">
         <SectionAnchor>Decisions</SectionAnchor>
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
@@ -216,21 +219,23 @@ export default function PaperboyCaseStudy() {
             the loop.
           </p>
         </div>
-      </section>
+      </Reveal>
 
-      <CalloutBlock eyebrow="By the numbers">
-        <StatGrid
-          stats={[
-            { label: 'Atoms in', value: '55', caption: 'from Loom' },
-            { label: 'Atoms added', value: '1', caption: 'project Logo only' },
-            { label: 'API calls / morning', value: '80–145', caption: 'in parallel' },
-            { label: 'Daily build', value: '3s', caption: 'end to end' },
-          ]}
-        />
-      </CalloutBlock>
+      <Reveal>
+        <CalloutBlock eyebrow="By the numbers">
+          <StatGrid
+            stats={[
+              { label: 'Atoms in', value: '55', caption: 'from Loom' },
+              { label: 'Atoms added', value: '1', caption: 'project Logo only' },
+              { label: 'API calls / morning', value: '80–145', caption: 'in parallel' },
+              { label: 'Daily build', value: '3s', caption: 'end to end' },
+            ]}
+          />
+        </CalloutBlock>
+      </Reveal>
 
       {/* UNDER THE HOOD */}
-      <section aria-label="Under the Hood" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Under the Hood" className="flex flex-col gap-8">
         <SectionAnchor>Under the Hood</SectionAnchor>
         <p className="text-lg leading-relaxed">
           Config in, JSON out, with a parallel fetch graph in the middle.
@@ -303,9 +308,11 @@ export async function buildDigest(
 }`}
           </CodeBlock>
         </div>
-      </section>
+      </Reveal>
 
-      <CrossLinkSection currentSlug="paperboy" />
+      <Reveal>
+        <CrossLinkSection currentSlug="paperboy" />
+      </Reveal>
     </main>
   );
 }

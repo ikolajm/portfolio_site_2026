@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { SVGLoader, type SVGResult } from 'three/examples/jsm/loaders/SVGLoader.js';
@@ -94,17 +94,40 @@ function Monogram() {
   );
 }
 
+/**
+ * Fires once, after the scene's async assets (the SVG paths and the HDRI
+ * environment) have resolved and the Suspense subtree commits. Drives the
+ * fade-in so the monogram eases in instead of popping.
+ */
+function ReadySignal({ onReady }: { onReady: () => void }) {
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
+  return null;
+}
+
 export function HeroMonogram({ className = '' }: { className?: string }) {
+  const [ready, setReady] = useState(false);
+  const handleReady = useCallback(() => setReady(true), []);
+
   return (
-    <div className={`pointer-events-none ${className}`} aria-hidden>
+    <div
+      className={`pointer-events-none transition-opacity duration-700 ease-out ${
+        ready ? 'opacity-100' : 'opacity-0'
+      } ${className}`}
+      aria-hidden
+    >
       <Canvas
         camera={{ position: [0, 0, 30], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
       >
         <ambientLight intensity={0.15} />
-        <Monogram />
-        <Environment preset="warehouse" />
+        <Suspense fallback={null}>
+          <Monogram />
+          <Environment preset="warehouse" />
+          <ReadySignal onReady={handleReady} />
+        </Suspense>
       </Canvas>
     </div>
   );

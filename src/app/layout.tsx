@@ -22,6 +22,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Finlandica:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
+        {/* No JS → scroll-reveal blocks must never stay hidden. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body>
         <ThemeProvider>

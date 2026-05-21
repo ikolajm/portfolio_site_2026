@@ -15,6 +15,7 @@ import { CompanyLogo } from '@/components/atoms/CompanyLogo';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
 import { PipelineFlow } from '@/components/atoms/PipelineFlow';
+import { Reveal } from '@/components/atoms/Reveal';
 
 export default function Home() {
   return (
@@ -29,14 +30,21 @@ export default function Home() {
         <div className="absolute inset-0 flex items-end">
           <div className="mx-auto w-full max-w-7xl px-6 pb-32 md:px-12">
             <div className="flex max-w-2xl flex-col gap-4">
-              <p className="font-mono text-sm uppercase tracking-eyebrow text-on-surface-variant md:text-base">
+              <Reveal
+                as="p"
+                className="font-mono text-sm uppercase tracking-eyebrow text-on-surface-variant md:text-base"
+              >
                 [ Jacob Ikola ]
-              </p>
-              <h1 className="text-4xl font-semibold leading-display tracking-tight md:text-5xl">
+              </Reveal>
+              <Reveal
+                as="h1"
+                delay={100}
+                className="text-4xl font-semibold leading-display tracking-tight md:text-5xl"
+              >
                 Design. Development.
                 <br />
                 And the systems between.
-              </h1>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -51,9 +59,11 @@ export default function Home() {
         aria-label="About"
         className="flex flex-col gap-12 py-24"
       >
-        <SectionAnchor>About</SectionAnchor>
+        <Reveal>
+          <SectionAnchor>About</SectionAnchor>
+        </Reveal>
 
-        <div className="flex flex-col gap-6 text-lg leading-relaxed">
+        <Reveal className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
             I design, I develop, and somewhere along the way I started building
             the systems between. Most developers pick a lane. I just kept
@@ -72,41 +82,58 @@ export default function Home() {
             first design system from scratch. Freelancing was all of it at
             once — designer, developer, and the person on every call.
           </p>
-        </div>
+        </Reveal>
 
-        <blockquote className="border-l border-outline-subtle pl-6 text-lg leading-relaxed">
+        <Reveal
+          as="blockquote"
+          className="border-l border-outline-subtle pl-6 text-lg leading-relaxed"
+        >
           The lanes always blurred. Not by accident — by preference.
-        </blockquote>
+        </Reveal>
 
-        <p className="text-lg leading-relaxed">
+        <Reveal as="p" className="text-lg leading-relaxed">
           The &quot;systems between&quot; part came out of that. The same kind
           of friction kept showing up — handoff drift between design and dev,
           foundation work eating product time, context lost between sessions.
           I started building tools to close the gaps. Lately, in my personal
           projects, that&apos;s become the main work.
-        </p>
+        </Reveal>
 
-        <p className="text-lg leading-relaxed">
+        <Reveal as="p" className="text-lg leading-relaxed">
           I built an AI system, and everything in this portfolio runs through
           it — the case studies, the writing, this page. I spent years
           avoiding AI; when I finally took it on, I wanted it to be a practice,
           not a habit. Working with it well is a real discipline now — context
           engineering — and JAMIE is my answer to it. It&apos;s the first case
           study below.
-        </p>
+        </Reveal>
 
         <div aria-label="Tools" className="flex flex-col gap-4 pt-4">
-          <p className="font-mono text-sm text-on-surface-variant">
+          <Reveal as="p" className="font-mono text-sm text-on-surface-variant">
             // The tools change. The way I work doesn&apos;t.
-          </p>
+          </Reveal>
           <ul className="flex flex-wrap items-center gap-6 text-on-surface-variant">
-            <li><SiReact size={32} title="React" /></li>
-            <li><SiTypescript size={32} title="TypeScript" /></li>
-            <li><SiNextdotjs size={32} title="Next.js" /></li>
-            <li><SiNodedotjs size={32} title="Node.js" /></li>
-            <li><SiThreedotjs size={32} title="Three.js" /></li>
-            <li><SiTailwindcss size={32} title="Tailwind CSS" /></li>
-            <li><SiFigma size={32} title="Figma" /></li>
+            <Reveal as="li" delay={0} className="transition-colors duration-150 hover:text-on-surface">
+              <SiReact size={32} title="React" />
+            </Reveal>
+            <Reveal as="li" delay={45} className="transition-colors duration-150 hover:text-on-surface">
+              <SiTypescript size={32} title="TypeScript" />
+            </Reveal>
+            <Reveal as="li" delay={90} className="transition-colors duration-150 hover:text-on-surface">
+              <SiNextdotjs size={32} title="Next.js" />
+            </Reveal>
+            <Reveal as="li" delay={135} className="transition-colors duration-150 hover:text-on-surface">
+              <SiNodedotjs size={32} title="Node.js" />
+            </Reveal>
+            <Reveal as="li" delay={180} className="transition-colors duration-150 hover:text-on-surface">
+              <SiThreedotjs size={32} title="Three.js" />
+            </Reveal>
+            <Reveal as="li" delay={225} className="transition-colors duration-150 hover:text-on-surface">
+              <SiTailwindcss size={32} title="Tailwind CSS" />
+            </Reveal>
+            <Reveal as="li" delay={270} className="transition-colors duration-150 hover:text-on-surface">
+              <SiFigma size={32} title="Figma" />
+            </Reveal>
           </ul>
         </div>
       </section>
@@ -116,112 +143,122 @@ export default function Home() {
         aria-label="Selected Work"
         className="flex flex-col gap-12 py-24"
       >
-        <SectionAnchor>Selected Work</SectionAnchor>
+        <Reveal>
+          <SectionAnchor>Selected Work</SectionAnchor>
+        </Reveal>
 
         <div className="flex flex-col gap-6">
-          <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
-            <JamieHeroLoop framed={false} />
-            <div className="flex flex-col gap-4 p-6 md:p-8">
-              <header className="flex items-baseline justify-between gap-4">
-                <h3 className="text-2xl font-semibold">JAMIE</h3>
-                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">01</span>
-              </header>
-              <p className="text-lg font-medium">
-                A persistent AI development partner — part JARVIS, part
-                operating system for how I work.
-              </p>
-              <p>
-                Identity, persistent memory, structured workspaces, and a daily
-                session-and-retro loop. Modeled after JARVIS — the personality
-                and first-person voice are intentional design choices, not
-                window dressing.
-              </p>
-              <ul className="flex flex-wrap gap-2">
-                <li><TagChip>Context Engineering</TagChip></li>
-                <li><TagChip>Prompt Engineering</TagChip></li>
-                <li><TagChip>Markdown</TagChip></li>
-                <li><TagChip>Agent SDKs</TagChip></li>
-              </ul>
-              <CaseStudyCTA slug="jamie" />
-            </div>
-          </article>
+          <Reveal>
+            <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
+              <JamieHeroLoop framed={false} />
+              <div className="flex flex-col gap-4 p-6 md:p-8">
+                <header className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-2xl font-semibold">JAMIE</h3>
+                  <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">01</span>
+                </header>
+                <p className="text-lg font-medium">
+                  A persistent AI development partner — part JARVIS, part
+                  operating system for how I work.
+                </p>
+                <p>
+                  Identity, persistent memory, structured workspaces, and a daily
+                  session-and-retro loop. Modeled after JARVIS — the personality
+                  and first-person voice are intentional design choices, not
+                  window dressing.
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  <li><TagChip>Context Engineering</TagChip></li>
+                  <li><TagChip>Prompt Engineering</TagChip></li>
+                  <li><TagChip>Markdown</TagChip></li>
+                  <li><TagChip>Agent SDKs</TagChip></li>
+                </ul>
+                <CaseStudyCTA slug="jamie" />
+              </div>
+            </article>
+          </Reveal>
 
-          <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
-            <PipelineFlow framed={false} />
-            <div className="flex flex-col gap-4 p-6 md:p-8">
+          <Reveal>
+            <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
+              <PipelineFlow framed={false} />
+              <div className="flex flex-col gap-4 p-6 md:p-8">
+                <header className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-2xl font-semibold">Loom</h3>
+                  <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">02</span>
+                </header>
+                <p className="text-lg font-medium">
+                  I kept burning out building UI foundations, so I built a
+                  pipeline that generates them.
+                </p>
+                <p>
+                  Brand questionnaire in — tokens, 55 components across 7
+                  categories, 30 Figma rendering scripts, and a working Next.js
+                  scaffold out. Change a token, regenerate everything. Figma and
+                  code stay in sync because they read from the same JSON.
+                </p>
+                <ul className="flex flex-wrap gap-2">
+                  <li><TagChip>TypeScript</TagChip></li>
+                  <li><TagChip>Figma API</TagChip></li>
+                  <li><TagChip>Tailwind</TagChip></li>
+                  <li><TagChip>React</TagChip></li>
+                </ul>
+                <CaseStudyCTA slug="loom" />
+              </div>
+            </article>
+          </Reveal>
+
+          <Reveal>
+            <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
               <header className="flex items-baseline justify-between gap-4">
-                <h3 className="text-2xl font-semibold">Loom</h3>
-                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">02</span>
+                <h3 className="text-2xl font-semibold">Paperboy</h3>
+                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">03</span>
               </header>
               <p className="text-lg font-medium">
-                I kept burning out building UI foundations, so I built a
-                pipeline that generates them.
+                A daily news dashboard I built so I&apos;d stop opening six apps
+                every morning.
               </p>
               <p>
-                Brand questionnaire in — tokens, 55 components across 7
-                categories, 30 Figma rendering scripts, and a working Next.js
-                scaffold out. Change a token, regenerate everything. Figma and
-                code stay in sync because they read from the same JSON.
+                RSS, ESPN, and TMDB fetched in parallel — ~3 seconds for
+                everything. News with two-tier filtering and cross-topic dedup,
+                media with podcasts and poster galleries, scores with
+                sport-specific game cards (MLB pitchers, F1 timing, UFC
+                methodology).
               </p>
               <ul className="flex flex-wrap gap-2">
-                <li><TagChip>TypeScript</TagChip></li>
-                <li><TagChip>Figma API</TagChip></li>
-                <li><TagChip>Tailwind</TagChip></li>
                 <li><TagChip>React</TagChip></li>
+                <li><TagChip>TypeScript</TagChip></li>
+                <li><TagChip>Next.js</TagChip></li>
+                <li><TagChip>Tailwind</TagChip></li>
               </ul>
-              <CaseStudyCTA slug="loom" />
-            </div>
-          </article>
+              <CaseStudyCTA slug="paperboy" />
+            </article>
+          </Reveal>
 
-          <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-            <header className="flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-semibold">Paperboy</h3>
-              <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">03</span>
-            </header>
-            <p className="text-lg font-medium">
-              A daily news dashboard I built so I&apos;d stop opening six apps
-              every morning.
-            </p>
-            <p>
-              RSS, ESPN, and TMDB fetched in parallel — ~3 seconds for
-              everything. News with two-tier filtering and cross-topic dedup,
-              media with podcasts and poster galleries, scores with
-              sport-specific game cards (MLB pitchers, F1 timing, UFC
-              methodology).
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              <li><TagChip>React</TagChip></li>
-              <li><TagChip>TypeScript</TagChip></li>
-              <li><TagChip>Next.js</TagChip></li>
-              <li><TagChip>Tailwind</TagChip></li>
-            </ul>
-            <CaseStudyCTA slug="paperboy" />
-          </article>
-
-          <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-            <header className="flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-semibold">Party Wipe</h3>
-              <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">04</span>
-            </header>
-            <p className="text-lg font-medium">
-              A D&amp;D roguelike — captures the scramble of a session going
-              sideways, solo, without needing a DM.
-            </p>
-            <p>
-              Solo party of four, zone-based combat, procedural dungeons, 5e
-              SRD data layer (CC-BY-4.0). Status effect animations are where
-              the design work lives — poison fog, frozen overlays, cursed
-              glows. Engine and UI done; animations and polish next.
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              <li><TagChip>React</TagChip></li>
-              <li><TagChip>TypeScript</TagChip></li>
-              <li><TagChip>Next.js</TagChip></li>
-              <li><TagChip>Tailwind</TagChip></li>
-              <li><TagChip>Three.js</TagChip></li>
-            </ul>
-            <CaseStudyCTA slug="party-wipe" />
-          </article>
+          <Reveal>
+            <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
+              <header className="flex items-baseline justify-between gap-4">
+                <h3 className="text-2xl font-semibold">Party Wipe</h3>
+                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">04</span>
+              </header>
+              <p className="text-lg font-medium">
+                A D&amp;D roguelike — captures the scramble of a session going
+                sideways, solo, without needing a DM.
+              </p>
+              <p>
+                Solo party of four, zone-based combat, procedural dungeons, 5e
+                SRD data layer (CC-BY-4.0). Status effect animations are where
+                the design work lives — poison fog, frozen overlays, cursed
+                glows. Engine and UI done; animations and polish next.
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                <li><TagChip>React</TagChip></li>
+                <li><TagChip>TypeScript</TagChip></li>
+                <li><TagChip>Next.js</TagChip></li>
+                <li><TagChip>Tailwind</TagChip></li>
+                <li><TagChip>Three.js</TagChip></li>
+              </ul>
+              <CaseStudyCTA slug="party-wipe" />
+            </article>
+          </Reveal>
         </div>
       </section>
 
@@ -230,10 +267,12 @@ export default function Home() {
         aria-label="Experience"
         className="flex flex-col gap-12 py-24"
       >
-        <SectionAnchor>Experience</SectionAnchor>
+        <Reveal>
+          <SectionAnchor>Experience</SectionAnchor>
+        </Reveal>
 
         <div className="flex flex-col gap-10">
-          <article className="flex flex-col gap-4 md:flex-row md:gap-6">
+          <Reveal as="article" className="flex flex-col gap-4 md:flex-row md:gap-6">
             <CompanyLogo
               src="/assets/svg/auctioneer_software.svg"
               alt="Spectrum Net Designs / Auctioneer Software"
@@ -252,9 +291,9 @@ export default function Home() {
                 and auction lifecycle.
               </p>
             </div>
-          </article>
+          </Reveal>
 
-          <article className="flex flex-col gap-4 md:flex-row md:gap-6">
+          <Reveal as="article" className="flex flex-col gap-4 md:flex-row md:gap-6">
             <CompanyLogo
               src="/assets/svg/personal_logo_white.svg"
               alt="Independent Contractor — Jacob Ikola"
@@ -271,9 +310,9 @@ export default function Home() {
                 didn&apos;t become expensive in the build phase.
               </p>
             </div>
-          </article>
+          </Reveal>
 
-          <article className="flex flex-col gap-4 md:flex-row md:gap-6">
+          <Reveal as="article" className="flex flex-col gap-4 md:flex-row md:gap-6">
             <CompanyLogo
               src="/assets/svg/propelup.svg"
               alt="PropelUp"
@@ -292,7 +331,7 @@ export default function Home() {
                 full context across design, engineering, and sales.
               </p>
             </div>
-          </article>
+          </Reveal>
         </div>
       </section>
 
