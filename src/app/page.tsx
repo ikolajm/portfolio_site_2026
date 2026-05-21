@@ -13,6 +13,8 @@ import { CaseStudyCTA } from '@/components/atoms/CaseStudyCTA';
 import { TagChip } from '@/components/atoms/TagChip';
 import { CompanyLogo } from '@/components/atoms/CompanyLogo';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
+import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
+import { PipelineFlow } from '@/components/atoms/PipelineFlow';
 
 export default function Home() {
   return (
@@ -27,10 +29,8 @@ export default function Home() {
         <div className="absolute inset-0 flex items-end">
           <div className="mx-auto w-full max-w-7xl px-6 pb-32 md:px-12">
             <div className="flex max-w-2xl flex-col gap-4">
-              <p className="font-mono text-sm uppercase tracking-eyebrow opacity-60 md:text-base">
-                <span className="opacity-50">[ </span>
-                Jacob Ikola
-                <span className="opacity-50"> ]</span>
+              <p className="font-mono text-sm uppercase tracking-eyebrow text-on-surface-variant md:text-base">
+                [ Jacob Ikola ]
               </p>
               <h1 className="text-4xl font-semibold leading-display tracking-tight md:text-5xl">
                 Design. Development.
@@ -74,7 +74,7 @@ export default function Home() {
           </p>
         </div>
 
-        <blockquote className="border-l border-outline-subtle pl-6 text-lg font-semibold leading-relaxed">
+        <blockquote className="border-l border-outline-subtle pl-6 text-lg leading-relaxed">
           The lanes always blurred. Not by accident — by preference.
         </blockquote>
 
@@ -83,15 +83,23 @@ export default function Home() {
           of friction kept showing up — handoff drift between design and dev,
           foundation work eating product time, context lost between sessions.
           I started building tools to close the gaps. Lately, in my personal
-          projects, that&apos;s become the main work. The case studies below
-          are some of those tools, and the products I built with them.
+          projects, that&apos;s become the main work.
+        </p>
+
+        <p className="text-lg leading-relaxed">
+          I built an AI system, and everything in this portfolio runs through
+          it — the case studies, the writing, this page. I spent years
+          avoiding AI; when I finally took it on, I wanted it to be a practice,
+          not a habit. Working with it well is a real discipline now — context
+          engineering — and JAMIE is my answer to it. It&apos;s the first case
+          study below.
         </p>
 
         <div aria-label="Tools" className="flex flex-col gap-4 pt-4">
-          <p className="font-mono text-sm opacity-60">
+          <p className="font-mono text-sm text-on-surface-variant">
             // The tools change. The way I work doesn&apos;t.
           </p>
-          <ul className="flex flex-wrap items-center gap-6 opacity-80">
+          <ul className="flex flex-wrap items-center gap-6 text-on-surface-variant">
             <li><SiReact size={32} title="React" /></li>
             <li><SiTypescript size={32} title="TypeScript" /></li>
             <li><SiNextdotjs size={32} title="Next.js" /></li>
@@ -111,64 +119,70 @@ export default function Home() {
         <SectionAnchor>Selected Work</SectionAnchor>
 
         <div className="flex flex-col gap-6">
-          <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-            <header className="flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-semibold">JAMIE</h3>
-              <span className="font-mono text-xs uppercase tracking-nav opacity-50">01</span>
-            </header>
-            <p className="text-lg font-medium">
-              A persistent AI development partner — part JARVIS, part operating
-              system for how I work.
-            </p>
-            <p className="opacity-80">
-              Identity, persistent memory, structured workspaces, and a daily
-              session-and-retro loop. Modeled after JARVIS — the personality
-              and first-person voice are intentional design choices, not window
-              dressing.
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              <li><TagChip>TypeScript</TagChip></li>
-              <li><TagChip>Markdown</TagChip></li>
-              <li><TagChip>Agent SDKs</TagChip></li>
-              <li><TagChip>CLI</TagChip></li>
-            </ul>
-            <CaseStudyCTA slug="jamie" />
+          <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
+            <JamieHeroLoop framed={false} />
+            <div className="flex flex-col gap-4 p-6 md:p-8">
+              <header className="flex items-baseline justify-between gap-4">
+                <h3 className="text-2xl font-semibold">JAMIE</h3>
+                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">01</span>
+              </header>
+              <p className="text-lg font-medium">
+                A persistent AI development partner — part JARVIS, part
+                operating system for how I work.
+              </p>
+              <p>
+                Identity, persistent memory, structured workspaces, and a daily
+                session-and-retro loop. Modeled after JARVIS — the personality
+                and first-person voice are intentional design choices, not
+                window dressing.
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                <li><TagChip>Context Engineering</TagChip></li>
+                <li><TagChip>Prompt Engineering</TagChip></li>
+                <li><TagChip>Markdown</TagChip></li>
+                <li><TagChip>Agent SDKs</TagChip></li>
+              </ul>
+              <CaseStudyCTA slug="jamie" />
+            </div>
           </article>
 
-          <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-            <header className="flex items-baseline justify-between gap-4">
-              <h3 className="text-2xl font-semibold">Loom</h3>
-              <span className="font-mono text-xs uppercase tracking-nav opacity-50">02</span>
-            </header>
-            <p className="text-lg font-medium">
-              I kept burning out building UI foundations, so I built a pipeline
-              that generates them.
-            </p>
-            <p className="opacity-80">
-              Brand questionnaire in — tokens, 55 components across 7
-              categories, 30 Figma rendering scripts, and a working Next.js
-              scaffold out. Change a token, regenerate everything. Figma and
-              code stay in sync because they read from the same JSON.
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              <li><TagChip>TypeScript</TagChip></li>
-              <li><TagChip>Figma API</TagChip></li>
-              <li><TagChip>Tailwind</TagChip></li>
-              <li><TagChip>React</TagChip></li>
-            </ul>
-            <CaseStudyCTA slug="loom" />
+          <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
+            <PipelineFlow framed={false} />
+            <div className="flex flex-col gap-4 p-6 md:p-8">
+              <header className="flex items-baseline justify-between gap-4">
+                <h3 className="text-2xl font-semibold">Loom</h3>
+                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">02</span>
+              </header>
+              <p className="text-lg font-medium">
+                I kept burning out building UI foundations, so I built a
+                pipeline that generates them.
+              </p>
+              <p>
+                Brand questionnaire in — tokens, 55 components across 7
+                categories, 30 Figma rendering scripts, and a working Next.js
+                scaffold out. Change a token, regenerate everything. Figma and
+                code stay in sync because they read from the same JSON.
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                <li><TagChip>TypeScript</TagChip></li>
+                <li><TagChip>Figma API</TagChip></li>
+                <li><TagChip>Tailwind</TagChip></li>
+                <li><TagChip>React</TagChip></li>
+              </ul>
+              <CaseStudyCTA slug="loom" />
+            </div>
           </article>
 
           <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
             <header className="flex items-baseline justify-between gap-4">
               <h3 className="text-2xl font-semibold">Paperboy</h3>
-              <span className="font-mono text-xs uppercase tracking-nav opacity-50">03</span>
+              <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">03</span>
             </header>
             <p className="text-lg font-medium">
               A daily news dashboard I built so I&apos;d stop opening six apps
               every morning.
             </p>
-            <p className="opacity-80">
+            <p>
               RSS, ESPN, and TMDB fetched in parallel — ~3 seconds for
               everything. News with two-tier filtering and cross-topic dedup,
               media with podcasts and poster galleries, scores with
@@ -187,13 +201,13 @@ export default function Home() {
           <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
             <header className="flex items-baseline justify-between gap-4">
               <h3 className="text-2xl font-semibold">Party Wipe</h3>
-              <span className="font-mono text-xs uppercase tracking-nav opacity-50">04</span>
+              <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">04</span>
             </header>
             <p className="text-lg font-medium">
               A D&amp;D roguelike — captures the scramble of a session going
               sideways, solo, without needing a DM.
             </p>
-            <p className="opacity-80">
+            <p>
               Solo party of four, zone-based combat, procedural dungeons, 5e
               SRD data layer (CC-BY-4.0). Status effect animations are where
               the design work lives — poison fog, frozen overlays, cursed
@@ -226,10 +240,10 @@ export default function Home() {
             />
             <div className="flex flex-1 flex-col gap-3">
               <h3 className="text-2xl font-semibold">Spectrum Net Designs</h3>
-              <p className="font-mono text-xs uppercase tracking-nav opacity-60">
+              <p className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
                 Full-Stack Developer, UI Designer · Feb 2022 – Jul 2025 · Grand Rapids, MI
               </p>
-              <p className="opacity-80">
+              <p>
                 Built the company&apos;s first design system from scratch — Figma
                 components, code libraries, living docs. Ran client projects 1:1
                 from requirements through delivery. Contributed full-stack to
@@ -247,10 +261,10 @@ export default function Home() {
             />
             <div className="flex flex-1 flex-col gap-3">
               <h3 className="text-2xl font-semibold">Independent Contractor</h3>
-              <p className="font-mono text-xs uppercase tracking-nav opacity-60">
+              <p className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
                 Design &amp; Development · Mar 2021 – Jan 2022 · Remote
               </p>
-              <p className="opacity-80">
+              <p>
                 Solo developer on marketing sites and internal SPAs. Owned the
                 full loop — Figma wireframes, client feedback, production code.
                 The job was catching problems in the design phase so they
@@ -266,10 +280,10 @@ export default function Home() {
             />
             <div className="flex flex-1 flex-col gap-3">
               <h3 className="text-2xl font-semibold">PropelUp</h3>
-              <p className="font-mono text-xs uppercase tracking-nav opacity-60">
+              <p className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
                 Full-Stack Developer · May 2019 – Jul 2020 · Indianapolis, IN
               </p>
-              <p className="opacity-80">
+              <p>
                 Sole developer on a Learning Management System. Took it from zero
                 to a product that companies were beta-testing in production.
                 React, Express, Node, Postgres, Heroku. Traveled with sales for

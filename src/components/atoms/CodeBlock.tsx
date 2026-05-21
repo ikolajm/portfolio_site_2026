@@ -9,9 +9,9 @@ export function CodeBlock({
 }) {
   return (
     <figure className="flex flex-col gap-3">
-      <div className="overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
-        <div className="flex items-center gap-2 border-b border-outline-subtle bg-surface-2/40 px-4 py-2 font-mono text-xs uppercase tracking-nav opacity-70">
-          <span className="opacity-50">{'> '}</span>
+      <div className="overflow-hidden rounded-sm border border-outline-subtle bg-surface-canvas">
+        <div className="flex items-center gap-2 border-b border-outline-subtle bg-surface-1 px-4 py-2 font-mono text-xs uppercase tracking-nav text-on-surface-variant">
+          <span>{'> '}</span>
           {filePath}
         </div>
         <pre className="overflow-x-auto px-4 py-4 font-mono text-xs leading-relaxed text-on-surface-variant">
@@ -19,7 +19,7 @@ export function CodeBlock({
         </pre>
       </div>
       {caption && (
-        <figcaption className="font-mono text-xs opacity-60">
+        <figcaption className="font-mono text-xs text-on-surface-variant">
           // {caption}
         </figcaption>
       )}

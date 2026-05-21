@@ -13,8 +13,7 @@ export type CaseStudyMeta = {
 /**
  * Canonical ordering for the four portfolio case studies. Index is
  * stable across the site — `01 JAMIE` everywhere, `02 Loom` everywhere.
- * Systems (JAMIE, Loom) carry the numbered index treatment; products
- * (Paperboy, Party Wipe) carry their actual logo. Cross-link sections
+ * All four case studies carry their own logo mark. Cross-link sections
  * filter the current slug out of this list.
  */
 export const CASE_STUDIES: CaseStudyMeta[] = [
@@ -24,7 +23,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     name: 'JAMIE',
     blurb:
       'A persistent AI development partner — part JARVIS, part operating system for how I work.',
-    badge: { kind: 'index' },
+    badge: { kind: 'logo', src: '/assets/svg/jamie-logo.svg' },
   },
   {
     slug: 'loom',
@@ -32,7 +31,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     name: 'Loom',
     blurb:
       'I kept burning out building UI foundations, so I built a pipeline that generates them.',
-    badge: { kind: 'index' },
+    badge: { kind: 'logo', src: '/assets/svg/loom.svg' },
   },
   {
     slug: 'paperboy',

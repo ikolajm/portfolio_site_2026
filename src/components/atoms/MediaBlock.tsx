@@ -24,13 +24,13 @@ export function MediaBlock({
         style={{ aspectRatio: aspect } as CSSProperties}
       >
         {children ?? (
-          <p className="font-mono text-xs uppercase tracking-nav opacity-50">
+          <p className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
             [ {placeholder} ]
           </p>
         )}
       </div>
       {caption && (
-        <figcaption className="font-mono text-xs opacity-60">
+        <figcaption className="font-mono text-xs text-on-surface-variant">
           // {caption}
         </figcaption>
       )}

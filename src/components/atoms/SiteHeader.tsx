@@ -63,16 +63,12 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" aria-label="Jacob Ikola — home" className="group">
-          <span className="inline-flex h-8 items-center gap-2 rounded-sm border border-outline-subtle bg-surface-1/40 px-2.5 font-mono text-xs uppercase tracking-nav text-on-surface transition-colors group-hover:bg-surface-2/40">
-            <img
-              src="/assets/svg/personal_logo_white.svg"
-              alt=""
-              aria-hidden
-              className="h-4 w-auto"
-            />
-          </span>
-        </Link>
+        <img
+          src="/assets/svg/personal_logo_white.svg"
+          alt=""
+          aria-hidden
+          className="h-6 w-auto"
+        />
 
         {isLanding ? (
           <>

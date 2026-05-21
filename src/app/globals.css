@@ -12,6 +12,10 @@
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
   --color-surface-inverse: var(--surface-inverse);
+
+  /* Dark technical canvas — media diagrams + code blocks. */
+  /* A literal value: stays dark in both themes, never swaps. */
+  --color-surface-canvas: #101113;
   --color-on-surface: var(--on-surface);
   --color-on-surface-variant: var(--on-surface-variant);
   --color-on-surface-inverse: var(--on-surface-inverse);
@@ -56,6 +60,12 @@
   51%, 100% { opacity: 0; }
 }
 
+/* Hub pulse — an expanding ring emanating from an active workspace icon. */
+@keyframes hub-ping {
+  from { transform: scale(1); opacity: 0.55; }
+  to { transform: scale(2.6); opacity: 0; }
+}
+
 /* CSS-mask logo treatment — lets monochrome SVGs inherit currentColor */
 /* regardless of how their internal fills are authored. Use via inline */
 /* style: `style={{ '--logo-mask': 'url(/path.svg)' }}`. */
@@ -69,6 +79,16 @@
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
   -webkit-mask-size: contain;
+}
+
+/* Media panel — dark gridded canvas for diagrams + animations. */
+/* Sits darker than the page; faint grid gives a prototype/blueprint feel. */
+.media-grid {
+  background-color: var(--color-surface-canvas);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 body {
