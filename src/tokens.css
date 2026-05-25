@@ -142,6 +142,11 @@
   --info-container: #0e3862;
   --on-info-container: #dce6ef;
   --on-color: #FFFFFF;
+  /* === Chip Categories === */
+  --chip-frontend: #5cc18c;
+  --chip-backend: #e89c5f;
+  --chip-craft: #8a8acd;
+  --chip-ai: #c9a45e;
   /* === Spacing Scale === */
   --space-0: 0;
   --space-1: 4px;
@@ -670,6 +675,10 @@
   --color-info-container: var(--info-container);
   --color-on-info-container: var(--on-info-container);
   --color-on-color: var(--on-color);
+  --color-chip-frontend: var(--chip-frontend);
+  --color-chip-backend: var(--chip-backend);
+  --color-chip-craft: var(--chip-craft);
+  --color-chip-ai: var(--chip-ai);
   --color-ring: var(--ring);
 
   /* Spacing */

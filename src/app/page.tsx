@@ -10,7 +10,7 @@ import {
 import { HeroMonogram } from '@/components/atoms/HeroMonogram';
 import { ScrollIndicator } from '@/components/atoms/ScrollIndicator';
 import { CaseStudyCTA } from '@/components/atoms/CaseStudyCTA';
-import { TagChip } from '@/components/atoms/TagChip';
+import { TagChipList } from '@/components/atoms/TagChip';
 import { CompanyLogo } from '@/components/atoms/CompanyLogo';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
@@ -167,12 +167,7 @@ export default function Home() {
                   and first-person voice are intentional design choices, not
                   window dressing.
                 </p>
-                <ul className="flex flex-wrap gap-2">
-                  <li><TagChip>Context Engineering</TagChip></li>
-                  <li><TagChip>Prompt Engineering</TagChip></li>
-                  <li><TagChip>Markdown</TagChip></li>
-                  <li><TagChip>Agent SDKs</TagChip></li>
-                </ul>
+                <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs']} />
                 <CaseStudyCTA slug="jamie" />
               </div>
             </article>
@@ -196,12 +191,7 @@ export default function Home() {
                   scaffold out. Change a token, regenerate everything. Figma and
                   code stay in sync because they read from the same JSON.
                 </p>
-                <ul className="flex flex-wrap gap-2">
-                  <li><TagChip>TypeScript</TagChip></li>
-                  <li><TagChip>Figma API</TagChip></li>
-                  <li><TagChip>Tailwind</TagChip></li>
-                  <li><TagChip>React</TagChip></li>
-                </ul>
+                <TagChipList chips={['TypeScript', 'Figma API', 'Tailwind', 'React']} />
                 <CaseStudyCTA slug="loom" />
               </div>
             </article>
@@ -224,12 +214,7 @@ export default function Home() {
                 sport-specific game cards (MLB pitchers, F1 timing, UFC
                 methodology).
               </p>
-              <ul className="flex flex-wrap gap-2">
-                <li><TagChip>React</TagChip></li>
-                <li><TagChip>TypeScript</TagChip></li>
-                <li><TagChip>Next.js</TagChip></li>
-                <li><TagChip>Tailwind</TagChip></li>
-              </ul>
+              <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind']} />
               <CaseStudyCTA slug="paperboy" />
             </article>
           </Reveal>
@@ -250,13 +235,7 @@ export default function Home() {
                 the design work lives — poison fog, frozen overlays, cursed
                 glows. Engine and UI done; animations and polish next.
               </p>
-              <ul className="flex flex-wrap gap-2">
-                <li><TagChip>React</TagChip></li>
-                <li><TagChip>TypeScript</TagChip></li>
-                <li><TagChip>Next.js</TagChip></li>
-                <li><TagChip>Tailwind</TagChip></li>
-                <li><TagChip>Three.js</TagChip></li>
-              </ul>
+              <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind', 'Three.js']} />
               <CaseStudyCTA slug="party-wipe" />
             </article>
           </Reveal>

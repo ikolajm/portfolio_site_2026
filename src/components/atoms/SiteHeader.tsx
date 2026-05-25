@@ -63,12 +63,18 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <img
-          src="/assets/svg/personal_logo_white.svg"
-          alt=""
-          aria-hidden
-          className="h-6 w-auto"
-        />
+        <Link
+          href="/"
+          aria-label="Home"
+          className="transition-opacity duration-150 hover:opacity-70"
+        >
+          <img
+            src="/assets/svg/personal_logo_white.svg"
+            alt=""
+            aria-hidden
+            className="h-6 w-auto"
+          />
+        </Link>
 
         {isLanding ? (
           <>

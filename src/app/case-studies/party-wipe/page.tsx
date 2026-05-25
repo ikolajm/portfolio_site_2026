@@ -12,7 +12,7 @@ import {
   Maximize2,
 } from 'lucide-react';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
-import { TagChip } from '@/components/atoms/TagChip';
+import { TagChipList } from '@/components/atoms/TagChip';
 import { CodeBlock } from '@/components/atoms/CodeBlock';
 import { InlineCode } from '@/components/atoms/InlineCode';
 import { MediaBlock } from '@/components/atoms/MediaBlock';
@@ -137,13 +137,7 @@ export default function PartyWipeCaseStudy() {
               In development · Engine and UI complete
             </span>
           </div>
-          <ul className="flex flex-wrap gap-2">
-            <li><TagChip>TypeScript</TagChip></li>
-            <li><TagChip>Next.js 16</TagChip></li>
-            <li><TagChip>React 19</TagChip></li>
-            <li><TagChip>Framer Motion</TagChip></li>
-            <li><TagChip>Loom</TagChip></li>
-          </ul>
+          <TagChipList chips={['TypeScript', 'Next.js 16', 'React 19', 'Framer Motion', 'Loom']} />
         </div>
 
         <MediaBlock

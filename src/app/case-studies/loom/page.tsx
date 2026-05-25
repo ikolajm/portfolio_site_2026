@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
-import { TagChip } from '@/components/atoms/TagChip';
+import { TagChipList } from '@/components/atoms/TagChip';
 import { TerminalGallery, type GalleryEntry } from '@/components/atoms/TerminalGallery';
 import { PipelineFlow } from '@/components/atoms/PipelineFlow';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
@@ -233,12 +233,7 @@ export default function LoomCaseStudy() {
               Active — used across this portfolio
             </span>
           </div>
-          <ul className="flex flex-wrap gap-2">
-            <li><TagChip>TypeScript</TagChip></li>
-            <li><TagChip>Figma API</TagChip></li>
-            <li><TagChip>Tailwind</TagChip></li>
-            <li><TagChip>React</TagChip></li>
-          </ul>
+          <TagChipList chips={['TypeScript', 'Figma API', 'Tailwind', 'React']} />
         </div>
 
       </Reveal>

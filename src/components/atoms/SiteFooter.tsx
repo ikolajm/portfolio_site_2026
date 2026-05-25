@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { BracketLabel } from '@/components/atoms/BracketLabel';
 
 export function SiteFooter() {
@@ -44,9 +45,9 @@ export function SiteFooter() {
           </a>
         </li>
         <li>
-          <a href="#" className="group inline-block">
+          <Link href="/resume" className="group inline-block">
             <BracketLabel>Resume</BracketLabel>
-          </a>
+          </Link>
         </li>
       </ul>
     </footer>

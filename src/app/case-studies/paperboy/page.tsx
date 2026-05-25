@@ -9,7 +9,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
-import { TagChip } from '@/components/atoms/TagChip';
+import { TagChipList } from '@/components/atoms/TagChip';
 import { MediaBlock } from '@/components/atoms/MediaBlock';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { PartsList, type Part } from '@/components/atoms/PartsList';
@@ -104,13 +104,7 @@ export default function PaperboyCaseStudy() {
               Shipped 2026-05 · In daily use
             </span>
           </div>
-          <ul className="flex flex-wrap gap-2">
-            <li><TagChip>TypeScript</TagChip></li>
-            <li><TagChip>Next.js 16</TagChip></li>
-            <li><TagChip>React 19</TagChip></li>
-            <li><TagChip>ESPN API</TagChip></li>
-            <li><TagChip>TMDB</TagChip></li>
-          </ul>
+          <TagChipList chips={['TypeScript', 'Next.js 16', 'React 19', 'ESPN API', 'TMDB']} />
         </div>
       </Reveal>
 

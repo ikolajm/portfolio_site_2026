@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { SiteHeader } from '@/components/atoms/SiteHeader';
 import { SiteFooter } from '@/components/atoms/SiteFooter';
+import { BackgroundField } from '@/components/atoms/BackgroundField';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
+          <BackgroundField />
           <SiteHeader />
           {children}
           <SiteFooter />

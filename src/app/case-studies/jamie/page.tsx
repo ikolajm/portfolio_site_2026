@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
-import { TagChip } from '@/components/atoms/TagChip';
+import { TagChipList } from '@/components/atoms/TagChip';
 import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { ProcessSteps, type ProcessStep } from '@/components/atoms/ProcessSteps';
@@ -186,12 +186,7 @@ export default function JamieCaseStudy() {
               Active — in use daily
             </span>
           </div>
-          <ul className="flex flex-wrap gap-2">
-            <li><TagChip>Context Engineering</TagChip></li>
-            <li><TagChip>Prompt Engineering</TagChip></li>
-            <li><TagChip>Markdown</TagChip></li>
-            <li><TagChip>Agent SDKs</TagChip></li>
-          </ul>
+          <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs']} />
         </div>
       </Reveal>
 
