@@ -6,6 +6,7 @@ import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { ProcessSteps, type ProcessStep } from '@/components/atoms/ProcessSteps';
 import { TerminalGallery, type GalleryEntry } from '@/components/atoms/TerminalGallery';
 import { InlineCode } from '@/components/atoms/InlineCode';
+import { Reveal } from '@/components/atoms/Reveal';
 import { Heart, Brain, FolderTree, RefreshCw } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -160,7 +161,7 @@ export default function JamieCaseStudy() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-20 px-6 pt-32 pb-24">
       {/* HERO */}
-      <section aria-label="Hero" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Hero" className="flex flex-col gap-8">
         <SectionAnchor>Case Study</SectionAnchor>
 
         {/* intro */}
@@ -192,13 +193,15 @@ export default function JamieCaseStudy() {
             <li><TagChip>Agent SDKs</TagChip></li>
           </ul>
         </div>
-      </section>
+      </Reveal>
 
       {/* HERO MEDIA */}
-      <JamieHeroLoop />
+      <Reveal>
+        <JamieHeroLoop />
+      </Reveal>
 
       {/* PROBLEM */}
-      <section aria-label="Problem" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Problem" className="flex flex-col gap-8">
         <SectionAnchor>The Problem</SectionAnchor>
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
@@ -233,10 +236,10 @@ export default function JamieCaseStudy() {
             what broke, not by reading about it.
           </p>
         </div>
-      </section>
+      </Reveal>
 
       {/* HOW IT WORKS */}
-      <section aria-label="How It Works" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="How It Works" className="flex flex-col gap-8">
         <SectionAnchor>How It Works</SectionAnchor>
         <p className="text-lg leading-relaxed">
           JAMIE — Just Always Making It Easier — gives the agent four things
@@ -259,10 +262,10 @@ export default function JamieCaseStudy() {
           year&apos;s, and the system comes along intact. The next session
           loads the same files and picks up where the last one left off.
         </p>
-      </section>
+      </Reveal>
 
       {/* UNDER THE HOOD */}
-      <section aria-label="Under the Hood" className="flex flex-col gap-8">
+      <Reveal as="section" aria-label="Under the Hood" className="flex flex-col gap-8">
         <SectionAnchor>Under the Hood</SectionAnchor>
         <p className="text-lg leading-relaxed">
           JAMIE has no UI of its own — the interface is the agent reading and
@@ -271,9 +274,11 @@ export default function JamieCaseStudy() {
         </p>
 
         <TerminalGallery entries={UNDER_HOOD} />
-      </section>
+      </Reveal>
 
-      <CrossLinkSection currentSlug="jamie" />
+      <Reveal>
+        <CrossLinkSection currentSlug="jamie" />
+      </Reveal>
     </main>
   );
 }

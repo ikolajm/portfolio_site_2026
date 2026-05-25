@@ -1,11 +1,20 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import {
+  Workflow,
+  LayoutDashboard,
+  GalleryHorizontalEnd,
+  RadioTower,
+  Zap,
+  Trophy,
+} from 'lucide-react';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { TagChip } from '@/components/atoms/TagChip';
-import { CodeBlock } from '@/components/atoms/CodeBlock';
 import { MediaBlock } from '@/components/atoms/MediaBlock';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
-import { CalloutBlock } from '@/components/atoms/CalloutBlock';
-import { StatGrid } from '@/components/atoms/StatGrid';
+import { PartsList, type Part } from '@/components/atoms/PartsList';
+import { InlineCode } from '@/components/atoms/InlineCode';
+import { StatCards } from '@/components/atoms/StatCards';
 import { Reveal } from '@/components/atoms/Reveal';
 
 export const metadata: Metadata = {
@@ -13,6 +22,63 @@ export const metadata: Metadata = {
   description:
     'A daily news dashboard I built so I’d stop opening six apps every morning. RSS, ESPN, and TMDB in parallel — 80–145 calls, 3 seconds, one JSON digest.',
 };
+
+const ARCH_PARTS: Part[] = [
+  {
+    icon: Workflow,
+    title: 'The pipeline',
+    body: (
+      <p>
+        A TypeScript command. RSS feeds for editorial news (Google News
+        subsections + ESPN sports + opinion outlets), the ESPN scoreboard API
+        for the day&apos;s games, and TMDB for movies and streaming — 80–145
+        API calls per run, all in flight at once, finishing in 2–3 seconds.
+        The output is a single{' '}
+        <InlineCode>digest.json</InlineCode> under{' '}
+        <InlineCode>digests/YYYY-MM-DD/</InlineCode>. That
+        file is the artifact.
+      </p>
+    ),
+  },
+  {
+    icon: LayoutDashboard,
+    title: 'The dashboard',
+    body: (
+      <>
+        <p>
+          A Next.js app that reads{' '}
+          <InlineCode>digest.json</InlineCode> at request
+          time. There is no server running between digest builds. When you
+          load the page, the dashboard parses today&apos;s JSON and renders.
+          Static-ish behavior at the surface; the data underneath is fresh
+          every morning. It surfaces three tabs:
+        </p>
+        <ul className="flex flex-col gap-2 border-l border-outline-subtle pl-5 text-on-surface-variant">
+          <li>
+            <strong className="text-on-surface">News</strong> is two-tier
+            filtering — Headlines / Topics / Sports / Opinions, with contextual
+            sub-filters per tier-1 selection. Cross-topic dedup keeps the same
+            story from showing up in AI <em>and</em> Cybersecurity.
+          </li>
+          <li>
+            <strong className="text-on-surface">Media</strong> is podcast rows
+            plus horizontal poster galleries for In Theatres, Streaming, and
+            Coming Soon, with watch-provider logos and detail overlays.
+          </li>
+          <li>
+            <strong className="text-on-surface">Scores</strong> is recaps and
+            schedule sub-tabs with per-sport rendering — MLB shows winning and
+            losing pitchers, F1 shows session timing across the weekend, UFC
+            shows fight methodology, NBA and NHL show scoring breakdowns. About
+            35 games get enriched with box scores, season leaders, injuries,
+            and series context — all in ~3.5 seconds via parallel fetches to
+            ESPN&apos;s summary endpoint.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+];
 
 export default function PaperboyCaseStudy() {
   return (
@@ -32,9 +98,12 @@ export default function PaperboyCaseStudy() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <p className="font-mono text-xs uppercase tracking-nav opacity-60">
-            STATUS: SHIPPED 2026-05 — IN DAILY USE
-          </p>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
+            <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
+              Shipped 2026-05 · In daily use
+            </span>
+          </div>
           <ul className="flex flex-wrap gap-2">
             <li><TagChip>TypeScript</TagChip></li>
             <li><TagChip>Next.js 16</TagChip></li>
@@ -84,60 +153,17 @@ export default function PaperboyCaseStudy() {
           time.
         </p>
 
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-3">
-            <h3 className="text-2xl font-semibold">The pipeline</h3>
-            <p className="leading-relaxed opacity-80">
-              A TypeScript command. RSS feeds for editorial news (Google
-              News subsections + ESPN sports + opinion outlets), the ESPN
-              scoreboard API for the day&apos;s games, and TMDB for movies
-              and streaming — 80–145 API calls per run, all in flight at
-              once, finishing in 2–3 seconds. The output is a single{' '}
-              <code className="font-mono text-sm">digest.json</code> under{' '}
-              <code className="font-mono text-sm">digests/YYYY-MM-DD/</code>.
-              That file is the artifact.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h3 className="text-2xl font-semibold">The dashboard</h3>
-            <p className="leading-relaxed opacity-80">
-              A Next.js app that reads{' '}
-              <code className="font-mono text-sm">digest.json</code> at
-              request time. There is no server running between digest
-              builds. When you load the page, the dashboard parses
-              today&apos;s JSON and renders. Static-ish behavior at the
-              surface; the data underneath is fresh every morning.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <h3 className="text-2xl font-semibold">Three tabs</h3>
-            <p className="leading-relaxed opacity-80">
-              <strong>News</strong> is two-tier filtering — Headlines /
-              Topics / Sports / Opinions, with contextual sub-filters per
-              tier-1 selection. Cross-topic dedup keeps the same story from
-              showing up in AI <em>and</em> Cybersecurity.{' '}
-              <strong>Media</strong> is podcast rows plus horizontal poster
-              galleries for In Theatres, Streaming, and Coming Soon, with
-              watch-provider logos and detail overlays.{' '}
-              <strong>Scores</strong> is recaps and schedule sub-tabs with
-              per-sport rendering — MLB shows winning and losing pitchers,
-              F1 shows session timing across the weekend, UFC shows fight
-              methodology, NBA and NHL show scoring breakdowns. About 35
-              games get enriched with box scores, season leaders, injuries,
-              and series context — all in ~3.5 seconds via parallel fetches
-              to ESPN&apos;s summary endpoint.
-            </p>
-          </div>
-        </div>
+        <PartsList parts={ARCH_PARTS} />
 
         <p className="text-lg leading-relaxed opacity-80">
-          The dashboard runs on 55 atoms generated by{' '}
-          <strong>Loom</strong> — a design-system pipeline I built before
-          this. One atom was added downstream: a project-specific{' '}
-          <code className="font-mono text-base">Logo.tsx</code>. The 55
-          atoms covered every interaction surface.
+          The dashboard is built entirely on{' '}
+          <Link
+            href="/case-studies/loom"
+            className="text-primary underline underline-offset-4"
+          >
+            Loom
+          </Link>, a design-system pipeline I built before Paperboy — its 55
+          generated atoms covering every interaction surface.
         </p>
       </Reveal>
 
@@ -156,16 +182,6 @@ export default function PaperboyCaseStudy() {
             digest is right, the dashboard is right.
           </p>
           <p>
-            <strong>Config-driven everything.</strong> Every source — topics,
-            sports, podcast feeds, opinion outlets, TMDB endpoints — lives
-            in{' '}
-            <code className="font-mono text-sm">config/config.json</code>.
-            Adding a new topic is a one-line edit. Adding a new sport is a
-            one-line edit. Adding a new editorial subsection under Headlines
-            is a config-array entry. The dashboard&apos;s surface evolves
-            without code changes.
-          </p>
-          <p>
             <strong>Editorial sources over keyword search.</strong> Google
             News topic feeds, ESPN&apos;s structured RSS, podcast publisher
             feeds, TMDB&apos;s curated lists. No keyword search anywhere.
@@ -175,16 +191,16 @@ export default function PaperboyCaseStudy() {
           <p>
             <strong>Graceful degradation as a baseline.</strong> Every
             external fetch is wrapped in{' '}
-            <code className="font-mono text-sm">Promise.allSettled</code>{' '}
+            <InlineCode>Promise.allSettled</InlineCode>{' '}
             with per-source isolation. When TMDB has a bad morning, news and
-            scores still ship, entertainment degrades to empty with a
+            scores still ship; entertainment degrades to empty with a
             warning. When ESPN goes down, you still get news and podcasts.
             One outage doesn&apos;t kill the day.
           </p>
           <p>
             <strong>Team color accessibility built in.</strong> Every team
             color routes through an{' '}
-            <code className="font-mono text-sm">ensureContrast()</code>{' '}
+            <InlineCode>ensureContrast()</InlineCode>{' '}
             utility that compares the brand color against the current
             theme&apos;s surface luminance and substitutes the alternate
             when contrast is insufficient. Light mode and dark mode both
@@ -193,23 +209,10 @@ export default function PaperboyCaseStudy() {
             and the contrast logic keeps every one of them readable.
           </p>
           <p>
-            <strong>Intentional deferrals, documented per feature.</strong>{' '}
-            Media bias badges have data and UI ready (43 outlets mapped,
-            color spectrum coded) and are commented out because per-card
-            badges crowded the headline attention. Deep dive buttons have
-            full infrastructure built and are also commented out — the
-            interaction model isn&apos;t settled. Live score polling is
-            permanently out of scope; building a product on top of an
-            unauthenticated ESPN endpoint isn&apos;t a precedent I want to
-            set. Each deferral lives in{' '}
-            <code className="font-mono text-sm">docs/DEFERRED.md</code> with
-            the reasoning.
-          </p>
-          <p>
             <strong>Audit scripts for every dataset I can&apos;t keep in my head.</strong>{' '}
             F1 driver rosters change every season and mid-season. Circuit
             timezones change as the calendar expands. So{' '}
-            <code className="font-mono text-sm">audit-f1</code> fetches the
+            <InlineCode>audit-f1</InlineCode> fetches the
             live ESPN season and reports drivers and circuits missing from
             the static maps, with ready-to-paste stub entries. Same pattern
             for the media bias dataset (scans past digests for coverage
@@ -222,92 +225,35 @@ export default function PaperboyCaseStudy() {
       </Reveal>
 
       <Reveal>
-        <CalloutBlock eyebrow="By the numbers">
-          <StatGrid
-            stats={[
-              { label: 'Atoms in', value: '55', caption: 'from Loom' },
-              { label: 'Atoms added', value: '1', caption: 'project Logo only' },
-              { label: 'API calls / morning', value: '80–145', caption: 'in parallel' },
-              { label: 'Daily build', value: '3s', caption: 'end to end' },
-            ]}
-          />
-        </CalloutBlock>
-      </Reveal>
-
-      {/* UNDER THE HOOD */}
-      <Reveal as="section" aria-label="Under the Hood" className="flex flex-col gap-8">
-        <SectionAnchor>Under the Hood</SectionAnchor>
-        <p className="text-lg leading-relaxed">
-          Config in, JSON out, with a parallel fetch graph in the middle.
-          Two slices show the shape — the sports section of the config (each
-          sport is four fields) and the pipeline orchestrator that fans the
-          fetches out and degrades branches independently.
-        </p>
-
-        <div className="flex flex-col gap-8">
-          <CodeBlock
-            filePath="config/config.json"
-            caption="the sports section — each sport is four fields; adding a sport is one config entry"
-          >{`{
-  "sports": {
-    "NBA": {
-      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
-      "recaps":   true,
-      "schedule": true,
-      "odds":     false
-    },
-    "NHL": {
-      "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard",
-      "recaps":   true,
-      "schedule": true,
-      "odds":     false
-    },
-    "MLB": {
-      "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
-      "recaps":   true,
-      "schedule": true,
-      "odds":     false
-    },
-    "F1":   { "url": "...", "recaps": true, "schedule": true, "odds": false },
-    "UFC":  { "url": "...", "recaps": true, "schedule": true, "odds": false }
-  }
-}`}
-          </CodeBlock>
-
-          <CodeBlock
-            filePath="scripts/digest/pipeline.ts"
-            caption="orchestrator — Promise.allSettled over RSS batch + scores + TMDB; branch failures degrade to warnings, the digest still completes"
-          >{`/**
- * Digest pipeline orchestration.
- * Fetches all data sources in parallel, applies filtering,
- * and assembles the complete Digest object.
- */
-
-import type { PaperboyConfig, Credentials } from "../../shared/types/config.js";
-import type { Digest, DigestSections } from "../../shared/types/digest.js";
-import { fetchBatch }     from "../fetch-rss.js";
-import { fetchTmdb }      from "../fetch-tmdb.js";
-import { fetchAllScores } from "../fetch-scores.js";
-import { enrichAllGames } from "../scores/enrich.js";
-
-export async function buildDigest(
-  config: PaperboyConfig,
-  creds: Credentials
-): Promise<Digest> {
-  const [rss, scores, tmdb] = await Promise.allSettled([
-    fetchBatch(buildFeedBatch(config)),
-    fetchAllScores(config.sports),
-    fetchTmdb(config.tmdb, creds.tmdb),
-  ]);
-
-  // Branch failures degrade — the digest still completes.
-  const sections = assembleSections({ rss, scores, tmdb });
-  const meta     = buildMeta(sections, { rss, scores, tmdb });
-
-  return { sections, meta };
-}`}
-          </CodeBlock>
-        </div>
+        <StatCards
+          heading="By the numbers"
+          stats={[
+            {
+              icon: GalleryHorizontalEnd,
+              value: '6',
+              label: 'Apps replaced',
+              caption: 'one tab every morning',
+            },
+            {
+              icon: RadioTower,
+              value: '80–145',
+              label: 'API calls / morning',
+              caption: 'all in parallel',
+            },
+            {
+              icon: Zap,
+              value: '~3s',
+              label: 'Daily build',
+              caption: 'fetch to digest',
+            },
+            {
+              icon: Trophy,
+              value: '~35',
+              label: 'Games enriched',
+              caption: 'box scores, leaders, injuries',
+            },
+          ]}
+        />
       </Reveal>
 
       <Reveal>

@@ -6,7 +6,10 @@ export function SectionAnchor({ children }: { children: React.ReactNode }) {
         {children}
         <span className="opacity-50"> ]</span>
       </h2>
-      <span aria-hidden className="h-px flex-1 bg-outline-subtle/60" />
+      <span
+        aria-hidden
+        className="section-anchor-line h-px flex-1 origin-left bg-outline-subtle/60"
+      />
     </div>
   );
 }

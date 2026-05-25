@@ -16,6 +16,7 @@ import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
 import { PipelineFlow } from '@/components/atoms/PipelineFlow';
 import { Reveal } from '@/components/atoms/Reveal';
+import { TextScramble } from '@/components/atoms/TextScramble';
 
 export default function Home() {
   return (
@@ -34,7 +35,7 @@ export default function Home() {
                 as="p"
                 className="font-mono text-sm uppercase tracking-eyebrow text-on-surface-variant md:text-base"
               >
-                [ Jacob Ikola ]
+                <TextScramble>[ Jacob Ikola ]</TextScramble>
               </Reveal>
               <Reveal
                 as="h1"

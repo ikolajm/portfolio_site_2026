@@ -103,6 +103,25 @@
   }
 }
 
+/* SectionAnchor line — drags out from left when its Reveal ancestor fires. */
+/* Scoped to [data-reveal] so SectionAnchors outside a Reveal render normally. */
+/* Uses the individual `scale` CSS property (not `transform`) so it stays */
+/* independent of any Tailwind transform-property defaults. */
+[data-reveal] .section-anchor-line {
+  transform-origin: left;
+  scale: 0 1;
+  transition: scale 700ms ease-out;
+}
+[data-reveal][data-shown] .section-anchor-line {
+  scale: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] .section-anchor-line {
+    scale: 1;
+    transition: none;
+  }
+}
+
 /* Media panel — dark gridded canvas for diagrams + animations. */
 /* Sits darker than the page; faint grid gives a prototype/blueprint feel. */
 .media-grid {
