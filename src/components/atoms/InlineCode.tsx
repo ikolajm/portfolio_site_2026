@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
  */
 export function InlineCode({ children }: { children: ReactNode }) {
   return (
-    <code className="rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[0.85em] text-on-surface">
+    <code className="rounded bg-surface-canvas px-1.5 py-0.5 font-mono text-[0.85em] text-primary">
       {children}
     </code>
   );
