@@ -61,7 +61,10 @@ export const SKILL_CATEGORY: Record<string, ChipCategory> = {
 
   // AI
   'Agent SDKs': 'ai',
+  'Claude Code': 'ai',
+  ComfyUI: 'ai',
   'Context Engineering': 'ai',
+  'Figma Make': 'ai',
   'Prompt Engineering': 'ai',
 };
 

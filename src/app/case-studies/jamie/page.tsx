@@ -7,6 +7,7 @@ import { ProcessSteps, type ProcessStep } from '@/components/atoms/ProcessSteps'
 import { TerminalGallery, type GalleryEntry } from '@/components/atoms/TerminalGallery';
 import { InlineCode } from '@/components/atoms/InlineCode';
 import { Reveal } from '@/components/atoms/Reveal';
+import { StatusBadge } from '@/components/atoms/StatusBadge';
 import { Heart, Brain, FolderTree, RefreshCw } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -180,12 +181,7 @@ export default function JamieCaseStudy() {
 
         {/* stats */}
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
-              Active — in use daily
-            </span>
-          </div>
+          <StatusBadge label="Active — in use daily" />
           <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs']} />
         </div>
       </Reveal>

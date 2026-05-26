@@ -3,6 +3,8 @@ import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { TagChipList } from '@/components/atoms/TagChip';
 import { Download } from 'lucide-react';
 import { Reveal } from '@/components/atoms/Reveal';
+import { TextLink } from '@/components/atoms/TextLink';
+import { Button } from '@/components/atoms/Button';
 
 export const metadata: Metadata = {
   title: 'Resume — Jacob Ikola',
@@ -43,7 +45,7 @@ const RESUME = {
     github: { url: 'https://github.com/ikolajm', handle: 'ikolajm' },
   },
   location: 'Michigan, USA',
-  lastUpdated: '2026-05-25',
+  lastUpdated: '2026-05-26',
   summary:
     'Design engineer with 6+ years shipping web applications from Figma to production. Design-systems builder, sole-developer product owner, client-facing engineer — comfortable owning the whole stack and the AI-augmented workflows around it. Range across React, TypeScript, Node.js, and GraphQL.',
   experience: [
@@ -54,13 +56,15 @@ const RESUME = {
       startDate: '2025-08',
       endDate: 'Present',
       highlights: [
-        'Deepened design-system engineering — built and used a token-first generation pipeline producing a populated Figma library and a Next.js + Tailwind scaffold from one JSON source; eliminated Figma↔code drift structurally.',
-        'Developed AI-augmented engineering workflows as a daily-use practice — context engineering, agent-SDK integration, programmatic memory and session management.',
-        'Frontend craft and animation — Three.js / React Three Fiber, scroll-reveal patterns, motion discipline.',
+        'Built Loom — a token-first design system generator. One JSON spec produces a populated Figma library and a Next.js + Tailwind scaffold, eliminating Figma↔code drift structurally. Validated in production through three downstream projects.',
+        'Shipped JAMIE — a programmable AI operating layer for daily engineering work. Identity, memory, sessions, and routing as version-controlled markdown; Anthropic Agent SDK integration; runs across Claude Code, Codex, and Gemini.',
+        'Shipped Paperboy and Party Wipe as design-system proofs — Paperboy (daily news dashboard, in daily use) and Party Wipe (D&D combat roguelike, Three.js status-effect rendering), both built end-to-end on Loom’s output.',
+        'Frontend motion craft — Three.js / React Three Fiber hero scenes, IntersectionObserver-based scroll-reveal, prefers-reduced-motion discipline, individual transform properties for atom-level animations.',
       ],
       technologies: [
         'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Three.js',
         'React Three Fiber', 'Figma Plugin API', 'Node.js', 'Agent SDKs',
+        'Claude Code',
       ],
     },
     {
@@ -71,10 +75,9 @@ const RESUME = {
       endDate: '2025-07',
       highlights: [
         "Established a company-wide design system from the ground up — Figma components, reusable libraries, and living documentation — significantly reducing stylistic code bloat across the team's output.",
-        "Operated as a 1:1 client-facing developer, leading engagements from requirements gathering through technical architecture and delivery. Contributed across the company's broader portfolio of custom software projects.",
-        'Contributed full-stack to Auctioneer Software (SaaS) across iterative agile sprints — React/TypeScript UI, GraphQL resolvers, and PostgreSQL schemas handling bidding data, user management, and auction lifecycle.',
-        'Managed code through Git and GitHub with PR-based workflows, code reviews, and GitHub Actions CI/CD pipelines across concurrent client projects.',
-        'Coordinated directly with non-technical stakeholders, balancing multiple client timelines and priorities in Teamwork.',
+        'Operated as a 1:1 client-facing developer, leading engagements from requirements through technical architecture and delivery; balanced multiple concurrent client timelines and stakeholder relationships.',
+        'Contributed full-stack to Auctioneer Software (SaaS) — React/TypeScript UI, GraphQL resolvers, and PostgreSQL schemas handling bidding data, user management, and auction lifecycle. Shipped through PR-based code review and GitHub Actions CI/CD.',
+        "Contributed across the company's broader portfolio of custom software projects beyond direct client work — different stacks, different codebases, as the team needed.",
       ],
       technologies: [
         'HTML', 'SCSS', 'JavaScript', 'React', 'TypeScript', 'GraphQL',
@@ -88,9 +91,9 @@ const RESUME = {
       startDate: '2021-03',
       endDate: '2022-01',
       highlights: [
-        'Designed and built single-page applications for marketing, advertising, and internal office use — solo developer with designer and project owner check-ins.',
-        'Owned the full design-to-development lifecycle — wireframing in Figma, iterating through feedback, then building production-ready code to spec.',
-        'Identified technical constraints early in the design process and proposed scalable solutions, preventing costly rework during implementation.',
+        "Designed and built single-page applications for marketing, advertising, and internal office use — solo developer working directly with each project's designer and owner.",
+        'Owned the full design-to-development lifecycle — wireframing in Figma, iterating through feedback, and shipping production-ready code to spec.',
+        'Identified technical constraints early in design, proposing scalable solutions that prevented rework during implementation.',
       ],
       technologies: ['HTML', 'CSS', 'JavaScript', 'Figma'],
     },
@@ -103,7 +106,6 @@ const RESUME = {
       highlights: [
         'Sole developer on a Learning Management System — grew the codebase from zero to a product that software companies beta-tested in production. React, Express, Node.js, PostgreSQL with REST APIs, deployed on Heroku.',
         'Traveled on-site with the sales team to conduct user interviews and deliver live product demos, directly shaping the roadmap from real feedback.',
-        'Built an e-learning dashboard that became a key differentiator in sales conversations.',
         'Served as the connective thread between design, engineering, and sales — the only team member with full context across all three.',
       ],
       technologies: [
@@ -128,10 +130,10 @@ const RESUME = {
     },
   ] satisfies EducationEntry[],
   skills: [
-    { category: 'Frontend & Code', items: ['CSS', 'Cypress', 'HTML', 'JavaScript', 'Next.js', 'React', 'SCSS', 'Tailwind CSS', 'TypeScript'] },
-    { category: 'Backend & Data', items: ['Apollo', 'Docker', 'Express', 'Git', 'GitHub Actions', 'GraphQL', 'Node.js', 'PostgreSQL', 'REST APIs'] },
+    { category: 'Frontend & Code', items: ['CSS', 'Cypress', 'JavaScript', 'Next.js', 'React', 'SCSS', 'Tailwind CSS', 'TypeScript'] },
+    { category: 'Backend & Data', items: ['Apollo', 'Docker', 'Express', 'GitHub Actions', 'GraphQL', 'Node.js', 'PostgreSQL', 'REST APIs'] },
     { category: 'Design, Motion & Craft', items: ['Figma', 'Figma Plugin API', 'GSAP', 'Motion.js', 'React Three Fiber', 'Three.js'] },
-    { category: 'AI', items: ['Agent SDKs', 'Context Engineering', 'Prompt Engineering'] },
+    { category: 'AI', items: ['Agent SDKs', 'Claude Code', 'ComfyUI', 'Context Engineering', 'Figma Make', 'Prompt Engineering'] },
   ],
 };
 
@@ -161,32 +163,19 @@ export default function ResumePage() {
             <CommentLabel>Contact</CommentLabel>
             <ul className="flex flex-col gap-2 text-sm">
               <li>
-                <a
-                  href={`mailto:${RESUME.contact.email}`}
-                  className="text-primary underline underline-offset-4"
-                >
+                <TextLink href={`mailto:${RESUME.contact.email}`}>
                   {RESUME.contact.email}
-                </a>
+                </TextLink>
               </li>
               <li>
-                <a
-                  href={RESUME.contact.linkedin.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-primary underline underline-offset-4"
-                >
+                <TextLink href={RESUME.contact.linkedin.url}>
                   linkedin.com/in/{RESUME.contact.linkedin.handle}
-                </a>
+                </TextLink>
               </li>
               <li>
-                <a
-                  href={RESUME.contact.github.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-primary underline underline-offset-4"
-                >
+                <TextLink href={RESUME.contact.github.url}>
                   github.com/{RESUME.contact.github.handle}
-                </a>
+                </TextLink>
               </li>
             </ul>
           </div>
@@ -203,16 +192,9 @@ export default function ResumePage() {
             </p>
           </div>
 
-          <a
-            href="/resume.pdf"
-            download
-            className="group inline-flex items-center gap-2 self-start rounded-sm border border-primary px-4 py-2.5 transition-colors duration-150 hover:bg-primary/10"
-          >
-            <Download size={14} className="text-primary" aria-hidden />
-            <span className="font-mono text-xs uppercase tracking-nav text-primary">
-              Download Resume
-            </span>
-          </a>
+          <Button asChild variant="outline" size="sm" leadingIcon={<Download />} className="self-start">
+            <a href="/resume.pdf" download>Download Resume</a>
+          </Button>
         </aside>
 
         {/* MAIN — hero, experience, education, skills */}

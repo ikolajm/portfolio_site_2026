@@ -66,6 +66,24 @@
   to { transform: scale(1.9); opacity: 0; }
 }
 
+/* Initial page-load fade — for chrome (nav, scroll cue) that should ease in */
+/* on first paint rather than pop. Use Tailwind `motion-safe:animate-[...]` so */
+/* reduced-motion users skip the animation entirely. */
+@keyframes load-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Card surface texture — subtle dot grid that defines the 'card' visual */
+/* vocabulary across all card-class panels (CaseStudyCard, StatCards, */
+/* CompanyLogo, etc.). At ~3.5% opacity, the dots add felt-not-noticed */
+/* surface character without competing with cards' decorative features */
+/* (logo watermarks, faded icons). Tune-once point for the whole system. */
+.card-surface {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
 /* CSS-mask logo treatment — lets monochrome SVGs inherit currentColor */
 /* regardless of how their internal fills are authored. Use via inline */
 /* style: `style={{ '--logo-mask': 'url(/path.svg)' }}`. */

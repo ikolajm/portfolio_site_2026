@@ -1,13 +1,11 @@
 import Link from 'next/link';
-import { BracketLabel } from '@/components/atoms/BracketLabel';
+import { ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/atoms/Button';
 
 export function CaseStudyCTA({ slug }: { slug: string }) {
   return (
-    <Link
-      href={`/case-studies/${slug}`}
-      className="group mt-6 inline-block self-start"
-    >
-      <BracketLabel>read case study</BracketLabel>
-    </Link>
+    <Button asChild variant="outline" size="sm" trailingIcon={<ArrowUpRight />}>
+      <Link href={`/case-studies/${slug}`}>Read Case Study</Link>
+    </Button>
   );
 }

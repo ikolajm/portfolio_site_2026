@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import {
   LayoutTemplate,
   Swords,
@@ -18,8 +17,10 @@ import { InlineCode } from '@/components/atoms/InlineCode';
 import { MediaBlock } from '@/components/atoms/MediaBlock';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { PartsList, type Part } from '@/components/atoms/PartsList';
+import { TextLink } from '@/components/atoms/TextLink';
 import { StatCards } from '@/components/atoms/StatCards';
 import { Reveal } from '@/components/atoms/Reveal';
+import { StatusBadge } from '@/components/atoms/StatusBadge';
 
 export const metadata: Metadata = {
   title: 'Party Wipe — Jacob Ikola',
@@ -131,12 +132,7 @@ export default function PartyWipeCaseStudy() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
-              In development · Engine and UI complete
-            </span>
-          </div>
+          <StatusBadge label="In development · Engine and UI complete" color="amber" />
           <TagChipList chips={['TypeScript', 'Next.js 16', 'React 19', 'Framer Motion', 'Loom']} />
         </div>
 
@@ -198,12 +194,7 @@ export default function PartyWipeCaseStudy() {
 
         <p className="text-lg leading-relaxed opacity-80">
           Party Wipe is built on{' '}
-          <Link
-            href="/case-studies/loom"
-            className="text-primary underline underline-offset-4"
-          >
-            Loom
-          </Link>, the same design-system pipeline behind Paperboy — one
+          <TextLink href="/case-studies/loom">Loom</TextLink>, the same design-system pipeline behind Paperboy — one
           questionnaire in, two visually distinct products out.
         </p>
       </Reveal>

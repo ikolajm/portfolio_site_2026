@@ -32,7 +32,7 @@ export function StatCards({
           return (
             <div
               key={s.label}
-              className="relative overflow-hidden rounded-sm border border-outline-subtle bg-surface-1 p-6"
+              className="card-surface relative overflow-hidden rounded-sm border border-outline-subtle bg-surface-1 p-6"
             >
               <Icon
                 aria-hidden

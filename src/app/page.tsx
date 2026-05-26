@@ -9,20 +9,47 @@ import {
 } from '@icons-pack/react-simple-icons';
 import { HeroMonogram } from '@/components/atoms/HeroMonogram';
 import { ScrollIndicator } from '@/components/atoms/ScrollIndicator';
-import { CaseStudyCTA } from '@/components/atoms/CaseStudyCTA';
-import { TagChipList } from '@/components/atoms/TagChip';
+import { CaseStudyCard, type Project } from '@/components/atoms/CaseStudyCard';
 import { CompanyLogo } from '@/components/atoms/CompanyLogo';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
-import { JamieHeroLoop } from '@/components/atoms/JamieHeroLoop';
-import { PipelineFlow } from '@/components/atoms/PipelineFlow';
 import { Reveal } from '@/components/atoms/Reveal';
 import { TextScramble } from '@/components/atoms/TextScramble';
+
+const LANDING_PROJECTS: Project[] = [
+  {
+    slug: 'jamie',
+    title: 'JAMIE',
+    hook: 'A persistent AI development partner — part JARVIS, part operating system for how I work.',
+    chips: ['Context Engineering', 'Prompt Engineering', 'Agent SDKs', 'TypeScript'],
+    logo: '/assets/svg/jamie-logo.svg',
+  },
+  {
+    slug: 'loom',
+    title: 'Loom',
+    hook: 'I kept burning out building UI foundations, so I built a pipeline that generates them.',
+    chips: ['TypeScript', 'Figma Plugin API', 'Tailwind CSS', 'React'],
+    logo: '/assets/svg/loom.svg',
+  },
+  {
+    slug: 'paperboy',
+    title: 'Paperboy',
+    hook: "A daily news dashboard I built so I'd stop opening six apps every morning.",
+    chips: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
+    logo: '/assets/svg/paperboy-logo.svg',
+  },
+  {
+    slug: 'party-wipe',
+    title: 'Party Wipe',
+    hook: 'A D&D roguelike that captures the scramble of a session going sideways, solo.',
+    chips: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Three.js'],
+    logo: '/assets/svg/party-wipe-logo.svg',
+  },
+];
 
 export default function Home() {
   return (
     <main>
       <section
-        id="hero"
         aria-label="Hero"
         className="relative min-h-[95vh] overflow-hidden"
       >
@@ -50,7 +77,9 @@ export default function Home() {
           </div>
         </div>
 
-        <ScrollIndicator className="absolute bottom-8 left-1/2 -translate-x-1/2" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 motion-safe:animate-[load-fade-in_400ms_ease-out_700ms_both]">
+          <ScrollIndicator />
+        </div>
       </section>
 
       <div className="mx-auto max-w-3xl px-6">
@@ -77,12 +106,6 @@ export default function Home() {
             design decisions and the code decisions get made together. Small
             teams, big ownership.
           </p>
-          <p>
-            That&apos;s been my actual career: at PropelUp it was me and the
-            CEO. At Spectrum Net Designs I kickstarted the company&apos;s
-            first design system from scratch. Freelancing was all of it at
-            once — designer, developer, and the person on every call.
-          </p>
         </Reveal>
 
         <Reveal
@@ -93,20 +116,13 @@ export default function Home() {
         </Reveal>
 
         <Reveal as="p" className="text-lg leading-relaxed">
-          The &quot;systems between&quot; part came out of that. The same kind
-          of friction kept showing up — handoff drift between design and dev,
+          The &quot;systems between&quot; part came from the same friction
+          showing up everywhere — handoff drift between design and dev,
           foundation work eating product time, context lost between sessions.
-          I started building tools to close the gaps. Lately, in my personal
-          projects, that&apos;s become the main work.
-        </Reveal>
-
-        <Reveal as="p" className="text-lg leading-relaxed">
-          I built an AI system, and everything in this portfolio runs through
-          it — the case studies, the writing, this page. I spent years
-          avoiding AI; when I finally took it on, I wanted it to be a practice,
-          not a habit. Working with it well is a real discipline now — context
-          engineering — and JAMIE is my answer to it. It&apos;s the first case
-          study below.
+          Lately, building tools to close those gaps has become the main
+          work. I built an AI system, and everything in this portfolio runs
+          through it — the case studies, the writing, this page. JAMIE is
+          the first case study below.
         </Reveal>
 
         <div aria-label="Tools" className="flex flex-col gap-4 pt-4">
@@ -149,96 +165,11 @@ export default function Home() {
         </Reveal>
 
         <div className="flex flex-col gap-6">
-          <Reveal>
-            <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
-              <JamieHeroLoop framed={false} />
-              <div className="flex flex-col gap-4 p-6 md:p-8">
-                <header className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-2xl font-semibold">JAMIE</h3>
-                  <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">01</span>
-                </header>
-                <p className="text-lg font-medium">
-                  A persistent AI development partner — part JARVIS, part
-                  operating system for how I work.
-                </p>
-                <p>
-                  Identity, persistent memory, structured workspaces, and a daily
-                  session-and-retro loop. Modeled after JARVIS — the personality
-                  and first-person voice are intentional design choices, not
-                  window dressing.
-                </p>
-                <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs']} />
-                <CaseStudyCTA slug="jamie" />
-              </div>
-            </article>
-          </Reveal>
-
-          <Reveal>
-            <article className="flex flex-col overflow-hidden rounded-sm border border-outline-subtle bg-surface-1">
-              <PipelineFlow framed={false} />
-              <div className="flex flex-col gap-4 p-6 md:p-8">
-                <header className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-2xl font-semibold">Loom</h3>
-                  <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">02</span>
-                </header>
-                <p className="text-lg font-medium">
-                  I kept burning out building UI foundations, so I built a
-                  pipeline that generates them.
-                </p>
-                <p>
-                  Brand questionnaire in — tokens, 55 components across 7
-                  categories, 30 Figma rendering scripts, and a working Next.js
-                  scaffold out. Change a token, regenerate everything. Figma and
-                  code stay in sync because they read from the same JSON.
-                </p>
-                <TagChipList chips={['TypeScript', 'Figma API', 'Tailwind', 'React']} />
-                <CaseStudyCTA slug="loom" />
-              </div>
-            </article>
-          </Reveal>
-
-          <Reveal>
-            <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-              <header className="flex items-baseline justify-between gap-4">
-                <h3 className="text-2xl font-semibold">Paperboy</h3>
-                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">03</span>
-              </header>
-              <p className="text-lg font-medium">
-                A daily news dashboard I built so I&apos;d stop opening six apps
-                every morning.
-              </p>
-              <p>
-                RSS, ESPN, and TMDB fetched in parallel — ~3 seconds for
-                everything. News with two-tier filtering and cross-topic dedup,
-                media with podcasts and poster galleries, scores with
-                sport-specific game cards (MLB pitchers, F1 timing, UFC
-                methodology).
-              </p>
-              <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind']} />
-              <CaseStudyCTA slug="paperboy" />
-            </article>
-          </Reveal>
-
-          <Reveal>
-            <article className="flex flex-col gap-4 rounded-sm border border-outline-subtle bg-surface-1 p-6 md:p-8">
-              <header className="flex items-baseline justify-between gap-4">
-                <h3 className="text-2xl font-semibold">Party Wipe</h3>
-                <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">04</span>
-              </header>
-              <p className="text-lg font-medium">
-                A D&amp;D roguelike — captures the scramble of a session going
-                sideways, solo, without needing a DM.
-              </p>
-              <p>
-                Solo party of four, zone-based combat, procedural dungeons, 5e
-                SRD data layer (CC-BY-4.0). Status effect animations are where
-                the design work lives — poison fog, frozen overlays, cursed
-                glows. Engine and UI done; animations and polish next.
-              </p>
-              <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind', 'Three.js']} />
-              <CaseStudyCTA slug="party-wipe" />
-            </article>
-          </Reveal>
+          {LANDING_PROJECTS.map((project) => (
+            <Reveal key={project.slug}>
+              <CaseStudyCard project={project} />
+            </Reveal>
+          ))}
         </div>
       </section>
 
@@ -306,8 +237,7 @@ export default function Home() {
                 Sole developer on a Learning Management System. Took it from zero
                 to a product that companies were beta-testing in production.
                 React, Express, Node, Postgres, Heroku. Traveled with sales for
-                user interviews and live demos. Built the dashboard that became
-                the closer in sales conversations. Only person on the team with
+                user interviews and live demos. Only person on the team with
                 full context across design, engineering, and sales.
               </p>
             </div>

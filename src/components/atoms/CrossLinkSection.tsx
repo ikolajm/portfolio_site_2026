@@ -17,7 +17,7 @@ export function CrossLinkSection({ currentSlug }: { currentSlug: string }) {
             {cs.badge.kind === 'logo' ? (
               <CompanyLogo src={cs.badge.src} alt={`${cs.name} logo`} />
             ) : (
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-sm border border-outline-subtle bg-surface-1 md:h-28 md:w-28">
+              <div className="card-surface flex h-20 w-20 shrink-0 items-center justify-center rounded-sm border border-outline-subtle bg-surface-1 md:h-28 md:w-28">
                 <span className="font-mono text-2xl tracking-nav opacity-70 md:text-3xl">
                   {cs.index}
                 </span>

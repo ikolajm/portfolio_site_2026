@@ -102,7 +102,7 @@ const fragmentShader = /* glsl */ `
     vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
 
     // sample 3D simplex noise — third axis is slow time, drives the morph
-    float n = snoise(vec3(p * 0.8, uTime * 0.04));
+    float n = snoise(vec3(p * 0.8, uTime * 0.02));
 
     // quantize into contour bands: fract(n * N) cycles N times across the noise range
     float bands = fract(n * 4.0);
@@ -132,7 +132,7 @@ function NoisePlane({ reducedMotion }: { reducedMotion: boolean }) {
       <shaderMaterial
         ref={matRef}
         uniforms={{
-          uTime: { value: 0 },
+          uTime: { value: 20 },
           uResolution: { value: new Vector2(1, 1) },
           uColor: { value: new Color('#4da7ff') }, // primary
           uOpacity: { value: 0.05 },

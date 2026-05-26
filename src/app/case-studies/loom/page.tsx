@@ -7,6 +7,7 @@ import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { ProcessSteps, type ProcessStep } from '@/components/atoms/ProcessSteps';
 import { InlineCode } from '@/components/atoms/InlineCode';
 import { Reveal } from '@/components/atoms/Reveal';
+import { StatusBadge } from '@/components/atoms/StatusBadge';
 import { ClipboardList, Braces, Palette, Boxes, Terminal } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -227,12 +228,7 @@ export default function LoomCaseStudy() {
 
         {/* stats */}
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
-              Active — used across this portfolio
-            </span>
-          </div>
+          <StatusBadge label="Active — used across this portfolio" />
           <TagChipList chips={['TypeScript', 'Figma API', 'Tailwind', 'React']} />
         </div>
 

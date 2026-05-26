@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { BracketLabel } from '@/components/atoms/BracketLabel';
-
 export const metadata = {
   title: '404 — Jacob Ikola',
   description: 'Path not found.',
@@ -19,23 +16,14 @@ export default function NotFound() {
 
       <p className="text-lg leading-relaxed opacity-80">
         Either the URL is wrong, the page moved, or it never existed. The
-        rest of the site still works — head back to the landing and pick
-        up there.
+        rest of the site still works — use the header to get back on
+        track.
       </p>
 
       <p className="font-mono text-sm opacity-60">
         <span className="opacity-50">{'> '}</span>
         no match.
       </p>
-
-      <div className="flex flex-wrap gap-4">
-        <Link href="/" className="group inline-block">
-          <BracketLabel>← Landing</BracketLabel>
-        </Link>
-        <Link href="/case-studies/jamie" className="group inline-block">
-          <BracketLabel>Case Studies</BracketLabel>
-        </Link>
-      </div>
     </main>
   );
 }

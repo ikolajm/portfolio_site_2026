@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Slot } from '@radix-ui/react-slot';
+import { Slot, Slottable } from '@radix-ui/react-slot';
 import { cn } from './cn';
 
 const buttonVariants = cva(
@@ -14,6 +14,7 @@ const buttonVariants = cva(
         success: 'bg-success text-on-success',
         warning: 'bg-warning text-on-warning',
         ghost: 'bg-transparent text-on-surface',
+        outline: 'border border-primary bg-transparent text-primary hover:bg-primary/10',
       },
       size: {
         'sm': 'h-ch-3 px-3 py-1 gap-1 rounded-component text-action-sm',
@@ -63,7 +64,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {!iconOnly && leadingIcon && <span className={cn('shrink-0 [&>svg]:size-full', iconCls)}>{leadingIcon}</span>}
-        {iconOnly ? <span className={cn('shrink-0 [&>svg]:size-full', iconCls)}>{children}</span> : children}
+        {iconOnly ? (
+          <span className={cn('shrink-0 [&>svg]:size-full', iconCls)}>{children}</span>
+        ) : (
+          <Slottable>{children}</Slottable>
+        )}
         {!iconOnly && trailingIcon && <span className={cn('shrink-0 [&>svg]:size-full', iconCls)}>{trailingIcon}</span>}
       </Comp>
     );

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import {
   Workflow,
   LayoutDashboard,
@@ -16,6 +15,8 @@ import { PartsList, type Part } from '@/components/atoms/PartsList';
 import { InlineCode } from '@/components/atoms/InlineCode';
 import { StatCards } from '@/components/atoms/StatCards';
 import { Reveal } from '@/components/atoms/Reveal';
+import { StatusBadge } from '@/components/atoms/StatusBadge';
+import { TextLink } from '@/components/atoms/TextLink';
 
 export const metadata: Metadata = {
   title: 'Paperboy — Jacob Ikola',
@@ -98,12 +99,7 @@ export default function PaperboyCaseStudy() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-xs uppercase tracking-nav text-on-surface-variant">
-              Shipped 2026-05 · In daily use
-            </span>
-          </div>
+          <StatusBadge label="Shipped 2026-05 · In daily use" />
           <TagChipList chips={['TypeScript', 'Next.js 16', 'React 19', 'ESPN API', 'TMDB']} />
         </div>
       </Reveal>
@@ -151,12 +147,7 @@ export default function PaperboyCaseStudy() {
 
         <p className="text-lg leading-relaxed opacity-80">
           The dashboard is built entirely on{' '}
-          <Link
-            href="/case-studies/loom"
-            className="text-primary underline underline-offset-4"
-          >
-            Loom
-          </Link>, a design-system pipeline I built before Paperboy — its 55
+          <TextLink href="/case-studies/loom">Loom</TextLink>, a design-system pipeline I built before Paperboy — its 55
           generated atoms covering every interaction surface.
         </p>
       </Reveal>

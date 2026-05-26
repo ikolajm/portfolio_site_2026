@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { SVGLoader, type SVGResult } from 'three/examples/jsm/loaders/SVGLoader.js';
 import * as THREE from 'three';
@@ -10,6 +10,15 @@ const TILT_RANGE_X = 0.15;
 const TILT_RANGE_Y = 0.15;
 const LERP = 0.05;
 const IDLE_REVOLUTION_SECONDS = 25;
+
+// Viewport-aware composition. Desktop offsets the monogram to the right so
+// the bottom-left text overlay balances; portrait centers it and lifts it
+// into the upper half, leaving the lower half clear for the text.
+const PORTRAIT_ASPECT_THRESHOLD = 1.0;
+const COMPOSITION = {
+  desktop: { targetHeight: 11, xOffset: 3, yOffset: 0 },
+  portrait: { targetHeight: 7, xOffset: 0, yOffset: 2.5 },
+} as const;
 
 function isTouchDevice(): boolean {
   if (typeof window === 'undefined') return false;
@@ -21,10 +30,11 @@ function Monogram() {
   const target = useRef({ x: 0, y: 0 });
   const touchModeRef = useRef(false);
   const svg = useLoader(SVGLoader, '/assets/svg/personal_logo_white.svg') as SVGResult;
+  const { viewport } = useThree();
 
   const shapes = useMemo(() => svg.paths.flatMap((p) => p.toShapes(true)), [svg]);
 
-  const { centerOffset, scale } = useMemo(() => {
+  const { centerOffset, sourceHeight } = useMemo(() => {
     const bbox = new THREE.Box2();
     shapes.forEach((shape) => {
       const pts = shape.getPoints(24);
@@ -34,10 +44,12 @@ function Monogram() {
     bbox.getSize(size);
     const center = new THREE.Vector2();
     bbox.getCenter(center);
-    const targetHeight = 11;
-    const scale = targetHeight / size.y;
-    return { centerOffset: center, scale };
+    return { centerOffset: center, sourceHeight: size.y };
   }, [shapes]);
+
+  const composition =
+    viewport.aspect < PORTRAIT_ASPECT_THRESHOLD ? COMPOSITION.portrait : COMPOSITION.desktop;
+  const scale = composition.targetHeight / sourceHeight;
 
   useEffect(() => {
     touchModeRef.current = isTouchDevice();
@@ -64,7 +76,7 @@ function Monogram() {
   });
 
   return (
-    <group ref={groupRef} scale={[scale, -scale, scale]} position={[3, 0, 0]}>
+    <group ref={groupRef} scale={[scale, -scale, scale]} position={[composition.xOffset, composition.yOffset, 0]}>
       <group position={[-centerOffset.x, -centerOffset.y, -3]}>
         {shapes.map((shape, i) => (
           <mesh key={i}>
