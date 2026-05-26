@@ -8,7 +8,7 @@ import {
   Timer,
   Skull,
   Palette,
-  Maximize2,
+  PanelsTopLeft,
 } from 'lucide-react';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { TagChipList } from '@/components/atoms/TagChip';
@@ -133,13 +133,8 @@ export default function PartyWipeCaseStudy() {
 
         <div className="flex flex-col gap-3">
           <StatusBadge label="In development · Engine and UI complete" color="amber" />
-          <TagChipList chips={['TypeScript', 'Next.js 16', 'React 19', 'Framer Motion', 'Loom']} />
+          <TagChipList chips={['TypeScript', 'Next.js', 'React', 'Framer Motion']} />
         </div>
-
-        <MediaBlock
-          aspect="16/9"
-          placeholder="hero media — four-character party mid-encounter, fire-bolt mid-flourish (charge-up, target scrim, embers rising, damage-in-glyph with CRIT ribbon)"
-        />
       </Reveal>
 
       {/* MEDIABLOCK — visual-led position 2 */}
@@ -204,7 +199,7 @@ export default function PartyWipeCaseStudy() {
         <SectionAnchor>Decisions</SectionAnchor>
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
-            <strong>Combat first, story later.</strong> Most D&amp;D digital
+            <strong>Combat first, story later.</strong>{' '}Most D&amp;D digital
             adaptations render the whole experience: narrative, exploration,
             character relationships, combat. Party Wipe deliberately
             doesn&apos;t. Story tracking is the solved-ish half (wikis,
@@ -214,7 +209,7 @@ export default function PartyWipeCaseStudy() {
             into a larger system.
           </p>
           <p>
-            <strong>Zone abstraction over grid.</strong> Most digital D&amp;D
+            <strong>Zone abstraction over grid.</strong>{' '}Most digital D&amp;D
             either keeps the grid (BG3, Solasta) or abstracts to text-only
             (most CRPG-likes). Three zones is the middle abstraction that
             preserves positioning as a tactical choice without making turns
@@ -282,7 +277,7 @@ export default function PartyWipeCaseStudy() {
               caption: 'themed flourishes',
             },
             {
-              icon: Maximize2,
+              icon: PanelsTopLeft,
               value: '0',
               label: 'Menus',
               caption: 'phase is the screen',
@@ -302,7 +297,7 @@ export default function PartyWipeCaseStudy() {
         <div className="flex flex-col gap-8">
           <CodeBlock
             filePath="src/data/v1-roster.ts"
-            caption="the curated 18 monsters / 23 spells / 14 weapons / 6 consumables — each comment explains why the entry earned its slot"
+            caption="The curated 18 monsters / 23 spells / 14 weapons / 6 consumables — each comment explains why the entry earned its slot"
           >{`/**
  * V1 Roster — Curated game content
  *

@@ -38,7 +38,7 @@ export function StatCards({
                 aria-hidden
                 size={104}
                 strokeWidth={1.25}
-                className="pointer-events-none absolute -bottom-5 -right-5 text-outline-subtle"
+                className="pointer-events-none absolute -bottom-0.5 -right-0.5 text-outline-subtle opacity-80"
               />
               <div className="relative flex flex-col gap-1">
                 <span className="text-4xl font-semibold leading-display tracking-tight">

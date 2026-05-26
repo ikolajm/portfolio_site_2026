@@ -175,14 +175,14 @@ export default function JamieCaseStudy() {
             system for how I work.
           </p>
           <p className="font-mono text-xs text-on-surface-variant">
-            // the case study you&apos;re reading was written with it
+            // The case study you&apos;re reading was written with it
           </p>
         </div>
 
         {/* stats */}
         <div className="flex flex-col gap-3">
           <StatusBadge label="Active — in use daily" />
-          <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs']} />
+          <TagChipList chips={['Context Engineering', 'Prompt Engineering', 'Agent SDKs', 'TypeScript']} />
         </div>
       </Reveal>
 
@@ -229,9 +229,9 @@ export default function JamieCaseStudy() {
         </div>
       </Reveal>
 
-      {/* HOW IT WORKS */}
-      <Reveal as="section" aria-label="How It Works" className="flex flex-col gap-8">
-        <SectionAnchor>How It Works</SectionAnchor>
+      {/* ARCHITECTURE */}
+      <Reveal as="section" aria-label="Architecture" className="flex flex-col gap-8">
+        <SectionAnchor>Architecture</SectionAnchor>
         <p className="text-lg leading-relaxed">
           JAMIE — Just Always Making It Easier — gives the agent four things
           every session: a persistent identity, indexed memory, a workspace
@@ -243,16 +243,51 @@ export default function JamieCaseStudy() {
         </p>
 
         <ProcessSteps steps={ARCH_STEPS} />
+      </Reveal>
 
-        <p className="text-lg leading-relaxed">
-          JAMIE isn&apos;t a chatbot or an app, and it isn&apos;t a product for
-          other people. It&apos;s markdown files and conventions, nothing
-          more: no application, no database, no vendor SDK to lock into.
-          That&apos;s deliberate. Turning any compatible agent into JAMIE is a
-          config change, not a rewrite — switch models now, or move to next
-          year&apos;s, and the system comes along intact. The next session
-          loads the same files and picks up where the last one left off.
-        </p>
+      {/* DECISIONS */}
+      <Reveal as="section" aria-label="Decisions" className="flex flex-col gap-8">
+        <SectionAnchor>Decisions</SectionAnchor>
+        <div className="flex flex-col gap-6 text-lg leading-relaxed">
+          <p>
+            <strong>Markdown files and conventions, not an app.</strong>{' '}JAMIE
+            is text I can grep through, not a dedicated runtime with its own
+            UI. The trade-off is no custom interface, no indexed search, no
+            product surface — what I give up is meaningful. The payoff is that
+            the same system runs across Claude Code, Codex, and Gemini today —
+            switching engines is a config change, not a rewrite — and next
+            year&apos;s model inherits the whole thing intact. Building it as
+            files made everything else possible.
+          </p>
+          <p>
+            <strong>Automation over hallucination.</strong>{' '}Where a script or
+            a typed schema can do the work, use it; reserve prose generation
+            for the parts that genuinely require it. The cost is more upfront
+            engineering than &quot;ask the agent to handle it.&quot; The
+            payoff is that deterministic operations stay deterministic — the
+            agent doesn&apos;t drift on counts, file paths, or naming.
+            Hallucinations compound; structured boundaries don&apos;t.
+          </p>
+          <p>
+            <strong>Memory is distilled, not dumped.</strong>{' '}Working memory
+            entries are curated artifacts — frontmatter-tagged, machine-indexed
+            — not chat-log archives. Curation happens at retro time, manually.
+            The labor is real. The payoff is that retrieval stays fast and
+            signal density stays high. A memory system that only accumulates
+            becomes a graveyard to wade through, which is worse than no
+            memory at all.
+          </p>
+          <p>
+            <strong>Workspace-scoped context.</strong>{' '}The agent loads only
+            the files the current workspace needs: a writing task pulls in
+            writing conventions, a design-system task pulls in entirely
+            different files. The cost is partitioning the hub into separate
+            workspaces with their own context files, which is upfront design
+            work. The payoff is less noise per call, fewer cross-domain rule
+            confusions, and lower token cost on the agent&apos;s working set.
+            Context engineering at the filesystem level.
+          </p>
+        </div>
       </Reveal>
 
       {/* UNDER THE HOOD */}

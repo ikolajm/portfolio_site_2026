@@ -74,6 +74,13 @@
   to { opacity: 1; }
 }
 
+/* Hide the universal footer on the 404 page — tonal mismatch between */
+/* the "Nothing here." dead-end body and the warm "Always open to a new */
+/* hat" footer CTA. Header stays (it's the recovery path). */
+main[data-page="not-found"] ~ footer {
+  display: none;
+}
+
 /* Card surface texture — subtle dot grid that defines the 'card' visual */
 /* vocabulary across all card-class panels (CaseStudyCard, StatCards, */
 /* CompanyLogo, etc.). At ~3.5% opacity, the dots add felt-not-noticed */

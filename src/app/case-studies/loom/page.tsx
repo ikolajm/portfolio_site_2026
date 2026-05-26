@@ -222,14 +222,14 @@ export default function LoomCaseStudy() {
             that generates them.
           </p>
           <p className="font-mono text-xs text-on-surface-variant">
-            // every atom on this page came out of it
+            // Every atom on this page came out of it
           </p>
         </div>
 
         {/* stats */}
         <div className="flex flex-col gap-3">
-          <StatusBadge label="Active — used across this portfolio" />
-          <TagChipList chips={['TypeScript', 'Figma API', 'Tailwind', 'React']} />
+          <StatusBadge label="Active — validated across three products" />
+          <TagChipList chips={['TypeScript', 'Figma Plugin API', 'Tailwind CSS', 'React']} />
         </div>
 
       </Reveal>
@@ -272,26 +272,47 @@ export default function LoomCaseStudy() {
         </p>
 
         <ProcessSteps steps={ARCH_STEPS} />
+      </Reveal>
 
-        <p className="text-lg leading-relaxed">
-          The key architectural property: all of it reads from the same JSON.
-          Change a token in{' '}
-          <InlineCode>spec/config/</InlineCode>,
-          regenerate, both worlds update — Figma and code in lockstep.
-        </p>
-
-        <blockquote className="border-l border-outline-subtle pl-6 text-lg leading-relaxed">
-          Drift isn&apos;t just discouraged — it&apos;s structurally
-          impossible. There is no second source to drift from.
-        </blockquote>
-
-        <p className="text-lg leading-relaxed">
-          Loom isn&apos;t a CLI tool published to npm. It isn&apos;t a SaaS
-          product. It isn&apos;t trying to be Material Design or Shadcn or a
-          competitor to any of them. It&apos;s a private generator for my
-          own projects — a way to turn a short questionnaire into a working
-          design system instead of six months of foundation work.
-        </p>
+      {/* DECISIONS */}
+      <Reveal as="section" aria-label="Decisions" className="flex flex-col gap-8">
+        <SectionAnchor>Decisions</SectionAnchor>
+        <div className="flex flex-col gap-6 text-lg leading-relaxed">
+          <p>
+            <strong>One JSON source, two synchronized worlds.</strong>{' '}The
+            questionnaire compiles to five JSON files. The Figma scripts read
+            from them; the code templates read from them. Change a token in{' '}
+            <InlineCode>spec/config/</InlineCode>, regenerate, both worlds
+            update — Figma and code in lockstep. The cost is discipline: the
+            generator must always keep both halves in sync, which means new
+            features ship to both layers or neither. The payoff is that drift
+            becomes structurally impossible, not just discouraged. There is no
+            second source to drift from.
+          </p>
+          <p>
+            <strong>Private generator, not a public framework.</strong>{' '}Loom
+            isn&apos;t on npm, isn&apos;t a CLI for the world, isn&apos;t
+            competing with Shadcn or Material Design. The scope is
+            deliberately narrow: a generator I run for my own projects. The
+            cost is no community, no contributions, no leverage beyond what I
+            build with it. The payoff is that I never had to design for the
+            general case — I could make decisions specifically for the
+            proportions of work I actually ship in. Validated in production
+            through three products: Paperboy, Party Wipe, and this portfolio.
+          </p>
+          <p>
+            <strong>Paste-go Figma scripts, not a Figma plugin.</strong>{' '}The
+            Figma side is thirty scripts pasted into the Plugin API console,
+            not a packaged Figma plugin. The cost is no GUI — each script
+            gets copied and pasted manually, one at a time. The payoff is
+            portability: no plugin install per account, no plugin runtime to
+            maintain, no permissions or distribution channel to manage.
+            Scripts can be run independently — update one component config
+            and rerun just that script, no rebuild required. Anyone with
+            access to the Figma file can run them, and the entire &quot;front
+            end&quot; stays as plain text.
+          </p>
+        </div>
       </Reveal>
 
       {/* UNDER THE HOOD */}

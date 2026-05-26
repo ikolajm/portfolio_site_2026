@@ -25,7 +25,7 @@ export function CaseStudyCard({ project }: { project: Project }) {
       {/* as the StatCards bleed-off icon), bleeds off the right + bottom edges */}
       <span
         aria-hidden
-        className="logo-mask pointer-events-none absolute -bottom-10 -right-10 h-72 w-72 text-outline-subtle md:h-96 md:w-96"
+        className="logo-mask pointer-events-none absolute -bottom-5 -right-5 h-72 w-72 text-outline-subtle md:h-96 md:w-96 opacity-80"
         style={{ '--logo-mask': `url(${project.logo})` } as CSSProperties}
       />
 
