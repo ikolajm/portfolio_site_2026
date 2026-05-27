@@ -99,7 +99,8 @@ I push back when something feels off.
 name: Design System Overhaul
 description: Pipeline validated through three downstream projects (Paperboy,
   Party Wipe, portfolio rebuild)
-type: project
+metadata:
+  type: project
 ---
 
 **Status:** Validated through three downstream projects. Generator in

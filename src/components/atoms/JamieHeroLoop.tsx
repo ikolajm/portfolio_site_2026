@@ -87,28 +87,27 @@ export function JamieHeroLoop({ framed = true }: { framed?: boolean }) {
     <div
       role="img"
       aria-label="Animation: a terminal types developer queries while JAMIE, at the center of a hub of workspace icons, lights up the workspace each query routes to."
-      className={`media-grid relative aspect-[4/3] overflow-hidden md:aspect-[16/9] ${
+      className={`media-grid relative flex flex-col gap-10 overflow-hidden px-6 pt-6 pb-10 md:gap-12 md:p-10 ${
         framed ? 'rounded-sm border border-outline-subtle' : ''
       }`}
     >
-      <div className="flex h-full flex-col">
-        {/* TERMINAL — the query types in */}
-        <div className="relative z-10 flex shrink-0 items-baseline gap-2 px-6 pt-6 font-mono text-xs sm:text-sm">
-          <span className="text-on-surface-variant">{'>'}</span>
-          <span className="whitespace-nowrap text-on-surface">
-            {text}
-            <span
-              aria-hidden
-              className={cursorSteady ? '' : 'animate-[blink_1.1s_linear_infinite]'}
-            >
-              ▌
-            </span>
+      {/* TERMINAL — the query types in */}
+      <div className="relative z-10 flex shrink-0 items-baseline gap-2 overflow-hidden font-mono text-[11px] sm:text-sm">
+        <span className="text-on-surface-variant">{'>'}</span>
+        <span className="whitespace-nowrap text-on-surface">
+          {text}
+          <span
+            aria-hidden
+            className={cursorSteady ? '' : 'animate-[blink_1.1s_linear_infinite]'}
+          >
+            ▌
           </span>
-        </div>
+        </span>
+      </div>
 
-        {/* HUB — JAMIE centered in a 3×3 grid of workspace icons */}
-        <div className="flex flex-1 items-center justify-center">
-          <div className="grid h-[300px] w-[460px] scale-[0.85] grid-cols-3 grid-rows-3 place-items-center md:scale-100">
+      {/* HUB — JAMIE centered in a 3×3 grid of workspace icons */}
+      <div className="flex items-center justify-center">
+        <div className="grid w-full max-w-[460px] grid-cols-3 grid-rows-[auto_auto_auto] place-items-center gap-y-10 sm:gap-y-14">
             {/* center — JAMIE */}
             <div className="relative z-10 col-start-2 row-start-2 flex h-14 w-14 items-center justify-center rounded-sm border border-outline-subtle bg-surface-2">
               <span
@@ -168,7 +167,6 @@ export function JamieHeroLoop({ framed = true }: { framed?: boolean }) {
                 </div>
               );
             })}
-          </div>
         </div>
       </div>
     </div>
