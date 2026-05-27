@@ -58,7 +58,7 @@ const RESUME = {
       highlights: [
         'Built Loom — a token-first design system generator. One JSON spec produces a populated Figma library and a Next.js + Tailwind scaffold, eliminating Figma↔code drift structurally. Validated in production through three downstream projects.',
         'Shipped JAMIE — a programmable AI operating layer for daily engineering work. Identity, memory, sessions, and routing as version-controlled markdown; Anthropic Agent SDK integration; runs across Claude Code, Codex, and Gemini.',
-        'Shipped Paperboy and Party Wipe as design-system proofs — Paperboy (daily news dashboard, in daily use) and Party Wipe (D&D combat roguelike, Three.js status-effect rendering), both built end-to-end on Loom’s output.',
+        'Shipped Paperboy and Party Wipe as design-system proofs — Paperboy (daily news dashboard, in daily use) and Party Wipe (D&D combat roguelike), both built end-to-end on Loom’s output.',
         'Frontend motion craft — Three.js / React Three Fiber hero scenes, IntersectionObserver-based scroll-reveal, prefers-reduced-motion discipline, individual transform properties for atom-level animations.',
       ],
       technologies: [

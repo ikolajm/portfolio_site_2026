@@ -34,7 +34,7 @@ function Monogram() {
 
   const shapes = useMemo(() => svg.paths.flatMap((p) => p.toShapes(true)), [svg]);
 
-  const { centerOffset, sourceHeight } = useMemo(() => {
+  const { centerOffset, sourceHeight, sourceWidth } = useMemo(() => {
     const bbox = new THREE.Box2();
     shapes.forEach((shape) => {
       const pts = shape.getPoints(24);
@@ -44,12 +44,16 @@ function Monogram() {
     bbox.getSize(size);
     const center = new THREE.Vector2();
     bbox.getCenter(center);
-    return { centerOffset: center, sourceHeight: size.y };
+    return { centerOffset: center, sourceHeight: size.y, sourceWidth: size.x };
   }, [shapes]);
 
-  const composition =
-    viewport.aspect < PORTRAIT_ASPECT_THRESHOLD ? COMPOSITION.portrait : COMPOSITION.desktop;
-  const scale = composition.targetHeight / sourceHeight;
+  const isPortrait = viewport.aspect < PORTRAIT_ASPECT_THRESHOLD;
+  const composition = isPortrait ? COMPOSITION.portrait : COMPOSITION.desktop;
+  // Portrait fits to whichever axis is binding so the monogram never overflows
+  // narrow viewports. The 0.85 padding leaves margin for the tilt sweep.
+  const heightScale = composition.targetHeight / sourceHeight;
+  const widthScale = (viewport.width * 0.85) / sourceWidth;
+  const scale = isPortrait ? Math.min(heightScale, widthScale) : heightScale;
 
   useEffect(() => {
     touchModeRef.current = isTouchDevice();

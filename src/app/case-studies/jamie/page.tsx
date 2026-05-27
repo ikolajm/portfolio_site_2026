@@ -47,7 +47,21 @@ const ARCH_STEPS: ProcessStep[] = [
   {
     icon: RefreshCw,
     title: 'The Session / Retro Loop',
-    body: "The pump that keeps the other three honest. Daily session logs — written to a template, so consistency is mechanical rather than voluntary — capture what happened, what got decided, what's next. Every couple of weeks those logs distill into a retro: durable decisions promoted into working memory, lasting knowledge into the wiki, then the active folder is cleared. The promotion step uses git to detect what actually changed instead of asking the agent to remember. And the forgetting is deliberate — a memory system that only accumulates becomes a graveyard to wade through; curating it down is what keeps retrieval fast and the loaded context relevant. Forgetting is part of remembering well.",
+    body: (
+      <>
+        The pump that keeps the other three honest. Daily session logs —
+        written to a template, so consistency is mechanical rather than
+        voluntary — capture what happened, what got decided, what&apos;s
+        next. Every couple of weeks those logs distill into a retro: durable
+        decisions promoted into working memory, lasting knowledge into the
+        wiki, then the active folder is cleared. The promotion step uses{' '}
+        <InlineCode>git</InlineCode>{' '}to detect what actually changed instead
+        of asking the agent to remember. And the forgetting is deliberate —
+        a memory system that only accumulates becomes a graveyard to wade
+        through; curating it down is what keeps retrieval fast and the
+        loaded context relevant. Forgetting is part of remembering well.
+      </>
+    ),
   },
 ];
 
@@ -80,7 +94,7 @@ I push back when something feels off.
     tab: 'Memory',
     filePath: 'jamie/memory/project_design-system-overhaul.md',
     description:
-      "A working-memory entry. The YAML frontmatter is machine-indexed, so the agent loads only what's relevant — no prose parsing. This one tracks the current state of Loom.",
+      "A working-memory entry from the day the portfolio rebuild began — kept as a historical snapshot. The YAML frontmatter is machine-indexed, so the agent loads only what's relevant; this one was tracking Loom's state at the start of this site's build.",
     code: `---
 name: Design System Overhaul
 description: Pipeline validated through three downstream projects (Paperboy,
@@ -251,8 +265,8 @@ export default function JamieCaseStudy() {
         <div className="flex flex-col gap-6 text-lg leading-relaxed">
           <p>
             <strong>Markdown files and conventions, not an app.</strong>{' '}JAMIE
-            is text I can grep through, not a dedicated runtime with its own
-            UI. The trade-off is no custom interface, no indexed search, no
+            is text I can <InlineCode>grep</InlineCode>{' '}through, not a dedicated
+            runtime with its own UI. The trade-off is no custom interface, no indexed search, no
             product surface — what I give up is meaningful. The payoff is that
             the same system runs across Claude Code, Codex, and Gemini today —
             switching engines is a config change, not a rewrite — and next

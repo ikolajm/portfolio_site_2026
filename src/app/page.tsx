@@ -41,7 +41,7 @@ const LANDING_PROJECTS: Project[] = [
     slug: 'party-wipe',
     title: 'Party Wipe',
     hook: 'A D&D roguelike that captures the scramble of a session going sideways, solo.',
-    chips: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Three.js'],
+    chips: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
     logo: '/assets/svg/party-wipe-logo.svg',
   },
 ];
