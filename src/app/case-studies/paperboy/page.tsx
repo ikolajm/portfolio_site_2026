@@ -9,7 +9,6 @@ import {
 } from 'lucide-react';
 import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { TagChipList } from '@/components/atoms/TagChip';
-import { MediaBlock } from '@/components/atoms/MediaBlock';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { PartsList, type Part } from '@/components/atoms/PartsList';
 import { InlineCode } from '@/components/atoms/InlineCode';
@@ -18,6 +17,7 @@ import { Reveal } from '@/components/atoms/Reveal';
 import { StatusBadge } from '@/components/atoms/StatusBadge';
 import { TextLink } from '@/components/atoms/TextLink';
 import { TerminalGallery, type GalleryEntry } from '@/components/atoms/TerminalGallery';
+import { MediaGallery, type GalleryFrame } from '@/components/atoms/MediaGallery';
 
 export const metadata: Metadata = {
   title: 'Paperboy — Jacob Ikola',
@@ -49,7 +49,7 @@ const ARCH_PARTS: Part[] = [
       <>
         <p>
           A Next.js app that reads{' '}
-          <InlineCode>digest.json</InlineCode> at request
+          <InlineCode>digest.json</InlineCode>{' '}at request
           time. There is no server running between digest builds. When you
           load the page, the dashboard parses today&apos;s JSON and renders.
           Static-ish behavior at the surface; the data underneath is fresh
@@ -79,6 +79,25 @@ const ARCH_PARTS: Part[] = [
         </ul>
       </>
     ),
+  },
+];
+
+const PAPERBOY_FRAMES: GalleryFrame[] = [
+  {
+    src: '/assets/media/paperboy-1.png',
+    alt: 'News landing — headlines, popular today, topic feeds',
+  },
+  {
+    src: '/assets/media/paperboy-2.png',
+    alt: 'Media — poster galleries for movies, streaming, coming soon',
+  },
+  {
+    src: '/assets/media/paperboy-3.png',
+    alt: 'Scores — game card box, leaders, injuries',
+  },
+  {
+    src: '/assets/media/paperboy-4.png',
+    alt: 'Scores - Full game detail view of NBA playoff game',
   },
 ];
 
@@ -236,17 +255,13 @@ export default function PaperboyCaseStudy() {
 
         <div className="flex flex-col gap-3">
           <StatusBadge label="Shipped 2026-05 · In daily use" />
-          <TagChipList chips={['TypeScript', 'Next.js', 'React', 'ESPN API', 'TMDB']} />
+          <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind CSS']} />
         </div>
       </Reveal>
 
-      {/* MEDIABLOCK — product-first position 2 */}
+      {/* GALLERY — product-first position 2 */}
       <Reveal>
-        <MediaBlock
-          aspect="16/10"
-          placeholder="the dashboard — opening, switching News / Media / Scores, expanding an NBA card to linescore + leaders + injuries, filtering News by Topics → AI"
-          caption="actual product, not a mockup"
-        />
+        <MediaGallery frames={PAPERBOY_FRAMES} />
       </Reveal>
 
       {/* PROBLEM */}
@@ -333,7 +348,7 @@ export default function PaperboyCaseStudy() {
             <strong>Audit scripts for every dataset I can&apos;t keep in my head.</strong>{' '}
             F1 driver rosters change every season and mid-season. Circuit
             timezones change as the calendar expands. So{' '}
-            <InlineCode>audit-f1</InlineCode> fetches the
+            <InlineCode>audit-f1</InlineCode>{' '}fetches the
             live ESPN season and reports drivers and circuits missing from
             the static maps, with ready-to-paste stub entries. Same pattern
             for the media bias dataset (scans past digests for coverage

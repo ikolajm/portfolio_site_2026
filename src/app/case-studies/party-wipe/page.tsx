@@ -14,7 +14,7 @@ import { SectionAnchor } from '@/components/atoms/SectionAnchor';
 import { TagChipList } from '@/components/atoms/TagChip';
 import { CodeBlock } from '@/components/atoms/CodeBlock';
 import { InlineCode } from '@/components/atoms/InlineCode';
-import { MediaBlock } from '@/components/atoms/MediaBlock';
+import { MediaGallery, type GalleryFrame } from '@/components/atoms/MediaGallery';
 import { CrossLinkSection } from '@/components/atoms/CrossLinkSection';
 import { PartsList, type Part } from '@/components/atoms/PartsList';
 import { TextLink } from '@/components/atoms/TextLink';
@@ -113,6 +113,25 @@ const ARCH_PARTS: Part[] = [
   },
 ];
 
+const PW_FRAMES: GalleryFrame[] = [
+  {
+    src: '/assets/media/party-wipe-1.png',
+    alt: 'Title screen — Cinzel typography over amber-gold brand',
+  },
+  {
+    src: '/assets/media/party-wipe-2.png',
+    alt: 'Party select — class cards, draft mode',
+  },
+  {
+    src: '/assets/media/party-wipe-3.png',
+    alt: 'Room preview — encounter incoming, enemy lineup, zones',
+  },
+  {
+    src: '/assets/media/party-wipe-4.png',
+    alt: 'Combat scene — zones, intent broadcast, status visuals',
+  },
+];
+
 export default function PartyWipeCaseStudy() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-20 px-6 pt-32 pb-24">
@@ -133,17 +152,13 @@ export default function PartyWipeCaseStudy() {
 
         <div className="flex flex-col gap-3">
           <StatusBadge label="In development · Engine and UI complete" color="amber" />
-          <TagChipList chips={['TypeScript', 'Next.js', 'React', 'Framer Motion']} />
+          <TagChipList chips={['React', 'TypeScript', 'Next.js', 'Tailwind CSS']} />
         </div>
       </Reveal>
 
-      {/* MEDIABLOCK — visual-led position 2 */}
+      {/* GALLERY — visual-led position 2 */}
       <Reveal>
-        <MediaBlock
-          aspect="16/10"
-          placeholder="a single combat moment — Wizard casts burning-hands on a hell-hound; charge-up at the caster, scrim + fire flourish + number-in-glyph + VULNERABLE ribbon on the target"
-          caption="same event bus, three structural layers — scrim, flourish, result"
-        />
+        <MediaGallery frames={PW_FRAMES} />
       </Reveal>
 
       {/* PROBLEM */}
@@ -219,10 +234,10 @@ export default function PartyWipeCaseStudy() {
             <strong>Qualifier as field, not event.</strong>{' '}
             <InlineCode>CRIT</InlineCode>,{' '}
             <InlineCode>VULNERABLE</InlineCode>, and{' '}
-            <InlineCode>RESISTED</InlineCode> used to fire
+            <InlineCode>RESISTED</InlineCode>{' '}used to fire
             as separate floating popups offset from the damage number.
             Folded them into a{' '}
-            <InlineCode>qualifier</InlineCode> field on
+            <InlineCode>qualifier</InlineCode>{' '}field on
             the damage event itself, rendered as a small uppercase ribbon
             anchored above the number-in-glyph. Three events became one.
             The visual hierarchy is identical every time, so the pattern
@@ -233,9 +248,9 @@ export default function PartyWipeCaseStudy() {
             resolvers flip{' '}
             <InlineCode>isAlive: false</InlineCode>{' '}
             immediately, but{' '}
-            <InlineCode>ZoneToken</InlineCode> holds the
+            <InlineCode>ZoneToken</InlineCode>{' '}holds the
             visual alive for 1200ms after a{' '}
-            <InlineCode>kill</InlineCode> event — long
+            <InlineCode>kill</InlineCode>{' '}event — long
             enough for the damage flourish to play through before the card
             grayscales. Five kill paths (player melee, player spell, enemy
             melee, enemy save-AoE, DoT) all emit the same event and get the
