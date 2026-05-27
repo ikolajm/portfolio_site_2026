@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "../tokens.css";
+
+@theme {
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Finlandica", system-ui, sans-serif;
+
+  /* Loom role tokens registered as Tailwind color utilities. */
+  /* Indirection through tokens.css means utilities follow theme swaps automatically. */
+  --color-surface: var(--surface);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-surface-inverse: var(--surface-inverse);
+
+  /* Dark technical canvas — media diagrams + code blocks. */
+  /* A literal value: stays dark in both themes, never swaps. */
+  --color-surface-canvas: #101113;
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-on-surface-inverse: var(--on-surface-inverse);
+
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  --color-outline: var(--outline);
+  --color-outline-subtle: var(--outline-subtle);
+
+  --color-scrim: var(--scrim);
+
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-success: var(--success);
+  --color-on-success: var(--on-success);
+  --color-warning: var(--warning);
+  --color-on-warning: var(--on-warning);
+  --color-info: var(--info);
+  --color-on-info: var(--on-info);
+
+  /* Brand-specific tracking + leading. */
+  /* Encoded once so call sites stop reaching for arbitrary values. */
+  --tracking-eyebrow: 0.24em;
+  --tracking-tag: 0.22em;
+  --tracking-nav: 0.18em;
+  --leading-display: 1.05;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Hub pulse — an expanding ring emanating from an active workspace icon. */
+@keyframes hub-ping {
+  from { transform: scale(1); opacity: 0.55; }
+  to { transform: scale(1.9); opacity: 0; }
+}
+
+/* Initial page-load fade — for chrome (nav, scroll cue) that should ease in */
+/* on first paint rather than pop. Use Tailwind `motion-safe:animate-[...]` so */
+/* reduced-motion users skip the animation entirely. */
+@keyframes load-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hide the universal footer on the 404 page — tonal mismatch between */
+/* the "Nothing here." dead-end body and the warm "Always open to a new */
+/* hat" footer CTA. Header stays (it's the recovery path). */
+main[data-page="not-found"] ~ footer {
+  display: none;
+}
+
+/* Card surface texture — subtle dot grid that defines the 'card' visual */
+/* vocabulary across all card-class panels (CaseStudyCard, StatCards, */
+/* CompanyLogo, etc.). At ~3.5% opacity, the dots add felt-not-noticed */
+/* surface character without competing with cards' decorative features */
+/* (logo watermarks, faded icons). Tune-once point for the whole system. */
+.card-surface {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* CSS-mask logo treatment — lets monochrome SVGs inherit currentColor */
+/* regardless of how their internal fills are authored. Use via inline */
+/* style: `style={{ '--logo-mask': 'url(/path.svg)' }}`. */
+.logo-mask {
+  background-color: currentColor;
+  mask-image: var(--logo-mask, none);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: var(--logo-mask, none);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* Scroll-reveal — blocks fade + rise into view once, the first time they */
+/* cross the viewport. Implemented as a one-shot animation (not a transition) */
+/* so a revealed element's `transition` stays free for hover micro-states. */
+@keyframes reveal-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+[data-reveal] {
+  opacity: 0;
+}
+[data-reveal][data-shown] {
+  animation: reveal-rise 500ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+  }
+  [data-reveal][data-shown] {
+    animation: none;
+  }
+}
+
+/* SectionAnchor line — drags out from left when its Reveal ancestor fires. */
+/* Scoped to [data-reveal] so SectionAnchors outside a Reveal render normally. */
+/* Uses the individual `scale` CSS property (not `transform`) so it stays */
+/* independent of any Tailwind transform-property defaults. */
+[data-reveal] .section-anchor-line {
+  transform-origin: left;
+  scale: 0 1;
+  transition: scale 700ms ease-out;
+}
+[data-reveal][data-shown] .section-anchor-line {
+  scale: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] .section-anchor-line {
+    scale: 1;
+    transition: none;
+  }
+}
+
+/* Media panel — dark gridded canvas for diagrams + animations. */
+/* Sits darker than the page; faint grid gives a prototype/blueprint feel. */
+.media-grid {
+  background-color: var(--color-surface-canvas);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+body {
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--on-surface-variant);
+  border-radius: var(--br-999);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--on-surface);
+}
